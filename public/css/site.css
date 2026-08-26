@@ -756,6 +756,7 @@ a { color: inherit; }
   backdrop-filter: blur(2px);
   animation: subir 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
+.cookies[hidden] { display: none !important; }
 @keyframes subir { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
 .cookies__caixa {
@@ -787,6 +788,7 @@ a { color: inherit; }
   border-top: 1px solid var(--claro-18);
   padding-top: 0.85rem;
 }
+.cookies__opcoes[hidden] { display: none !important; }
 .cookies__opcao {
   display: grid;
   grid-template-columns: minmax(115px, 145px) minmax(0, 1fr);
@@ -830,6 +832,7 @@ a { color: inherit; }
 .cookies__conteudo small { display: block; color: var(--claro-70); font-size: 0.78rem; line-height: 1.4; }
 
 .cookies__acoes { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; }
+.cookies__acoes[hidden] { display: none !important; }
 .cookies__acoes .botao { font-size: 0.7rem; padding: 0.64rem 1rem; }
 .cookies__acoes .botao--fantasma { color: var(--claro-70); border-color: var(--claro-45); }
 .cookies__acoes--principal { border-top: 1px solid var(--claro-18); padding-top: 0.85rem; }
