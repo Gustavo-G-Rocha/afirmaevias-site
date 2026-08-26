@@ -2,6 +2,11 @@
    Subsetadas para o alfabeto português (119 KB no total, contra 455 KB do
    arquivo cheio). Auto-hospedar evita requisição ao Google a cada visita —
    melhor performance e um terceiro a menos para declarar na política LGPD. */
+@font-face{font-family:'Exo';font-style:normal;font-weight:200;font-display:swap;src:url('/fontes/exo-200.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:300;font-display:swap;src:url('/fontes/exo-300.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:400;font-display:swap;src:url('/fontes/exo-400.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:500;font-display:swap;src:url('/fontes/exo-500.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:600;font-display:swap;src:url('/fontes/exo-600.woff2') format('woff2');}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:300;font-display:swap;src:url('/fontes/poppins-300.woff2') format('woff2');}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('/fontes/poppins-400.woff2') format('woff2');}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:500;font-display:swap;src:url('/fontes/poppins-500.woff2') format('woff2');}
@@ -81,7 +86,7 @@ img { display: block; max-width: 100%; }
 .entrada__caixa { width: min(100%, 400px); color: var(--claro-70); }
 .entrada__caixa img { width: 150px; height: auto; margin-bottom: 2rem; }
 .entrada__titulo {
-  font-family: 'Poppins', sans-serif; font-weight: 200;
+  font-family: 'Exo', sans-serif; font-weight: 200;
   font-size: 2.25rem; line-height: 1.1; color: var(--off-white);
   margin: 0 0 0.75rem;
 }
@@ -109,12 +114,12 @@ img { display: block; max-width: 100%; }
 .lateral__marca img { width: 118px; height: auto; }
 .lateral__etiqueta {
   display: block; margin-top: 0.75rem;
-  font-family: 'Poppins', sans-serif; font-size: 0.66rem;
+  font-family: 'Exo', sans-serif; font-size: 0.66rem;
   letter-spacing: 0.28em; text-transform: uppercase; color: var(--verde-claro);
 }
 .lateral__nav { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
 .lateral__grupo {
-  font-family: 'Poppins', sans-serif; font-size: 0.62rem; font-weight: 600;
+  font-family: 'Exo', sans-serif; font-size: 0.62rem; font-weight: 600;
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--claro-40);
   margin: 1.5rem 0 0.5rem;
 }
@@ -129,10 +134,10 @@ img { display: block; max-width: 100%; }
 
 .lateral__conta { border-top: 1px solid var(--claro-15); padding-top: 1.25rem; margin-top: 1.5rem; }
 .lateral__nome { margin: 0; color: var(--off-white); font-size: 0.9rem; }
-.lateral__papel { margin: 0 0 0.75rem; font-size: 0.72rem; color: var(--claro-40); text-transform: uppercase; letter-spacing: 0.14em; font-family: 'Poppins', sans-serif; }
+.lateral__papel { margin: 0 0 0.75rem; font-size: 0.72rem; color: var(--claro-40); text-transform: uppercase; letter-spacing: 0.14em; font-family: 'Exo', sans-serif; }
 .lateral__sair {
   background: none; border: 1px solid var(--claro-40); color: var(--claro-70);
-  font-family: 'Poppins', sans-serif; font-size: 0.7rem; letter-spacing: 0.14em;
+  font-family: 'Exo', sans-serif; font-size: 0.7rem; letter-spacing: 0.14em;
   text-transform: uppercase; padding: 0.5rem 0.9rem; cursor: pointer;
   transition: background 160ms, color 160ms;
 }
@@ -149,14 +154,14 @@ img { display: block; max-width: 100%; }
 }
 .topo-conteudo__data { margin: 0; color: var(--azul-30); font-size: 0.85rem; }
 .sobrancelha-admin {
-  font-family: 'Poppins', sans-serif; font-size: 0.66rem; font-weight: 600;
+  font-family: 'Exo', sans-serif; font-size: 0.66rem; font-weight: 600;
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--verde);
   margin: 0 0 0.4rem;
 }
 .sobrancelha-admin a { text-decoration: none; }
 .sobrancelha-admin a:hover { text-decoration: underline; }
 .titulo-admin {
-  font-family: 'Poppins', sans-serif; font-weight: 300;
+  font-family: 'Exo', sans-serif; font-weight: 300;
   font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
   line-height: 1.1; margin: 0; letter-spacing: -0.015em;
 }
@@ -194,12 +199,12 @@ img { display: block; max-width: 100%; }
 .metrica:hover { background: var(--bege); }
 .metrica--atencao { border-top: 3px solid var(--verde); }
 .metrica__rotulo {
-  font-family: 'Poppins', sans-serif; font-size: 0.68rem; font-weight: 600;
+  font-family: 'Exo', sans-serif; font-size: 0.68rem; font-weight: 600;
   letter-spacing: 0.16em; text-transform: uppercase; color: var(--verde);
   margin: 0 0 0.75rem;
 }
 .metrica__valor {
-  font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 2.75rem;
+  font-family: 'Exo', sans-serif; font-weight: 200; font-size: 2.75rem;
   line-height: 1; margin: 0 0 0.4rem;
 }
 .metrica__nota { margin: 0; font-size: 0.82rem; color: var(--azul-30); }
@@ -216,7 +221,7 @@ img { display: block; max-width: 100%; }
 .cartao-admin__cabeca { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 .cartao-admin__cabeca a { font-size: 0.82rem; color: var(--verde); }
 .cartao-admin__titulo {
-  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem;
+  font-family: 'Exo', sans-serif; font-weight: 600; font-size: 0.82rem;
   letter-spacing: 0.12em; text-transform: uppercase;
   margin: 0 0 1rem;
 }
@@ -240,7 +245,7 @@ img { display: block; max-width: 100%; }
 .tabela-admin { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
 .tabela-admin--lista { min-width: 640px; }
 .tabela-admin th {
-  text-align: left; font-family: 'Poppins', sans-serif; font-weight: 600;
+  text-align: left; font-family: 'Exo', sans-serif; font-weight: 600;
   font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--verde); padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--verde-claro);
@@ -256,7 +261,7 @@ img { display: block; max-width: 100%; }
 
 .etiqueta {
   display: inline-block;
-  font-family: 'Poppins', sans-serif; font-size: 0.66rem; font-weight: 600;
+  font-family: 'Exo', sans-serif; font-size: 0.66rem; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
   padding: 0.2rem 0.55rem;
   background: var(--azul-06); color: var(--azul-60);
@@ -288,7 +293,7 @@ img { display: block; max-width: 100%; }
 .formulario-admin { display: grid; gap: 1rem; }
 .campo-admin { display: grid; gap: 0.35rem; }
 .campo-admin > span {
-  font-family: 'Poppins', sans-serif; font-size: 0.66rem; font-weight: 600;
+  font-family: 'Exo', sans-serif; font-size: 0.66rem; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde);
 }
 .campo-admin small { font-size: 0.78rem; color: var(--azul-30); }
@@ -306,7 +311,7 @@ img { display: block; max-width: 100%; }
 
 .botao-admin {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.72rem;
+  font-family: 'Exo', sans-serif; font-weight: 600; font-size: 0.72rem;
   letter-spacing: 0.14em; text-transform: uppercase;
   padding: 0.7rem 1.25rem;
   border: 1px solid transparent; border-radius: var(--raio-botao);
@@ -334,7 +339,7 @@ input[type='reset'] {
 .definicoes { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
 .definicoes__item--longo { grid-column: 1 / -1; }
 .definicoes dt {
-  font-family: 'Poppins', sans-serif; font-size: 0.64rem; font-weight: 600;
+  font-family: 'Exo', sans-serif; font-size: 0.64rem; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde);
   margin-bottom: 0.3rem;
 }
