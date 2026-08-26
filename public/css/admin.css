@@ -28,6 +28,7 @@
   --claro-15: rgba(242, 241, 239, 0.15);
   --perigo: #8C3A2B;
   --lateral-largura: 250px;
+  --raio-botao: 10px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -308,7 +309,7 @@ img { display: block; max-width: 100%; }
   font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.72rem;
   letter-spacing: 0.14em; text-transform: uppercase;
   padding: 0.7rem 1.25rem;
-  border: 1px solid transparent; border-radius: 0;
+  border: 1px solid transparent; border-radius: var(--raio-botao);
   cursor: pointer; text-decoration: none;
   transition: background 160ms, color 160ms, border-color 160ms;
 }
@@ -320,6 +321,13 @@ img { display: block; max-width: 100%; }
 .botao-admin--perigo:hover { background: #722f23; }
 .botao-admin--mini { padding: 0.4rem 0.75rem; font-size: 0.64rem; background: transparent; border-color: var(--azul-12); }
 .botao-admin--mini:hover { border-color: var(--verde); color: var(--verde); }
+
+button,
+input[type='submit'],
+input[type='button'],
+input[type='reset'] {
+  border-radius: var(--raio-botao);
+}
 
 /* ------------------------------------------------------------- definições */
 
