@@ -457,6 +457,22 @@ input[type='reset'] {
 .grade-enderecos { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
 .grade-enderecos--compacta { margin-top: 2.5rem; }
 .endereco { border-left: 3px solid var(--verde-claro); padding-left: 1.25rem; }
+.endereco--link {
+  display: block;
+  text-decoration: none;
+  border-radius: 8px;
+  padding-block: 0.25rem;
+  transition: background var(--transicao), border-color var(--transicao), transform var(--transicao);
+}
+.endereco--link:hover {
+  background: rgba(191, 207, 153, 0.08);
+  border-left-color: var(--verde);
+  transform: translateY(-2px);
+}
+.endereco--link:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 3px;
+}
 .endereco__cidade { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.15rem; margin: 0 0 0.4rem; }
 .endereco__cidade span { color: var(--verde); font-weight: 300; }
 .endereco p { margin: 0; color: var(--azul-60); font-size: 0.95rem; }

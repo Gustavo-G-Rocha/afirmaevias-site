@@ -33,8 +33,10 @@
       <ul class="rodape__lista rodape__lista--enderecos">
         <% empresa.enderecos.forEach(function (endereco) { %>
           <li>
-            <span class="rodape__cidade"><%= endereco.cidade %>/<%= endereco.uf %></span>
-            <%= endereco.linha1 %><br><%= endereco.linha2 %>
+            <a href="<%= endereco.mapsUrl %>" target="_blank" rel="noopener" aria-label="Abrir localização de <%= endereco.cidade %> no Google Maps">
+              <span class="rodape__cidade"><%= endereco.cidade %>/<%= endereco.uf %></span>
+              <%= endereco.linha1 %><br><%= endereco.linha2 %>
+            </a>
           </li>
         <% }); %>
       </ul>

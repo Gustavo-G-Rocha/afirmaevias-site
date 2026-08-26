@@ -69,10 +69,10 @@
     </div>
     <div class="grade-enderecos">
       <% empresa.enderecos.forEach(function (endereco) { %>
-        <article class="endereco" data-revelar>
+        <a class="endereco endereco--link" data-revelar href="<%= endereco.mapsUrl %>" target="_blank" rel="noopener" aria-label="Abrir localização de <%= endereco.cidade %> no Google Maps">
           <h3 class="endereco__cidade"><%= endereco.cidade %><span>/<%= endereco.uf %></span></h3>
           <p><%= endereco.linha1 %><br><%= endereco.linha2 %></p>
-        </article>
+        </a>
       <% }); %>
     </div>
   </div>

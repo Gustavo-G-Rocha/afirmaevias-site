@@ -21,10 +21,10 @@
 
       <div class="grade-enderecos grade-enderecos--compacta">
         <% empresa.enderecos.forEach(function (endereco) { %>
-          <article class="endereco">
+          <a class="endereco endereco--link" href="<%= endereco.mapsUrl %>" target="_blank" rel="noopener" aria-label="Abrir localização de <%= endereco.cidade %> no Google Maps">
             <h2 class="endereco__cidade"><%= endereco.cidade %><span>/<%= endereco.uf %></span></h2>
             <p><%= endereco.linha1 %><br><%= endereco.linha2 %></p>
-          </article>
+          </a>
         <% }); %>
       </div>
     </div>

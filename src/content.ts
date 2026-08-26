@@ -18,13 +18,17 @@ export const empresa = {
       cidade: 'Curitiba',
       uf: 'PR',
       linha1: 'R. Baltazar Carrasco dos Reis, 2345',
-      linha2: 'Rebouças — Curitiba/PR, 80230-070'
+      linha2: 'Rebouças — Curitiba/PR, 80230-070',
+      mapsUrl:
+        'https://www.google.com/maps/search/?api=1&query=R.+Baltazar+Carrasco+dos+Reis%2C+2345%2C+Rebou%C3%A7as%2C+Curitiba%2FPR%2C+80230-070'
     },
     {
       cidade: 'Marília',
       uf: 'SP',
       linha1: 'R. Benedito Alves Delfino, 1527',
-      linha2: 'Distrito Industrial — Marília/SP, 17512-043'
+      linha2: 'Distrito Industrial — Marília/SP, 17512-043',
+      mapsUrl:
+        'https://www.google.com/maps/search/?api=1&query=R.+Benedito+Alves+Delfino%2C+1527%2C+Distrito+Industrial%2C+Mar%C3%ADlia%2FSP%2C+17512-043'
     }
   ]
 };
