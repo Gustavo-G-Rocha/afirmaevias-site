@@ -70,8 +70,14 @@ A migration é idempotente: roda a cada deploy sem quebrar nada.
 
 ## Decisões de marca
 
-Paleta e tipografia vêm direto do Manual de Marca v1.0: `#00233B`, `#566E3D`, `#BFCF99`,
-`#EFEBDC`, `#F2F1EF`, `#FFFFFF`; Exo para títulos e rótulos, Poppins para texto corrido.
+A paleta vem direto do Manual de Marca v1.0: `#00233B`, `#566E3D`, `#BFCF99`,
+`#EFEBDC`, `#F2F1EF`, `#FFFFFF`.
+
+A tipografia é a exceção. O manual pede Exo para títulos e rótulos e Poppins para
+texto corrido; o site usa **Poppins em tudo**. A Exo foi testada e tirava a
+sobriedade que um site institucional de engenharia precisa ter. A hierarquia é
+feita por peso, corpo e letter-spacing, não por troca de família. A logo continua
+sendo o arquivo oficial e não foi tocada.
 
 O grafismo do manual (o elemento que nasce da junção dos "i") virou o elemento estrutural do
 site: a faixa de traços que abre cada herói, marca os itens de lista, separa as seções e fecha
