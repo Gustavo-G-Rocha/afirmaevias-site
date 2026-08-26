@@ -1,0 +1,39 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina heroi--escuro">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha sobrancelha--claro"><%= aplicativo.eyebrow %></p>
+    <h1 class="titulo-display titulo-display--claro"><%- aplicativo.titulo %></h1>
+    <p class="heroi__chamada heroi__chamada--clara"><%= aplicativo.chamada %></p>
+    <a class="botao botao--verde" href="/contato">Quero uma demonstração</a>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner">
+    <div class="cabeca-secao">
+      <p class="sobrancelha">O que ele faz</p>
+      <h2 class="titulo-secao">Quatro coisas que mudam na sua operação</h2>
+    </div>
+    <div class="grade-recursos">
+      <% aplicativo.recursos.forEach(function (recurso) { %>
+        <article class="recurso" data-revelar>
+          <span class="recurso__marca" aria-hidden="true"></span>
+          <h3 class="recurso__titulo"><%= recurso.titulo %></h3>
+          <p class="recurso__texto"><%= recurso.texto %></p>
+        </article>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--clara">
+  <div class="conteiner faixa-fecho">
+    <p class="faixa-fecho__texto"><%= aplicativo.fecho %></p>
+    <a class="botao botao--escuro" href="/servicos#supervisao">Ver como usamos na obra</a>
+  </div>
+</section>
+
+<%- include('../partials/chamada-contato') %>
+<%- include('../partials/rodape') %>

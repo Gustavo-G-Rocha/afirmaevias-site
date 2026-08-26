@@ -1,0 +1,85 @@
+<%- include('topo') %>
+
+<header class="topo-conteudo">
+  <div>
+    <p class="sobrancelha-admin"><a href="/admin/dados/<%= colecao.chave %>">← <%= colecao.rotulo %></a></p>
+    <h1 class="titulo-admin"><%= registro.protocolo || [registro.nome, registro.sobrenome].filter(Boolean).join(' ') || registro.titulo || 'Registro' %></h1>
+  </div>
+  <% if (colecao.temArquivo && registro.arquivo_nome) { %>
+    <a class="botao-admin botao-admin--verde" href="/admin/dados/candidaturas/<%= registro.id %>/arquivo">Baixar currículo</a>
+  <% } %>
+</header>
+
+<div class="corpo duas-colunas-admin duas-colunas-admin--detalhe">
+
+  <section class="cartao-admin">
+    <h2 class="cartao-admin__titulo">Dados do registro</h2>
+    <dl class="definicoes">
+      <% colecao.camposDetalhe.forEach(function (campo) { %>
+        <% const valor = registro[campo.campo]; %>
+        <div class="definicoes__item <%= campo.tipo === 'longo' ? 'definicoes__item--longo' : '' %>">
+          <dt><%= campo.rotulo %></dt>
+          <dd>
+            <% if (valor === null || valor === undefined || valor === '') { %>
+              <span class="secundario">—</span>
+            <% } else if (campo.tipo === 'data') { %>
+              <%= new Date(valor).toLocaleString('pt-BR') %>
+            <% } else if (campo.tipo === 'bool' || typeof valor === 'boolean') { %>
+              <%= valor ? 'sim' : 'não' %>
+            <% } else if (campo.tipo === 'longo') { %>
+              <p class="texto-longo"><%= valor %></p>
+            <% } else { %>
+              <%= valor %>
+            <% } %>
+          </dd>
+        </div>
+      <% }); %>
+    </dl>
+  </section>
+
+  <div class="coluna-acoes">
+    <% if (colecao.status.length > 0) { %>
+      <section class="cartao-admin">
+        <h2 class="cartao-admin__titulo">Andamento</h2>
+        <form method="post" action="/admin/dados/<%= colecao.chave %>/<%= registro.id %>" class="formulario-admin">
+          <label class="campo-admin">
+            <span>Status</span>
+            <select name="status">
+              <% colecao.status.forEach(function (opcao) { %>
+                <option value="<%= opcao %>" <%= registro.status === opcao ? 'selected' : '' %>><%= opcao %></option>
+              <% }); %>
+            </select>
+          </label>
+
+          <% if (['contatos', 'candidaturas'].includes(colecao.chave)) { %>
+            <label class="campo-admin">
+              <span>Observação interna</span>
+              <textarea name="observacao" rows="4" placeholder="Anotação visível só para a equipe"><%= registro.observacao || '' %></textarea>
+            </label>
+          <% } %>
+
+          <% if (['lgpd', 'relatos'].includes(colecao.chave)) { %>
+            <label class="campo-admin">
+              <span>Resposta ao titular</span>
+              <textarea name="resposta" rows="5" placeholder="Registre aqui a resposta enviada"><%= registro.resposta || '' %></textarea>
+            </label>
+          <% } %>
+
+          <button type="submit" class="botao-admin botao-admin--verde">Salvar andamento</button>
+        </form>
+      </section>
+    <% } %>
+
+    <% if (usuario.papel === 'admin') { %>
+      <section class="cartao-admin cartao-admin--perigo">
+        <h2 class="cartao-admin__titulo">Excluir registro</h2>
+        <p class="secundario">Use para atender pedido de eliminação da LGPD. A exclusão é definitiva e fica registrada na trilha de auditoria.</p>
+        <form method="post" action="/admin/dados/<%= colecao.chave %>/<%= registro.id %>/excluir" onsubmit="return confirm('Excluir este registro em definitivo?')">
+          <button type="submit" class="botao-admin botao-admin--perigo">Excluir em definitivo</button>
+        </form>
+      </section>
+    <% } %>
+  </div>
+</div>
+
+<%- include('rodape') %>

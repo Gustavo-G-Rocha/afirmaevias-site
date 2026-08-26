@@ -1,0 +1,67 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina heroi--documento">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha">LGPD · Lei 13.709/2018</p>
+    <h1 class="titulo-display titulo-display--medio">Política de privacidade</h1>
+    <p class="documento__meta">Versão <%= privacidade.versao %> · atualizada em <%= privacidade.atualizadoEm %></p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner documento">
+    <nav class="documento__indice" aria-label="Sumário">
+      <p class="documento__indice-rotulo">Nesta página</p>
+      <ol>
+        <% privacidade.secoes.forEach(function (secao, i) { %>
+          <li><a href="#s<%= i + 1 %>"><%= secao.titulo %></a></li>
+        <% }); %>
+        <li><a href="#cookies-detalhe">Cookies que usamos</a></li>
+      </ol>
+    </nav>
+
+    <div class="documento__corpo">
+      <% privacidade.secoes.forEach(function (secao, i) { %>
+        <section class="documento__secao" id="s<%= i + 1 %>">
+          <h2 class="documento__titulo"><span class="documento__numero"><%= String(i + 1).padStart(2, '0') %></span><%= secao.titulo %></h2>
+          <% (secao.paragrafos || []).forEach(function (paragrafo) { %>
+            <p><%= paragrafo %></p>
+          <% }); %>
+          <% if (secao.lista) { %>
+            <ul class="lista-marcada">
+              <% secao.lista.forEach(function (item) { %><li><%= item %></li><% }); %>
+            </ul>
+          <% } %>
+        </section>
+      <% }); %>
+
+      <section class="documento__secao" id="cookies-detalhe">
+        <h2 class="documento__titulo"><span class="documento__numero"><%= String(privacidade.secoes.length + 1).padStart(2, '0') %></span>Cookies que usamos</h2>
+        <div class="tabela-envolvida">
+          <table class="tabela">
+            <thead><tr><th>Categoria</th><th>Para que serve</th><th>Precisa do seu aceite?</th></tr></thead>
+            <tbody>
+              <% cookies.categorias.forEach(function (categoria) { %>
+                <tr>
+                  <td><%= categoria.titulo %></td>
+                  <td><%= categoria.texto %></td>
+                  <td><%= categoria.obrigatorio ? 'Não, são essenciais' : 'Sim' %></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        <p>Você pode rever sua escolha a qualquer momento em <button type="button" class="link-botao" data-abrir-cookies>preferências de cookies</button>.</p>
+      </section>
+
+      <div class="documento__acao">
+        <h2 class="titulo-bloco">Quer exercer um direito?</h2>
+        <p>O Portal do titular registra seu pedido, gera protocolo e nos coloca no prazo de 15 dias.</p>
+        <a class="botao botao--verde" href="/portal-do-titular">Abrir o Portal do titular</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

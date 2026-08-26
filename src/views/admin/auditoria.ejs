@@ -1,0 +1,45 @@
+<%- include('topo') %>
+
+<header class="topo-conteudo">
+  <div>
+    <p class="sobrancelha-admin">Administração</p>
+    <h1 class="titulo-admin">Trilha de auditoria</h1>
+  </div>
+</header>
+
+<div class="corpo">
+  <p class="secundario secundario--nota">Registro imutável de quem acessou o painel e o que alterou. Use como evidência de conformidade.</p>
+
+  <div class="tabela-envolvida-admin">
+    <table class="tabela-admin tabela-admin--lista">
+      <thead>
+        <tr><th>Quando</th><th>Quem</th><th>Ação</th><th>Entidade</th><th>Detalhes</th><th>IP</th></tr>
+      </thead>
+      <tbody>
+        <% if (registros.length === 0) { %>
+          <tr><td colspan="6" class="vazio">Nenhum evento registrado ainda.</td></tr>
+        <% } %>
+        <% registros.forEach(function (evento) { %>
+          <tr>
+            <td class="mono"><%= new Date(evento.criado_em).toLocaleString('pt-BR') %></td>
+            <td><%= evento.usuario_email || '—' %></td>
+            <td><span class="etiqueta etiqueta--acao"><%= evento.acao %></span></td>
+            <td class="mono"><%= evento.entidade || '—' %></td>
+            <td class="mono secundario"><%= evento.detalhes ? JSON.stringify(evento.detalhes).slice(0, 60) : '—' %></td>
+            <td class="mono secundario"><%= evento.ip || '—' %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if (paginas > 1) { %>
+    <nav class="paginacao" aria-label="Paginação">
+      <% if (pagina > 1) { %><a href="?p=<%= pagina - 1 %>">← anterior</a><% } %>
+      <span>página <%= pagina %> de <%= paginas %></span>
+      <% if (pagina < paginas) { %><a href="?p=<%= pagina + 1 %>">próxima →</a><% } %>
+    </nav>
+  <% } %>
+</div>
+
+<%- include('rodape') %>

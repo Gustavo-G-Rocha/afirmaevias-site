@@ -1,0 +1,57 @@
+<section class="chamada" id="contato">
+  <div class="conteiner chamada__grade">
+    <div>
+      <h2 class="titulo-display titulo-display--medio">Abrindo caminhos,<br>construindo o futuro.<br><em>Vamos juntos?</em></h2>
+      <p class="chamada__texto">Conte o desafio da sua obra. Respondemos em até um dia útil.</p>
+      <ul class="chamada__contatos">
+        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><%= empresa.telefoneCelular %></a></li>
+        <li><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></li>
+        <li><a href="mailto:<%= empresa.email %>"><%= empresa.email %></a></li>
+      </ul>
+    </div>
+
+    <form class="formulario" method="post" action="/contato">
+      <input type="hidden" name="origem" value="<%= rotaAtual === '/' ? 'home' : rotaAtual.replace('/', '') %>">
+      <p class="mel"><label>Deixe em branco<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+
+      <div class="campo-duplo">
+        <label class="campo">
+          <span class="campo__rotulo">Nome</span>
+          <input type="text" name="nome" required maxlength="120" autocomplete="given-name">
+        </label>
+        <label class="campo">
+          <span class="campo__rotulo">Sobrenome</span>
+          <input type="text" name="sobrenome" maxlength="120" autocomplete="family-name">
+        </label>
+      </div>
+
+      <label class="campo">
+        <span class="campo__rotulo">E-mail</span>
+        <input type="email" name="email" required maxlength="200" autocomplete="email">
+      </label>
+
+      <div class="campo-duplo">
+        <label class="campo">
+          <span class="campo__rotulo">Telefone</span>
+          <input type="tel" name="telefone" maxlength="40" autocomplete="tel">
+        </label>
+        <label class="campo">
+          <span class="campo__rotulo">Empresa ou órgão</span>
+          <input type="text" name="empresa" maxlength="160" autocomplete="organization">
+        </label>
+      </div>
+
+      <label class="campo">
+        <span class="campo__rotulo">Como podemos ajudar?</span>
+        <textarea name="mensagem" rows="4" required maxlength="5000" placeholder="Escreva aqui"></textarea>
+      </label>
+
+      <label class="aceite">
+        <input type="checkbox" name="consentimento" required>
+        <span>Li e aceito a <a href="/politica-de-privacidade" target="_blank">Política de privacidade</a> e autorizo o contato da Afirma E-vias.</span>
+      </label>
+
+      <button type="submit" class="botao botao--verde botao--largo">Enviar mensagem</button>
+    </form>
+  </div>
+</section>

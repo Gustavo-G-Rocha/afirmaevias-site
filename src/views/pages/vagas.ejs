@@ -1,0 +1,86 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha"><%= vagas.eyebrow %></p>
+    <h1 class="titulo-display"><%- vagas.titulo %></h1>
+    <p class="heroi__chamada"><%= vagas.chamada %></p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner chamada__grade">
+    <div>
+      <p class="sobrancelha">Áreas</p>
+      <h2 class="titulo-secao">Onde a gente costuma abrir vaga</h2>
+      <ul class="lista-marcada">
+        <% vagas.areas.forEach(function (area) { %><li><%= area %></li><% }); %>
+      </ul>
+      <p class="texto-apoio">Não achou a sua área? Manda mesmo assim. Guardamos currículos por 12 meses e você pode pedir a exclusão quando quiser pelo <a href="/portal-do-titular">Portal do titular</a>.</p>
+    </div>
+
+    <% if (enviado) { %>
+      <div class="painel-sucesso painel-sucesso--claro" role="status">
+        <p class="painel-sucesso__etiqueta">Currículo recebido</p>
+        <p>Obrigado. Se o seu perfil combinar com uma vaga aberta, o RH entra em contato pelo e-mail que você cadastrou.</p>
+        <a class="botao botao--escuro" href="/">Voltar para o início</a>
+      </div>
+    <% } else { %>
+      <form class="formulario" method="post" action="/trabalhe-com-a-gente" enctype="multipart/form-data">
+        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
+
+        <div class="campo-duplo">
+          <label class="campo">
+            <span class="campo__rotulo">Nome</span>
+            <input type="text" name="nome" required maxlength="120" value="<%= valores.nome || '' %>">
+          </label>
+          <label class="campo">
+            <span class="campo__rotulo">Sobrenome</span>
+            <input type="text" name="sobrenome" maxlength="120" value="<%= valores.sobrenome || '' %>">
+          </label>
+        </div>
+
+        <div class="campo-duplo">
+          <label class="campo">
+            <span class="campo__rotulo">E-mail</span>
+            <input type="email" name="email" required maxlength="200" value="<%= valores.email || '' %>">
+          </label>
+          <label class="campo">
+            <span class="campo__rotulo">Telefone</span>
+            <input type="tel" name="telefone" maxlength="40" value="<%= valores.telefone || '' %>">
+          </label>
+        </div>
+
+        <label class="campo">
+          <span class="campo__rotulo">Área de interesse</span>
+          <select name="area">
+            <% vagas.areas.forEach(function (area) { %>
+              <option value="<%= area %>" <%= valores.area === area ? 'selected' : '' %>><%= area %></option>
+            <% }); %>
+          </select>
+        </label>
+
+        <label class="campo campo--arquivo">
+          <span class="campo__rotulo">Currículo</span>
+          <input type="file" name="curriculo" accept=".pdf,.doc,.docx" required>
+          <span class="campo__ajuda">PDF, DOC ou DOCX, até 5 MB.</span>
+        </label>
+
+        <label class="campo">
+          <span class="campo__rotulo">Quer contar mais alguma coisa?</span>
+          <textarea name="mensagem" rows="4" maxlength="5000" placeholder="Opcional"><%= valores.mensagem || '' %></textarea>
+        </label>
+
+        <label class="aceite">
+          <input type="checkbox" name="consentimento" required>
+          <span>Autorizo a Afirma E-vias a guardar meu currículo por 12 meses para processos seletivos, conforme a <a href="/politica-de-privacidade" target="_blank">Política de privacidade</a>.</span>
+        </label>
+
+        <button type="submit" class="botao botao--verde botao--largo">Enviar currículo</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

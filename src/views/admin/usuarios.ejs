@@ -1,0 +1,64 @@
+<%- include('topo') %>
+
+<header class="topo-conteudo">
+  <div>
+    <p class="sobrancelha-admin">Administração</p>
+    <h1 class="titulo-admin">Usuários do painel</h1>
+  </div>
+</header>
+
+<div class="corpo duas-colunas-admin duas-colunas-admin--detalhe">
+  <section class="cartao-admin">
+    <h2 class="cartao-admin__titulo">Quem tem acesso</h2>
+    <% if (aviso) { %><p class="alerta-admin alerta-admin--ok"><%= aviso %></p><% } %>
+
+    <table class="tabela-admin tabela-admin--lista">
+      <thead><tr><th>Nome</th><th>Papel</th><th>Último acesso</th><th>Situação</th><th></th></tr></thead>
+      <tbody>
+        <% usuarios.forEach(function (pessoa) { %>
+          <tr>
+            <td><%= pessoa.nome %><br><span class="secundario"><%= pessoa.email %></span></td>
+            <td><span class="etiqueta etiqueta--<%= pessoa.papel %>"><%= pessoa.papel %></span></td>
+            <td class="secundario"><%= pessoa.ultimo_acesso ? new Date(pessoa.ultimo_acesso).toLocaleString('pt-BR') : 'nunca entrou' %></td>
+            <td><%= pessoa.ativo ? 'ativo' : 'desativado' %></td>
+            <td class="celula-direita">
+              <% if (usuario.papel === 'admin' && pessoa.id !== usuario.id) { %>
+                <form method="post" action="/admin/usuarios/<%= pessoa.id %>/alternar">
+                  <button type="submit" class="botao-admin botao-admin--mini"><%= pessoa.ativo ? 'Desativar' : 'Reativar' %></button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </section>
+
+  <% if (usuario.papel === 'admin') { %>
+    <section class="cartao-admin">
+      <h2 class="cartao-admin__titulo">Adicionar pessoa</h2>
+      <form method="post" action="/admin/usuarios" class="formulario-admin">
+        <% if (erro) { %><p class="alerta-admin" role="alert"><%= erro %></p><% } %>
+
+        <label class="campo-admin"><span>Nome</span><input type="text" name="nome" required maxlength="120"></label>
+        <label class="campo-admin"><span>E-mail</span><input type="email" name="email" required maxlength="200"></label>
+        <label class="campo-admin">
+          <span>Senha provisória</span>
+          <input type="text" name="senha" required minlength="10" autocomplete="new-password">
+          <small>Mínimo de 10 caracteres. Peça para a pessoa trocar depois.</small>
+        </label>
+        <label class="campo-admin">
+          <span>Papel</span>
+          <select name="papel">
+            <option value="editor">Editor — lê e atualiza andamentos</option>
+            <option value="admin">Administrador — também exclui e gerencia acessos</option>
+          </select>
+        </label>
+
+        <button type="submit" class="botao-admin botao-admin--verde">Criar acesso</button>
+      </form>
+    </section>
+  <% } %>
+</div>
+
+<%- include('rodape') %>

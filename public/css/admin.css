@@ -1,0 +1,358 @@
+/* Fontes oficiais do Manual de Marca, auto-hospedadas.
+   Subsetadas para o alfabeto português (119 KB no total, contra 455 KB do
+   arquivo cheio). Auto-hospedar evita requisição ao Google a cada visita —
+   melhor performance e um terceiro a menos para declarar na política LGPD. */
+@font-face{font-family:'Exo';font-style:normal;font-weight:200;font-display:swap;src:url('/fontes/exo-200.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:300;font-display:swap;src:url('/fontes/exo-300.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:400;font-display:swap;src:url('/fontes/exo-400.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:500;font-display:swap;src:url('/fontes/exo-500.woff2') format('woff2');}
+@font-face{font-family:'Exo';font-style:normal;font-weight:600;font-display:swap;src:url('/fontes/exo-600.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:300;font-display:swap;src:url('/fontes/poppins-300.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('/fontes/poppins-400.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:500;font-display:swap;src:url('/fontes/poppins-500.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:600;font-display:swap;src:url('/fontes/poppins-600.woff2') format('woff2');}
+
+/* =========================================================================
+   Afirma E-vias — painel administrativo
+   Mesma paleta do site. Densidade maior, decoração menor.
+   ========================================================================= */
+
+:root {
+  --azul: #00233B;
+  --verde: #566E3D;
+  --verde-claro: #BFCF99;
+  --bege: #EFEBDC;
+  --off-white: #F2F1EF;
+  --branco: #FFFFFF;
+  --azul-60: rgba(0, 35, 59, 0.6);
+  --azul-30: rgba(0, 35, 59, 0.32);
+  --azul-12: rgba(0, 35, 59, 0.12);
+  --azul-06: rgba(0, 35, 59, 0.05);
+  --claro-70: rgba(242, 241, 239, 0.7);
+  --claro-40: rgba(242, 241, 239, 0.4);
+  --claro-15: rgba(242, 241, 239, 0.15);
+  --perigo: #8C3A2B;
+  --lateral-largura: 250px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--azul);
+  background: var(--off-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+
+:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+
+.sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.mono { font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, monospace; font-size: 0.82rem; }
+.secundario { color: var(--azul-30); font-size: 0.85rem; }
+.secundario--nota { display: block; margin-bottom: 1.5rem; max-width: 70ch; }
+
+/* ------------------------------------------------------------ tela de login */
+
+.entrada {
+  min-height: 100dvh;
+  display: grid; place-items: center;
+  background: var(--azul);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.entrada__faixa {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; gap: 0.5rem; height: 12px;
+}
+.entrada__faixa span:nth-child(1) { width: 22%; background: var(--verde-claro); }
+.entrada__faixa span:nth-child(2) { width: 8%; background: var(--verde); }
+.entrada__faixa span:nth-child(3) { width: 30%; background: var(--bege); }
+.entrada__faixa span:nth-child(4) { width: 6%; background: var(--verde-claro); }
+.entrada__faixa span:nth-child(5) { width: 16%; background: var(--verde); }
+
+.entrada__caixa { width: min(100%, 400px); color: var(--claro-70); }
+.entrada__caixa img { width: 150px; height: auto; margin-bottom: 2rem; }
+.entrada__titulo {
+  font-family: 'Exo', sans-serif; font-weight: 200;
+  font-size: 2.25rem; line-height: 1.1; color: var(--off-white);
+  margin: 0 0 0.75rem;
+}
+.entrada__texto { font-size: 0.9rem; margin: 0 0 2rem; }
+.entrada .campo-admin span { color: var(--verde-claro); }
+.entrada .campo-admin input {
+  background: transparent; color: var(--off-white);
+  border-color: var(--claro-40);
+}
+.entrada .botao-admin { width: 100%; justify-content: center; margin-top: 0.5rem; }
+
+/* --------------------------------------------------------------- estrutura */
+
+.painel { display: grid; grid-template-columns: var(--lateral-largura) minmax(0, 1fr); min-height: 100dvh; }
+
+.lateral {
+  background: var(--azul);
+  color: var(--claro-70);
+  padding: 1.75rem 1.25rem;
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100dvh;
+  overflow-y: auto;
+}
+.lateral__marca { display: block; text-decoration: none; margin-bottom: 2rem; }
+.lateral__marca img { width: 118px; height: auto; }
+.lateral__etiqueta {
+  display: block; margin-top: 0.75rem;
+  font-family: 'Exo', sans-serif; font-size: 0.66rem;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--verde-claro);
+}
+.lateral__nav { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
+.lateral__grupo {
+  font-family: 'Exo', sans-serif; font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--claro-40);
+  margin: 1.5rem 0 0.5rem;
+}
+.lateral__link {
+  text-decoration: none; font-size: 0.88rem;
+  padding: 0.55rem 0.75rem;
+  border-left: 2px solid transparent;
+  transition: background 160ms, color 160ms, border-color 160ms;
+}
+.lateral__link:hover { background: rgba(242, 241, 239, 0.06); color: var(--off-white); }
+.lateral__link.is-atual { border-left-color: var(--verde-claro); color: var(--verde-claro); background: rgba(191, 207, 153, 0.08); }
+
+.lateral__conta { border-top: 1px solid var(--claro-15); padding-top: 1.25rem; margin-top: 1.5rem; }
+.lateral__nome { margin: 0; color: var(--off-white); font-size: 0.9rem; }
+.lateral__papel { margin: 0 0 0.75rem; font-size: 0.72rem; color: var(--claro-40); text-transform: uppercase; letter-spacing: 0.14em; font-family: 'Exo', sans-serif; }
+.lateral__sair {
+  background: none; border: 1px solid var(--claro-40); color: var(--claro-70);
+  font-family: 'Exo', sans-serif; font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 0.5rem 0.9rem; cursor: pointer;
+  transition: background 160ms, color 160ms;
+}
+.lateral__sair:hover { background: var(--off-white); color: var(--azul); }
+
+.conteudo { display: flex; flex-direction: column; min-width: 0; }
+
+.topo-conteudo {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  align-items: flex-end; justify-content: space-between;
+  padding: 2rem clamp(1.25rem, 3vw, 2.5rem) 1.5rem;
+  border-bottom: 1px solid var(--azul-12);
+  background: var(--branco);
+}
+.topo-conteudo__data { margin: 0; color: var(--azul-30); font-size: 0.85rem; }
+.sobrancelha-admin {
+  font-family: 'Exo', sans-serif; font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--verde);
+  margin: 0 0 0.4rem;
+}
+.sobrancelha-admin a { text-decoration: none; }
+.sobrancelha-admin a:hover { text-decoration: underline; }
+.titulo-admin {
+  font-family: 'Exo', sans-serif; font-weight: 300;
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  line-height: 1.1; margin: 0; letter-spacing: -0.015em;
+}
+
+.corpo { padding: clamp(1.25rem, 3vw, 2.5rem); flex: 1; }
+
+/* ---------------------------------------------------------------- alertas */
+
+.faixa-alerta {
+  background: var(--verde-claro); color: var(--azul);
+  padding: 0.9rem 1.25rem; margin-bottom: 1.75rem;
+  border-left: 4px solid var(--verde);
+  font-size: 0.9rem;
+}
+.faixa-alerta a { margin-left: 0.75rem; font-weight: 500; }
+
+.alerta-admin {
+  background: rgba(140, 58, 43, 0.1);
+  border-left: 3px solid var(--perigo);
+  padding: 0.75rem 1rem; margin: 0 0 0.5rem; font-size: 0.88rem;
+}
+.alerta-admin--ok { background: rgba(86, 110, 61, 0.12); border-left-color: var(--verde); }
+
+/* -------------------------------------------------------------- métricas */
+
+.grade-metricas {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px; background: var(--azul-12); border: 1px solid var(--azul-12);
+  margin-bottom: 1.75rem;
+}
+.metrica {
+  background: var(--branco); padding: 1.5rem;
+  text-decoration: none; transition: background 160ms;
+}
+.metrica:hover { background: var(--bege); }
+.metrica--atencao { border-top: 3px solid var(--verde); }
+.metrica__rotulo {
+  font-family: 'Exo', sans-serif; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--verde);
+  margin: 0 0 0.75rem;
+}
+.metrica__valor {
+  font-family: 'Exo', sans-serif; font-weight: 200; font-size: 2.75rem;
+  line-height: 1; margin: 0 0 0.4rem;
+}
+.metrica__nota { margin: 0; font-size: 0.82rem; color: var(--azul-30); }
+
+/* ---------------------------------------------------------------- cartões */
+
+.cartao-admin {
+  background: var(--branco);
+  border: 1px solid var(--azul-12);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.cartao-admin--perigo { border-left: 3px solid var(--perigo); }
+.cartao-admin__cabeca { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.cartao-admin__cabeca a { font-size: 0.82rem; color: var(--verde); }
+.cartao-admin__titulo {
+  font-family: 'Exo', sans-serif; font-weight: 600; font-size: 0.82rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+.cartao-admin__cabeca .cartao-admin__titulo { margin: 0; }
+
+.duas-colunas-admin { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+.duas-colunas-admin--detalhe { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
+.coluna-acoes { min-width: 0; }
+
+/* --------------------------------------------------------------- gráfico */
+
+.grafico { display: flex; align-items: flex-end; gap: 4px; height: 140px; }
+.grafico__coluna { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; gap: 0.4rem; }
+.grafico__barra { background: var(--verde-claro); border-top: 2px solid var(--verde); transition: background 160ms; }
+.grafico__coluna:hover .grafico__barra { background: var(--verde); }
+.grafico__rotulo { font-size: 0.62rem; color: var(--azul-30); text-align: center; }
+
+/* --------------------------------------------------------------- tabelas */
+
+.tabela-envolvida-admin { overflow-x: auto; background: var(--branco); border: 1px solid var(--azul-12); }
+.tabela-admin { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.tabela-admin--lista { min-width: 640px; }
+.tabela-admin th {
+  text-align: left; font-family: 'Exo', sans-serif; font-weight: 600;
+  font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--verde); padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--verde-claro);
+  background: var(--bege);
+  white-space: nowrap;
+}
+.tabela-admin td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--azul-12); vertical-align: top; }
+.tabela-admin--lista tbody tr { cursor: pointer; transition: background 140ms; }
+.tabela-admin--lista tbody tr:hover { background: var(--azul-06); }
+.tabela-admin a { color: var(--azul); text-decoration: none; border-bottom: 1px solid var(--verde-claro); }
+.tabela-admin a:hover { border-color: var(--verde); }
+.celula-direita { text-align: right; white-space: nowrap; }
+
+.etiqueta {
+  display: inline-block;
+  font-family: 'Exo', sans-serif; font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  background: var(--azul-06); color: var(--azul-60);
+  border: 1px solid var(--azul-12);
+}
+.etiqueta--novo, .etiqueta--recebido, .etiqueta--recebida { background: var(--verde-claro); color: var(--azul); border-color: var(--verde); }
+.etiqueta--em-atendimento, .etiqueta--em-análise, .etiqueta--em-apuração, .etiqueta--entrevista { background: var(--bege); color: var(--verde); border-color: var(--verde-claro); }
+.etiqueta--respondido, .etiqueta--atendida, .etiqueta--encerrado { background: var(--verde); color: var(--off-white); border-color: var(--verde); }
+.etiqueta--admin { background: var(--azul); color: var(--off-white); border-color: var(--azul); }
+.etiqueta--acao { font-family: ui-monospace, Menlo, Consolas, monospace; text-transform: none; letter-spacing: 0; }
+
+.paginacao { display: flex; align-items: center; gap: 1.5rem; justify-content: center; padding: 1.5rem 0; font-size: 0.85rem; }
+.paginacao a { color: var(--verde); text-decoration: none; }
+.paginacao a:hover { text-decoration: underline; }
+.paginacao span { color: var(--azul-30); }
+
+.vazio { padding: 3rem 1.5rem; text-align: center; color: var(--azul-30); background: var(--branco); border: 1px dashed var(--azul-12); }
+.vazio .botao-admin { margin-top: 1.25rem; }
+
+/* ---------------------------------------------------------------- filtros */
+
+.filtros { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
+.campo-admin--linha { flex: 1 1 200px; margin: 0; }
+.limpar { font-size: 0.82rem; color: var(--azul-30); }
+.contagem { margin-left: auto; font-size: 0.82rem; color: var(--azul-30); }
+
+/* ------------------------------------------------------------ formulários */
+
+.formulario-admin { display: grid; gap: 1rem; }
+.campo-admin { display: grid; gap: 0.35rem; }
+.campo-admin > span {
+  font-family: 'Exo', sans-serif; font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde);
+}
+.campo-admin small { font-size: 0.78rem; color: var(--azul-30); }
+.campo-admin input, .campo-admin select, .campo-admin textarea {
+  font-family: 'Poppins', sans-serif; font-size: 0.92rem; font-weight: 300;
+  color: inherit; background: var(--branco);
+  border: 1px solid var(--azul-12);
+  padding: 0.6rem 0.75rem; border-radius: 0;
+  transition: border-color 160ms;
+}
+.campo-admin input:focus, .campo-admin select:focus, .campo-admin textarea:focus {
+  outline: none; border-color: var(--verde);
+}
+.campo-admin textarea { resize: vertical; }
+
+.botao-admin {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  font-family: 'Exo', sans-serif; font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid transparent; border-radius: 0;
+  cursor: pointer; text-decoration: none;
+  transition: background 160ms, color 160ms, border-color 160ms;
+}
+.botao-admin--verde { background: var(--verde); color: var(--off-white); }
+.botao-admin--verde:hover { background: #46592f; }
+.botao-admin--fantasma { background: transparent; color: var(--azul); border-color: var(--azul-30); }
+.botao-admin--fantasma:hover { background: var(--azul); color: var(--off-white); border-color: var(--azul); }
+.botao-admin--perigo { background: var(--perigo); color: var(--off-white); margin-top: 0.75rem; }
+.botao-admin--perigo:hover { background: #722f23; }
+.botao-admin--mini { padding: 0.4rem 0.75rem; font-size: 0.64rem; background: transparent; border-color: var(--azul-12); }
+.botao-admin--mini:hover { border-color: var(--verde); color: var(--verde); }
+
+/* ------------------------------------------------------------- definições */
+
+.definicoes { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+.definicoes__item--longo { grid-column: 1 / -1; }
+.definicoes dt {
+  font-family: 'Exo', sans-serif; font-size: 0.64rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde);
+  margin-bottom: 0.3rem;
+}
+.definicoes dd { margin: 0; word-break: break-word; }
+.texto-longo {
+  margin: 0; padding: 1rem;
+  background: var(--bege);
+  border-left: 3px solid var(--verde-claro);
+  white-space: pre-wrap;
+}
+
+/* ------------------------------------------------------------- responsivo */
+
+@media (max-width: 860px) {
+  .painel { grid-template-columns: minmax(0, 1fr); }
+  .lateral { position: static; height: auto; }
+  .lateral__nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.25rem; }
+  .lateral__grupo { grid-column: 1 / -1; margin-top: 1rem; }
+  .duas-colunas-admin--detalhe { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

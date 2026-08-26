@@ -1,0 +1,97 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha"><%= integridade.eyebrow %></p>
+    <h1 class="titulo-display"><%- integridade.titulo %></h1>
+    <p class="heroi__chamada"><%= integridade.chamada %></p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner duas-colunas">
+    <article class="bloco-link" data-revelar>
+      <p class="sobrancelha">01 · Prevenção</p>
+      <h2 class="titulo-bloco"><%= integridade.compliance.titulo %></h2>
+      <p><%= integridade.compliance.texto %></p>
+      <a class="botao botao--escuro" href="<%= integridade.compliance.link %>" target="_blank" rel="noopener"><%= integridade.compliance.linkRotulo %></a>
+    </article>
+
+    <article class="bloco-link" data-revelar id="canal">
+      <p class="sobrancelha">02 · Detecção</p>
+      <h2 class="titulo-bloco"><%= integridade.canal.titulo %></h2>
+      <p><%= integridade.canal.texto %></p>
+      <ul class="rodape__lista rodape__lista--escura">
+        <li><a href="mailto:<%= integridade.canal.email %>"><%= integridade.canal.email %></a></li>
+        <li><a href="tel:08005912420"><%= integridade.canal.telefone %></a></li>
+      </ul>
+      <a class="botao botao--escuro" href="<%= integridade.canal.url %>" target="_blank" rel="noopener">Abrir o canal independente</a>
+    </article>
+  </div>
+</section>
+
+<section class="secao secao--escura" id="relato">
+  <div class="conteiner chamada__grade">
+    <div>
+      <p class="sobrancelha sobrancelha--claro">Relato direto</p>
+      <h2 class="titulo-secao titulo-secao--claro">Prefere falar direto com a gente?</h2>
+      <p class="texto-claro">Este formulário chega ao comitê de integridade da Afirma E-vias. Você pode enviar sem se identificar — nesse caso não pedimos nome nem e-mail e o único jeito de acompanhar é guardando o protocolo.</p>
+      <p class="texto-claro texto-claro--menor">Para denúncia com sigilo garantido por terceiro independente, use o canal externo acima.</p>
+    </div>
+
+    <% if (enviado) { %>
+      <div class="painel-sucesso" role="status">
+        <p class="painel-sucesso__etiqueta">Relato registrado</p>
+        <p class="painel-sucesso__protocolo"><%= protocolo %></p>
+        <p>Guarde este protocolo. Ele é a forma de acompanhar a apuração em <a href="/protocolo/<%= protocolo %>">/protocolo</a>.</p>
+      </div>
+    <% } else { %>
+      <form class="formulario formulario--claro" method="post" action="/programa-de-integridade">
+        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
+
+        <fieldset class="opcoes">
+          <legend class="campo__rotulo">Como você quer enviar</legend>
+          <label class="opcao"><input type="radio" name="anonimo" value="sim" checked><span>Anônimo</span></label>
+          <label class="opcao"><input type="radio" name="anonimo" value="nao"><span>Quero me identificar</span></label>
+        </fieldset>
+
+        <div class="identificacao" hidden>
+          <div class="campo-duplo">
+            <label class="campo">
+              <span class="campo__rotulo">Nome</span>
+              <input type="text" name="nome" maxlength="120" value="<%= valores.nome || '' %>">
+            </label>
+            <label class="campo">
+              <span class="campo__rotulo">E-mail para retorno</span>
+              <input type="email" name="email" maxlength="200" value="<%= valores.email || '' %>">
+            </label>
+          </div>
+        </div>
+
+        <label class="campo">
+          <span class="campo__rotulo">Título</span>
+          <input type="text" name="titulo" required maxlength="200" value="<%= valores.titulo || '' %>">
+        </label>
+
+        <label class="campo">
+          <span class="campo__rotulo">Categoria</span>
+          <select name="categoria">
+            <% integridade.categoriasRelato.forEach(function (categoria) { %>
+              <option value="<%= categoria %>" <%= valores.categoria === categoria ? 'selected' : '' %>><%= categoria %></option>
+            <% }); %>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span class="campo__rotulo">O que aconteceu</span>
+          <textarea name="relato" rows="6" required maxlength="8000" placeholder="Descreva o fato, quando ocorreu e quem estava envolvido"><%= valores.relato || '' %></textarea>
+        </label>
+
+        <button type="submit" class="botao botao--verde botao--largo">Enviar relato</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

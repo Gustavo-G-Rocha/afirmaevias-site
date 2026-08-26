@@ -1,0 +1,8 @@
+Coloque aqui os PDFs linkados pelo site:
+
+  certificado-iso-9001.pdf        -> pagina /acreditacao-e-certificacao
+  codigo-de-etica-e-conduta.pdf   -> pagina /programa-de-integridade
+
+Os arquivos atuais estao no WordPress antigo em:
+  /wp-content/uploads/2025/07/Certificado-ISO-9001.pdf
+  /wp-content/uploads/2025/10/Codigo-de-Etica-e-Conduta-AE.pdf

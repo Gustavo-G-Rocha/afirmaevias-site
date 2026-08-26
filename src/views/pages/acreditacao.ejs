@@ -1,0 +1,82 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha"><%= acreditacao.eyebrow %></p>
+    <h1 class="titulo-display"><%- acreditacao.titulo %></h1>
+    <p class="heroi__chamada"><%= acreditacao.chamada %></p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner duas-colunas duas-colunas--assimetrica">
+    <div class="selo" data-revelar>
+      <span class="selo__norma">ISO</span>
+      <span class="selo__numero">9001</span>
+      <span class="selo__legenda">Sistema de Gestão da Qualidade</span>
+    </div>
+    <div>
+      <h2 class="titulo-bloco"><%= acreditacao.iso9001.titulo %></h2>
+      <p><%= acreditacao.iso9001.texto %></p>
+      <a class="botao botao--escuro" href="<%= acreditacao.iso9001.link %>" target="_blank" rel="noopener"><%= acreditacao.iso9001.linkRotulo %></a>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--escura">
+  <div class="conteiner">
+    <p class="sobrancelha sobrancelha--claro">Política da qualidade</p>
+    <blockquote class="citacao"><%= acreditacao.politicaQualidade %></blockquote>
+    <p class="texto-claro texto-claro--menor">Os objetivos da qualidade são definidos a partir desta política e do planejamento estratégico da organização, e são monitorados pelas lideranças e pela gerência do laboratório.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner">
+    <div class="duas-colunas">
+      <article class="bloco-link" data-revelar>
+        <p class="sobrancelha">Missão</p>
+        <p class="texto-grande"><%= acreditacao.missao %></p>
+      </article>
+      <article class="bloco-link" data-revelar>
+        <p class="sobrancelha">Visão</p>
+        <p class="texto-grande"><%= acreditacao.visao %></p>
+      </article>
+    </div>
+
+    <div class="cabeca-secao cabeca-secao--espacada">
+      <p class="sobrancelha">Valores</p>
+      <h2 class="titulo-secao">O que guia cada decisão</h2>
+    </div>
+    <div class="grade-valores">
+      <% acreditacao.valores.forEach(function (valor) { %>
+        <article class="valor" data-revelar>
+          <h3 class="valor__titulo"><%= valor.titulo %></h3>
+          <p class="valor__texto"><%= valor.texto %></p>
+        </article>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--clara">
+  <div class="conteiner">
+    <div class="aviso" data-revelar>
+      <p class="aviso__etiqueta">Comunicado</p>
+      <h2 class="titulo-bloco"><%= acreditacao.comunicado17025.titulo %></h2>
+      <% acreditacao.comunicado17025.paragrafos.forEach(function (paragrafo) { %>
+        <p><%= paragrafo %></p>
+      <% }); %>
+      <p class="aviso__subtitulo">Durante este período de transição:</p>
+      <ul class="lista-marcada">
+        <% acreditacao.comunicado17025.durante.forEach(function (item) { %><li><%= item %></li><% }); %>
+      </ul>
+      <p><%= acreditacao.comunicado17025.fecho %></p>
+      <p class="aviso__assinatura">Afirma E-vias</p>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/chamada-contato') %>
+<%- include('../partials/rodape') %>

@@ -1,0 +1,86 @@
+</main>
+
+<footer class="rodape">
+  <div class="rodape__faixa" aria-hidden="true"></div>
+  <div class="conteiner rodape__grade">
+
+    <div class="rodape__marca">
+      <img src="/img/logo-vertical-claro.svg" alt="Afirma E-vias" width="160" height="79">
+      <p class="rodape__lema">Abrindo caminhos,<br>construindo o futuro.</p>
+    </div>
+
+    <div class="rodape__bloco">
+      <h2 class="rodape__titulo">Fale com a gente</h2>
+      <ul class="rodape__lista">
+        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><%= empresa.telefoneCelular %> · WhatsApp</a></li>
+        <li><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></li>
+        <li><a href="mailto:<%= empresa.email %>"><%= empresa.email %></a></li>
+      </ul>
+    </div>
+
+    <div class="rodape__bloco">
+      <h2 class="rodape__titulo">Nossos canais</h2>
+      <ul class="rodape__lista">
+        <li><a href="<%= empresa.linkedin %>" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="<%= empresa.instagram %>" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="/trabalhe-com-a-gente">Trabalhe com a gente</a></li>
+        <li><a href="/programa-de-integridade#canal">Canal de denúncias</a></li>
+      </ul>
+    </div>
+
+    <div class="rodape__bloco">
+      <h2 class="rodape__titulo">Endereços</h2>
+      <ul class="rodape__lista rodape__lista--enderecos">
+        <% empresa.enderecos.forEach(function (endereco) { %>
+          <li>
+            <span class="rodape__cidade"><%= endereco.cidade %>/<%= endereco.uf %></span>
+            <%= endereco.linha1 %><br><%= endereco.linha2 %>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="conteiner rodape__base">
+    <p>© <%= new Date().getFullYear() %> <%= empresa.razaoSocial %> · CNPJ <%= empresa.cnpj %></p>
+    <nav class="rodape__legal" aria-label="Links legais">
+      <a href="/politica-de-privacidade">Política de privacidade</a>
+      <a href="/termos-de-uso">Termos de uso</a>
+      <a href="/portal-do-titular">Portal do titular (LGPD)</a>
+      <button type="button" class="rodape__link-botao" data-abrir-cookies>Preferências de cookies</button>
+    </nav>
+  </div>
+</footer>
+
+<div class="cookies" id="cookies" hidden>
+  <div class="cookies__caixa" role="dialog" aria-modal="false" aria-labelledby="cookies-titulo">
+    <div class="cookies__texto">
+      <h2 class="cookies__titulo" id="cookies-titulo">Cookies neste site</h2>
+      <p>Usamos cookies necessários para o site funcionar. Os analíticos e de marketing só entram se você deixar. Veja o detalhe na <a href="/politica-de-privacidade">Política de privacidade</a>.</p>
+    </div>
+
+    <div class="cookies__opcoes" id="cookies-opcoes" hidden>
+      <% cookiesCategorias.forEach(function (categoria) { %>
+        <label class="cookies__opcao">
+          <input type="checkbox" name="<%= categoria.chave %>" <%= categoria.obrigatorio ? 'checked disabled' : '' %>>
+          <span>
+            <strong><%= categoria.titulo %><%= categoria.obrigatorio ? ' · sempre ativo' : '' %></strong>
+            <%= categoria.texto %>
+          </span>
+        </label>
+      <% }); %>
+    </div>
+
+    <div class="cookies__acoes">
+      <button type="button" class="botao botao--fantasma" data-cookies="ajustar">Escolher o que aceito</button>
+      <button type="button" class="botao botao--fantasma" data-cookies="recusar">Só os necessários</button>
+      <button type="button" class="botao botao--verde" data-cookies="aceitar">Aceitar todos</button>
+      <button type="button" class="botao botao--verde" data-cookies="salvar" hidden>Salvar escolha</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/site.js" defer></script>
+<script src="/js/cookies.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<%- include('topo') %>
+
+<header class="topo-conteudo">
+  <div>
+    <p class="sobrancelha-admin">Painel</p>
+    <h1 class="titulo-admin">Visão geral</h1>
+  </div>
+  <p class="topo-conteudo__data"><%= new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }) %></p>
+</header>
+
+<div class="corpo">
+
+  <% if (metricas.lgpdVencendo > 0) { %>
+    <div class="faixa-alerta">
+      <strong><%= metricas.lgpdVencendo %></strong> solicitação(ões) LGPD com prazo vencendo em menos de 5 dias.
+      <a href="/admin/dados/lgpd?status=recebida">Ver agora</a>
+    </div>
+  <% } %>
+
+  <section class="grade-metricas">
+    <a class="metrica" href="/admin/dados/contatos?status=novo">
+      <p class="metrica__rotulo">Contatos novos</p>
+      <p class="metrica__valor"><%= metricas.contatosNovos %></p>
+      <p class="metrica__nota"><%= metricas.contatosTotal %> no total</p>
+    </a>
+    <a class="metrica" href="/admin/dados/candidaturas?status=novo">
+      <p class="metrica__rotulo">Currículos novos</p>
+      <p class="metrica__valor"><%= metricas.curriculosNovos %></p>
+      <p class="metrica__nota"><%= metricas.curriculosTotal %> no total</p>
+    </a>
+    <a class="metrica" href="/admin/dados/relatos">
+      <p class="metrica__rotulo">Relatos em aberto</p>
+      <p class="metrica__valor"><%= metricas.relatosAbertos %></p>
+      <p class="metrica__nota">recebidos ou em apuração</p>
+    </a>
+    <a class="metrica <%= metricas.lgpdVencendo > 0 ? 'metrica--atencao' : '' %>" href="/admin/dados/lgpd">
+      <p class="metrica__rotulo">LGPD em aberto</p>
+      <p class="metrica__valor"><%= metricas.lgpdAbertas %></p>
+      <p class="metrica__nota"><%= metricas.lgpdVencendo %> no prazo crítico</p>
+    </a>
+  </section>
+
+  <section class="cartao-admin">
+    <h2 class="cartao-admin__titulo">Contatos nos últimos 14 dias</h2>
+    <div class="grafico">
+      <% const maximo = Math.max(1, ...serie.map(function (p) { return Number(p.total); })); %>
+      <% serie.forEach(function (ponto) { %>
+        <div class="grafico__coluna" title="<%= ponto.rotulo %>: <%= ponto.total %>">
+          <div class="grafico__barra" style="height: <%= Math.max(2, (Number(ponto.total) / maximo) * 100) %>%"></div>
+          <span class="grafico__rotulo"><%= ponto.rotulo %></span>
+        </div>
+      <% }); %>
+    </div>
+  </section>
+
+  <div class="duas-colunas-admin">
+    <section class="cartao-admin">
+      <div class="cartao-admin__cabeca">
+        <h2 class="cartao-admin__titulo">Últimos contatos</h2>
+        <a href="/admin/dados/contatos">Ver todos</a>
+      </div>
+      <% if (ultimosContatos.length === 0) { %>
+        <p class="vazio">Nenhum contato recebido ainda.</p>
+      <% } else { %>
+        <table class="tabela-admin">
+          <tbody>
+            <% ultimosContatos.forEach(function (contato) { %>
+              <tr>
+                <td><a href="/admin/dados/contatos/<%= contato.id %>"><%= contato.nome %></a><br><span class="secundario"><%= contato.empresa || contato.email %></span></td>
+                <td class="celula-direita"><span class="etiqueta etiqueta--<%= contato.status.replace(/ /g, '-') %>"><%= contato.status %></span><br><span class="secundario"><%= new Date(contato.criado_em).toLocaleDateString('pt-BR') %></span></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+
+    <section class="cartao-admin">
+      <div class="cartao-admin__cabeca">
+        <h2 class="cartao-admin__titulo">Solicitações LGPD</h2>
+        <a href="/admin/dados/lgpd">Ver todas</a>
+      </div>
+      <% if (ultimasLgpd.length === 0) { %>
+        <p class="vazio">Nenhuma solicitação recebida ainda.</p>
+      <% } else { %>
+        <table class="tabela-admin">
+          <tbody>
+            <% ultimasLgpd.forEach(function (item) { %>
+              <tr>
+                <td><a href="/admin/dados/lgpd/<%= item.id %>"><%= item.protocolo %></a><br><span class="secundario"><%= item.nome %> · <%= item.tipo %></span></td>
+                <td class="celula-direita"><span class="etiqueta etiqueta--<%= item.status.replace(/ /g, '-') %>"><%= item.status %></span><br><span class="secundario">prazo <%= new Date(item.prazo_em).toLocaleDateString('pt-BR') %></span></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+  </div>
+</div>
+
+<%- include('rodape') %>

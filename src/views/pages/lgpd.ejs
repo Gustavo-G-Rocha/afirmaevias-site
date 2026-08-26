@@ -1,0 +1,85 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina heroi--escuro">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha sobrancelha--claro">Portal do titular · art. 18 da LGPD</p>
+    <h1 class="titulo-display titulo-display--claro">Seus dados,<br>suas decisões.</h1>
+    <p class="heroi__chamada heroi__chamada--clara">Peça acesso, correção ou eliminação dos seus dados pessoais. Você recebe um protocolo na hora e nossa resposta em até 15 dias.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner chamada__grade">
+    <div>
+      <p class="sobrancelha">Como funciona</p>
+      <ol class="passos">
+        <li><strong>Você registra o pedido.</strong> Escolha o direito que quer exercer e descreva o que precisa.</li>
+        <li><strong>Confirmamos quem você é.</strong> Podemos pedir um documento antes de liberar dados pessoais — é proteção contra pedido de terceiro.</li>
+        <li><strong>Respondemos em até 15 dias.</strong> A resposta vai para o e-mail cadastrado, com o protocolo.</li>
+      </ol>
+
+      <div class="cartao-dpo">
+        <p class="cartao-dpo__rotulo">Encarregado pelo tratamento de dados</p>
+        <p><a href="mailto:<%= empresa.emailEncarregado %>"><%= empresa.emailEncarregado %></a></p>
+        <p><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></p>
+      </div>
+
+      <p class="texto-apoio">Já tem um protocolo? <a href="/protocolo/LGPD-">Acompanhe o andamento</a>.</p>
+    </div>
+
+    <% if (enviado) { %>
+      <div class="painel-sucesso painel-sucesso--claro" role="status">
+        <p class="painel-sucesso__etiqueta">Solicitação registrada</p>
+        <p class="painel-sucesso__protocolo painel-sucesso__protocolo--escuro"><%= protocolo %></p>
+        <p>Anote este protocolo. Enviamos a confirmação para o seu e-mail e respondemos em até 15 dias.</p>
+        <a class="botao botao--escuro" href="/protocolo/<%= protocolo %>">Acompanhar solicitação</a>
+      </div>
+    <% } else { %>
+      <form class="formulario" method="post" action="/portal-do-titular">
+        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
+
+        <label class="campo">
+          <span class="campo__rotulo">O que você quer solicitar</span>
+          <select name="tipo" required>
+            <option value="">Selecione o direito</option>
+            <% tipos.forEach(function (tipo) { %>
+              <option value="<%= tipo.valor %>" <%= valores.tipo === tipo.valor ? 'selected' : '' %>><%= tipo.rotulo %></option>
+            <% }); %>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span class="campo__rotulo">Nome completo</span>
+          <input type="text" name="nome" required maxlength="160" value="<%= valores.nome || '' %>">
+        </label>
+
+        <div class="campo-duplo">
+          <label class="campo">
+            <span class="campo__rotulo">E-mail</span>
+            <input type="email" name="email" required maxlength="200" value="<%= valores.email || '' %>">
+          </label>
+          <label class="campo">
+            <span class="campo__rotulo">CPF (opcional)</span>
+            <input type="text" name="documento" maxlength="40" value="<%= valores.documento || '' %>">
+            <span class="campo__ajuda">Ajuda a localizar seus registros mais rápido.</span>
+          </label>
+        </div>
+
+        <label class="campo">
+          <span class="campo__rotulo">Detalhes do pedido</span>
+          <textarea name="detalhes" rows="5" maxlength="4000" placeholder="Ex.: enviei currículo em março e quero que seja excluído"><%= valores.detalhes || '' %></textarea>
+        </label>
+
+        <label class="aceite">
+          <input type="checkbox" name="confirmacao" required>
+          <span>Declaro que os dados são meus ou que tenho representação legal para pedir em nome do titular.</span>
+        </label>
+
+        <button type="submit" class="botao botao--verde botao--largo">Registrar solicitação</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

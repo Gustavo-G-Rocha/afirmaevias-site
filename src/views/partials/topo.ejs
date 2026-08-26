@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= titulo %></title>
+<meta name="description" content="<%= descricao %>">
+<link rel="canonical" href="<%= siteUrl %><%= rotaAtual %>">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afirma E-vias">
+<meta property="og:title" content="<%= titulo %>">
+<meta property="og:description" content="<%= descricao %>">
+<meta property="og:image" content="<%= siteUrl %>/img/og.png">
+<meta name="theme-color" content="#00233B">
+<link rel="icon" href="/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" href="/fontes/exo-300.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fontes/poppins-300.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/site.css">
+</head>
+<body data-rota="<%= rotaAtual %>">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="cabecalho" id="cabecalho">
+  <div class="cabecalho__interno">
+    <a class="marca" href="/" aria-label="Afirma E-vias, página inicial">
+      <img src="/img/logo-horizontal-claro.svg" alt="Afirma E-vias — engenharia viária" width="200" height="44">
+    </a>
+
+    <nav class="navegacao" id="navegacao" aria-label="Navegação principal">
+      <% navegacao.forEach(function (item) { %>
+        <a href="<%= item.href %>" class="navegacao__link <%= rotaAtual === item.href ? 'is-atual' : '' %>"<%= rotaAtual === item.href ? ' aria-current="page"' : '' %>><%= item.rotulo %></a>
+      <% }); %>
+      <a class="botao botao--claro navegacao__cta" href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener">Falar agora</a>
+    </nav>
+
+    <button class="menu-botao" id="menu-botao" aria-expanded="false" aria-controls="navegacao">
+      <span class="menu-botao__traco"></span>
+      <span class="menu-botao__traco"></span>
+      <span class="sr">Abrir menu</span>
+    </button>
+  </div>
+  <div class="cabecalho__progresso" id="progresso"></div>
+</header>
+
+<main id="conteudo">

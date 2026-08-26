@@ -1,0 +1,26 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina heroi--documento">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha">Jurídico</p>
+    <h1 class="titulo-display titulo-display--medio">Termos de uso</h1>
+    <p class="documento__meta">Atualizados em <%= termos.atualizadoEm %></p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner documento documento--simples">
+    <div class="documento__corpo">
+      <% termos.secoes.forEach(function (secao, i) { %>
+        <section class="documento__secao">
+          <h2 class="documento__titulo"><span class="documento__numero"><%= String(i + 1).padStart(2, '0') %></span><%= secao.titulo %></h2>
+          <% secao.paragrafos.forEach(function (paragrafo) { %><p><%= paragrafo %></p><% }); %>
+        </section>
+      <% }); %>
+      <p class="documento__rodape">Sobre dados pessoais, veja a <a href="/politica-de-privacidade">Política de privacidade</a>.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

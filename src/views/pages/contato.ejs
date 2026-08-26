@@ -1,0 +1,93 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha">Contato</p>
+    <h1 class="titulo-display">Vamos falar<br>sobre a sua obra.</h1>
+    <p class="heroi__chamada">Curitiba e Marília, atendendo obras em todo o Brasil. Respondemos em até um dia útil.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner chamada__grade">
+    <div>
+      <p class="sobrancelha">Canais diretos</p>
+      <ul class="chamada__contatos chamada__contatos--escuro">
+        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><%= empresa.telefoneCelular %> · WhatsApp</a></li>
+        <li><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></li>
+        <li><a href="mailto:<%= empresa.email %>"><%= empresa.email %></a></li>
+      </ul>
+
+      <div class="grade-enderecos grade-enderecos--compacta">
+        <% empresa.enderecos.forEach(function (endereco) { %>
+          <article class="endereco">
+            <h2 class="endereco__cidade"><%= endereco.cidade %><span>/<%= endereco.uf %></span></h2>
+            <p><%= endereco.linha1 %><br><%= endereco.linha2 %></p>
+          </article>
+        <% }); %>
+      </div>
+    </div>
+
+    <% if (enviado) { %>
+      <div class="painel-sucesso painel-sucesso--claro" role="status">
+        <p class="painel-sucesso__etiqueta">Mensagem enviada</p>
+        <p>Recebemos seu contato. Nossa equipe comercial responde em até um dia útil no e-mail que você informou.</p>
+        <a class="botao botao--escuro" href="/">Voltar para o início</a>
+      </div>
+    <% } else { %>
+      <form class="formulario" method="post" action="/contato">
+        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
+        <input type="hidden" name="origem" value="contato">
+        <p class="mel"><label>Deixe em branco<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+
+        <div class="campo-duplo">
+          <label class="campo">
+            <span class="campo__rotulo">Nome</span>
+            <input type="text" name="nome" required maxlength="120" value="<%= valores.nome || '' %>">
+          </label>
+          <label class="campo">
+            <span class="campo__rotulo">Sobrenome</span>
+            <input type="text" name="sobrenome" maxlength="120" value="<%= valores.sobrenome || '' %>">
+          </label>
+        </div>
+
+        <div class="campo-duplo">
+          <label class="campo">
+            <span class="campo__rotulo">E-mail</span>
+            <input type="email" name="email" required maxlength="200" value="<%= valores.email || '' %>">
+          </label>
+          <label class="campo">
+            <span class="campo__rotulo">Telefone</span>
+            <input type="tel" name="telefone" maxlength="40" value="<%= valores.telefone || '' %>">
+          </label>
+        </div>
+
+        <div class="campo-duplo">
+          <label class="campo">
+            <span class="campo__rotulo">Empresa ou órgão</span>
+            <input type="text" name="empresa" maxlength="160" value="<%= valores.empresa || '' %>">
+          </label>
+          <label class="campo">
+            <span class="campo__rotulo">Assunto</span>
+            <input type="text" name="assunto" maxlength="160" value="<%= valores.assunto || '' %>">
+          </label>
+        </div>
+
+        <label class="campo">
+          <span class="campo__rotulo">Como podemos ajudar?</span>
+          <textarea name="mensagem" rows="5" required maxlength="5000"><%= valores.mensagem || '' %></textarea>
+        </label>
+
+        <label class="aceite">
+          <input type="checkbox" name="consentimento" required>
+          <span>Li e aceito a <a href="/politica-de-privacidade" target="_blank">Política de privacidade</a> e autorizo o contato da Afirma E-vias.</span>
+        </label>
+
+        <button type="submit" class="botao botao--verde botao--largo">Enviar mensagem</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

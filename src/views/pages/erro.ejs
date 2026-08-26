@@ -1,0 +1,11 @@
+<%- include('../partials/topo') %>
+<section class="heroi heroi--pagina heroi--erro">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha">Erro</p>
+    <h1 class="titulo-display">Algo quebrou<br>aqui do nosso lado.</h1>
+    <p class="heroi__chamada"><%= mensagem %> Tente de novo em instantes. Se continuar, fale com a gente pelo WhatsApp <%= empresa.telefoneCelular %>.</p>
+    <a class="botao botao--verde" href="/">Voltar para o início</a>
+  </div>
+</section>
+<%- include('../partials/rodape') %>

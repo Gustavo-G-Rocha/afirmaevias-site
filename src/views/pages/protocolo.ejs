@@ -1,0 +1,42 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina heroi--documento">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha">Acompanhamento</p>
+    <h1 class="titulo-display titulo-display--medio">Protocolo</h1>
+    <p class="documento__meta"><%= codigo %></p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner documento documento--simples">
+    <div class="documento__corpo">
+      <% if (registro) { %>
+        <div class="painel-sucesso painel-sucesso--claro">
+          <p class="painel-sucesso__etiqueta">Situação atual</p>
+          <p class="painel-sucesso__protocolo painel-sucesso__protocolo--escuro"><%= registro.status %></p>
+          <p>Registrado em <%= new Date(registro.criado_em).toLocaleDateString('pt-BR') %>.
+          <% if (tipo === 'lgpd' && registro.prazo_em) { %>
+            Prazo de resposta até <%= new Date(registro.prazo_em).toLocaleDateString('pt-BR') %>.
+          <% } %></p>
+        </div>
+      <% } else { %>
+        <div class="aviso">
+          <p class="aviso__etiqueta">Não encontramos</p>
+          <p>Nenhum registro corresponde a este protocolo. Confira se copiou o código completo, incluindo o prefixo (LGPD- ou INT-).</p>
+        </div>
+      <% } %>
+
+      <form class="formulario formulario--linha" method="get" action="/protocolo/" onsubmit="event.preventDefault(); location.href='/protocolo/' + encodeURIComponent(this.codigo.value.trim());">
+        <label class="campo">
+          <span class="campo__rotulo">Consultar outro protocolo</span>
+          <input type="text" name="codigo" placeholder="LGPD-2026-A1B2C3" maxlength="40">
+        </label>
+        <button type="submit" class="botao botao--escuro">Consultar</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>

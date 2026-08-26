@@ -1,0 +1,82 @@
+<%- include('topo') %>
+
+<header class="topo-conteudo">
+  <div>
+    <p class="sobrancelha-admin">Dados recebidos</p>
+    <h1 class="titulo-admin"><%= colecao.rotulo %></h1>
+  </div>
+  <a class="botao-admin botao-admin--fantasma" href="/admin/dados/<%= colecao.chave %>/exportar.csv">Exportar CSV</a>
+</header>
+
+<div class="corpo">
+  <form class="filtros" method="get" action="/admin/dados/<%= colecao.chave %>">
+    <label class="campo-admin campo-admin--linha">
+      <span class="sr">Buscar</span>
+      <input type="search" name="q" value="<%= busca %>" placeholder="Buscar por nome, e-mail, texto…">
+    </label>
+
+    <% if (colecao.status.length > 0) { %>
+      <label class="campo-admin campo-admin--linha">
+        <span class="sr">Status</span>
+        <select name="status">
+          <option value="">Todos os status</option>
+          <% colecao.status.forEach(function (opcao) { %>
+            <option value="<%= opcao %>" <%= status === opcao ? 'selected' : '' %>><%= opcao %></option>
+          <% }); %>
+        </select>
+      </label>
+    <% } %>
+
+    <button type="submit" class="botao-admin botao-admin--verde">Filtrar</button>
+    <% if (busca || status) { %><a class="limpar" href="/admin/dados/<%= colecao.chave %>">Limpar</a><% } %>
+    <span class="contagem"><%= total %> registro(s)</span>
+  </form>
+
+  <% if (registros.length === 0) { %>
+    <div class="vazio">
+      <p>Nada aqui ainda.<% if (busca || status) { %> Tente outro filtro.<% } else { %> Assim que alguém enviar pelo site, aparece nesta lista.<% } %></p>
+    </div>
+  <% } else { %>
+    <div class="tabela-envolvida-admin">
+      <table class="tabela-admin tabela-admin--lista">
+        <thead>
+          <tr>
+            <% colecao.colunasLista.forEach(function (coluna) { %><th><%= coluna.rotulo %></th><% }); %>
+            <th class="sr">Abrir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% registros.forEach(function (registro) { %>
+            <tr onclick="location.href='/admin/dados/<%= colecao.chave %>/<%= registro.id %>'">
+              <% colecao.colunasLista.forEach(function (coluna) { %>
+                <td>
+                  <% const valor = registro[coluna.campo]; %>
+                  <% if (coluna.tipo === 'data' && valor) { %>
+                    <%= new Date(valor).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' }) %>
+                  <% } else if (coluna.tipo === 'status' && valor) { %>
+                    <span class="etiqueta etiqueta--<%= String(valor).replace(/ /g, '-') %>"><%= valor %></span>
+                  <% } else if (typeof valor === 'boolean') { %>
+                    <%= valor ? 'sim' : 'não' %>
+                  <% } else { %>
+                    <%= valor === null || valor === undefined || valor === '' ? '—' : String(valor).slice(0, 60) %>
+                  <% } %>
+                </td>
+              <% }); %>
+              <td class="celula-direita"><a href="/admin/dados/<%= colecao.chave %>/<%= registro.id %>">abrir →</a></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if (paginas > 1) { %>
+      <nav class="paginacao" aria-label="Paginação">
+        <% if (pagina > 1) { %><a href="?q=<%= busca %>&status=<%= status %>&p=<%= pagina - 1 %>">← anterior</a><% } %>
+        <span>página <%= pagina %> de <%= paginas %></span>
+        <% if (pagina < paginas) { %><a href="?q=<%= busca %>&status=<%= status %>&p=<%= pagina + 1 %>">próxima →</a><% } %>
+      </nav>
+    <% } %>
+  <% } %>
+</div>
+
+<%- include('rodape') %>

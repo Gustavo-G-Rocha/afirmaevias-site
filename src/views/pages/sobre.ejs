@@ -1,0 +1,82 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha"><%= sobre.eyebrow %></p>
+    <h1 class="titulo-display"><%- sobre.titulo %></h1>
+    <p class="heroi__chamada">A história da Afirma E-vias nasce da união de duas trajetórias complementares e bem-sucedidas na engenharia consultiva brasileira.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner">
+    <ol class="linha-tempo">
+      <% sobre.linhaDoTempo.forEach(function (marco) { %>
+        <li class="marco" data-revelar>
+          <div class="marco__ano"><%= marco.ano %></div>
+          <div class="marco__corpo">
+            <h2 class="marco__titulo"><%= marco.titulo %></h2>
+            <p class="marco__texto"><%= marco.texto %></p>
+          </div>
+        </li>
+      <% }); %>
+    </ol>
+  </div>
+</section>
+
+<section class="secao secao--escura">
+  <div class="conteiner">
+    <div class="cabeca-secao">
+      <p class="sobrancelha sobrancelha--claro">Escala</p>
+      <h2 class="titulo-secao titulo-secao--claro">Números que falam por nós</h2>
+    </div>
+    <div class="grade-indicadores grade-indicadores--clara">
+      <% indicadores.forEach(function (indicador) { %>
+        <div class="indicador" data-revelar>
+          <p class="indicador__valor">+<%= indicador.valor %><span class="indicador__unidade"><%= indicador.unidade %></span></p>
+          <p class="indicador__rotulo"><%= indicador.rotulo %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--clara">
+  <div class="conteiner duas-colunas">
+    <article class="bloco-link" data-revelar>
+      <p class="sobrancelha">Qualidade</p>
+      <h2 class="titulo-bloco">Certificações que atestam nossa excelência</h2>
+      <p>Mais do que cumprir normas, buscamos superar padrões. Conheça as certificações e acreditações que comprovam nosso compromisso.</p>
+      <a class="botao botao--escuro" href="/acreditacao-e-certificacao">Ver certificações</a>
+    </article>
+
+    <article class="bloco-link" data-revelar>
+      <p class="sobrancelha">Integridade</p>
+      <h2 class="titulo-bloco">Um compromisso inegociável com a ética</h2>
+      <p>Nosso programa de Compliance segue os mais altos padrões éticos e as diretrizes da Lei Anticorrupção. Temos Código de Ética e Conduta e um canal de denúncia anônimo operado por empresa independente.</p>
+      <a class="botao botao--escuro" href="/programa-de-integridade">Ver o programa</a>
+    </article>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner">
+    <div class="cabeca-secao">
+      <p class="sobrancelha">Presença</p>
+      <h2 class="titulo-secao">Nossos escritórios e laboratórios</h2>
+      <p class="texto-apoio">Localizados estrategicamente em diversas cidades brasileiras, garantimos agilidade e precisão no atendimento às demandas de nossos clientes.</p>
+    </div>
+    <div class="grade-enderecos">
+      <% empresa.enderecos.forEach(function (endereco) { %>
+        <article class="endereco" data-revelar>
+          <h3 class="endereco__cidade"><%= endereco.cidade %><span>/<%= endereco.uf %></span></h3>
+          <p><%= endereco.linha1 %><br><%= endereco.linha2 %></p>
+        </article>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/chamada-contato') %>
+<%- include('../partials/rodape') %>

@@ -1,0 +1,76 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--inicio">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner heroi__grade">
+    <div class="heroi__texto">
+      <p class="sobrancelha"><%= home.eyebrow %></p>
+      <h1 class="titulo-display"><%- home.titulo %></h1>
+      <p class="heroi__chamada"><%= home.chamada %></p>
+      <p class="heroi__apoio"><%= home.apoio %></p>
+      <div class="heroi__acoes">
+        <a class="botao botao--verde" href="/servicos">Ver os serviços</a>
+        <a class="botao botao--fantasma" href="/afirma-evias">Conhecer a trajetória</a>
+      </div>
+    </div>
+    <div class="heroi__aparte">
+      <p class="heroi__aparte-rotulo">Onde já estivemos</p>
+      <p class="heroi__aparte-numero">50.000<span>km</span></p>
+      <p class="heroi__aparte-texto">de obras fiscalizadas em rodovias e vias urbanas por todo o Brasil.</p>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--clara indicadores">
+  <div class="conteiner">
+    <div class="grade-indicadores">
+      <% indicadores.forEach(function (indicador) { %>
+        <div class="indicador" data-revelar>
+          <p class="indicador__valor">+<%= indicador.valor %><span class="indicador__unidade"><%= indicador.unidade %></span></p>
+          <p class="indicador__rotulo"><%= indicador.rotulo %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="conteiner">
+    <div class="cabeca-secao">
+      <p class="sobrancelha">Serviços</p>
+      <h2 class="titulo-secao">Serviços que transformam o seu projeto viário em <em>realidade</em>.</h2>
+    </div>
+
+    <div class="grade-cartoes">
+      <% home.servicosResumo.forEach(function (servico) { %>
+        <article class="cartao" data-revelar>
+          <span class="cartao__marca" aria-hidden="true"></span>
+          <h3 class="cartao__titulo"><%= servico.titulo %></h3>
+          <p class="cartao__texto"><%= servico.texto %></p>
+        </article>
+      <% }); %>
+    </div>
+
+    <a class="botao botao--escuro" href="/servicos">Saiba mais sobre nossos serviços</a>
+  </div>
+</section>
+
+<section class="secao secao--escura destaque-app">
+  <div class="conteiner destaque-app__grade">
+    <div>
+      <p class="sobrancelha sobrancelha--claro">Aplicativo Afirma E-vias</p>
+      <h2 class="titulo-secao titulo-secao--claro">Tecnologia avançada para quem não abre mão de <em>qualidade, inovação e segurança.</em></h2>
+      <p class="texto-claro">Gestão da obra em tempo real, com ensaios georreferenciados, alertas de não conformidade e dashboards analíticos.</p>
+      <a class="botao botao--verde" href="/aplicativo">Descubra as funcionalidades</a>
+    </div>
+    <ul class="lista-marcada lista-marcada--clara">
+      <li>Ensaios registrados no ponto de aplicação</li>
+      <li>Alerta imediato de não conformidade</li>
+      <li>Cálculo automático de dosagem CBUQ e MRAF</li>
+      <li>Exportação de relatórios em PDF e CSV</li>
+    </ul>
+  </div>
+</section>
+
+<%- include('../partials/chamada-contato') %>
+<%- include('../partials/rodape') %>

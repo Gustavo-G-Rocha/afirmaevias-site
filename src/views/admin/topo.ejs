@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title><%= titulo %> · Painel Afirma E-vias</title>
+<link rel="icon" href="/img/favicon.png" type="image/png">
+<link rel="preload" href="/fontes/exo-300.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="painel">
+
+<aside class="lateral">
+  <a class="lateral__marca" href="/admin">
+    <img src="/img/logo-vertical-claro.svg" alt="Afirma E-vias" width="104" height="52">
+    <span class="lateral__etiqueta">Painel</span>
+  </a>
+
+  <nav class="lateral__nav" aria-label="Seções do painel">
+    <a href="/admin" class="lateral__link <%= rotaAtual === '/admin' ? 'is-atual' : '' %>">Visão geral</a>
+
+    <p class="lateral__grupo">Dados recebidos</p>
+    <a href="/admin/dados/contatos" class="lateral__link <%= rotaAtual === '/admin/dados/contatos' ? 'is-atual' : '' %>">Contatos comerciais</a>
+    <a href="/admin/dados/candidaturas" class="lateral__link <%= rotaAtual === '/admin/dados/candidaturas' ? 'is-atual' : '' %>">Currículos</a>
+    <a href="/admin/dados/relatos" class="lateral__link <%= rotaAtual === '/admin/dados/relatos' ? 'is-atual' : '' %>">Relatos de integridade</a>
+
+    <p class="lateral__grupo">Privacidade</p>
+    <a href="/admin/dados/lgpd" class="lateral__link <%= rotaAtual === '/admin/dados/lgpd' ? 'is-atual' : '' %>">Solicitações LGPD</a>
+    <a href="/admin/dados/consentimentos" class="lateral__link <%= rotaAtual === '/admin/dados/consentimentos' ? 'is-atual' : '' %>">Consentimentos</a>
+
+    <p class="lateral__grupo">Administração</p>
+    <a href="/admin/usuarios" class="lateral__link <%= rotaAtual === '/admin/usuarios' ? 'is-atual' : '' %>">Usuários</a>
+    <a href="/admin/auditoria" class="lateral__link <%= rotaAtual === '/admin/auditoria' ? 'is-atual' : '' %>">Trilha de auditoria</a>
+    <a href="/" class="lateral__link" target="_blank" rel="noopener">Ver o site ↗</a>
+  </nav>
+
+  <% if (usuario) { %>
+    <form class="lateral__conta" method="post" action="/admin/sair">
+      <p class="lateral__nome"><%= usuario.nome %></p>
+      <p class="lateral__papel"><%= usuario.papel %></p>
+      <button type="submit" class="lateral__sair">Sair</button>
+    </form>
+  <% } %>
+</aside>
+
+<div class="conteudo">

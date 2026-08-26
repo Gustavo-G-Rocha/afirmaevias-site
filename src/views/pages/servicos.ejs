@@ -1,0 +1,58 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha">Serviços</p>
+    <h1 class="titulo-display">Da primeira sondagem<br>à última medição.</h1>
+    <p class="heroi__chamada">Serviços especializados em engenharia viária, desenvolvidos para atender às necessidades da sua infraestrutura com excelência técnica, inovação e compromisso com resultados.</p>
+  </div>
+</section>
+
+<nav class="indice" aria-label="Áreas de atuação">
+  <div class="conteiner indice__interno">
+    <span class="indice__rotulo">Áreas de atuação</span>
+    <ul class="indice__lista">
+      <% servicos.forEach(function (servico) { %>
+        <li><a href="#<%= servico.id %>"><%= servico.titulo %></a></li>
+      <% }); %>
+    </ul>
+  </div>
+</nav>
+
+<% servicos.forEach(function (servico, indice) { %>
+  <section class="servico <%= indice % 2 === 1 ? 'servico--alternado' : '' %>" id="<%= servico.id %>">
+    <div class="conteiner servico__grade">
+      <header class="servico__cabeca">
+        <span class="servico__marca" aria-hidden="true"></span>
+        <h2 class="servico__titulo"><%= servico.titulo %></h2>
+      </header>
+
+      <div class="servico__corpo">
+        <p class="servico__resumo"><%= servico.resumo %></p>
+
+        <% if (servico.itens) { %>
+          <ul class="lista-marcada">
+            <% servico.itens.forEach(function (item) { %><li><%= item %></li><% }); %>
+          </ul>
+        <% } %>
+
+        <% if (servico.grupos) { %>
+          <div class="servico__grupos">
+            <% servico.grupos.forEach(function (grupo) { %>
+              <div class="grupo">
+                <h3 class="grupo__titulo"><%= grupo.titulo %></h3>
+                <ul class="lista-marcada">
+                  <% grupo.itens.forEach(function (item) { %><li><%= item %></li><% }); %>
+                </ul>
+              </div>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+<% }); %>
+
+<%- include('../partials/chamada-contato') %>
+<%- include('../partials/rodape') %>
