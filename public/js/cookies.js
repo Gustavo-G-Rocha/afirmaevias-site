@@ -4,6 +4,7 @@ const CHAVE = 'ae_cookies';
 const CHAVE_VISITANTE = 'ae_visitante';
 const banner = document.getElementById('cookies');
 const opcoes = document.getElementById('cookies-opcoes');
+const acoesPrincipais = banner?.querySelector('.cookies__acoes--principal');
 
 function idVisitante() {
   let id = localStorage.getItem(CHAVE_VISITANTE);
@@ -20,6 +21,14 @@ function escolhaSalva() {
   } catch {
     return null;
   }
+}
+
+function marcarOpcoes(escolha) {
+  if (!opcoes || !escolha) return;
+  const analiticos = opcoes.querySelector('input[name="analiticos"]');
+  const marketing = opcoes.querySelector('input[name="marketing"]');
+  if (analiticos) analiticos.checked = Boolean(escolha.analiticos);
+  if (marketing) marketing.checked = Boolean(escolha.marketing);
 }
 
 async function registrar(escolha) {
@@ -41,11 +50,9 @@ async function registrar(escolha) {
 function abrirBanner(mostrarOpcoes) {
   if (!banner) return;
   banner.hidden = false;
-  if (mostrarOpcoes && opcoes) {
-    opcoes.hidden = false;
-    banner.querySelector('[data-cookies="salvar"]').hidden = false;
-    banner.querySelector('[data-cookies="ajustar"]').hidden = true;
-  }
+  if (opcoes) opcoes.hidden = !mostrarOpcoes;
+  if (acoesPrincipais) acoesPrincipais.hidden = Boolean(mostrarOpcoes);
+  banner.classList.toggle('is-detalhando', Boolean(mostrarOpcoes));
 }
 
 if (banner) {
@@ -55,18 +62,14 @@ if (banner) {
     const acao = evento.target.closest('[data-cookies]')?.dataset.cookies;
     if (!acao) return;
 
-    if (acao === 'ajustar') {
-      opcoes.hidden = false;
-      banner.querySelector('[data-cookies="salvar"]').hidden = false;
-      evento.target.hidden = true;
-      return;
-    }
+    if (acao === 'ajustar') return abrirBanner(true);
+    if (acao === 'voltar') return abrirBanner(false);
     if (acao === 'aceitar') return registrar({ analiticos: true, marketing: true });
     if (acao === 'recusar') return registrar({ analiticos: false, marketing: false });
     if (acao === 'salvar') {
       return registrar({
-        analiticos: opcoes.querySelector('input[name="analiticos"]').checked,
-        marketing: opcoes.querySelector('input[name="marketing"]').checked
+        analiticos: Boolean(opcoes?.querySelector('input[name="analiticos"]')?.checked),
+        marketing: Boolean(opcoes?.querySelector('input[name="marketing"]')?.checked)
       });
     }
   });
@@ -75,10 +78,7 @@ if (banner) {
 document.querySelectorAll('[data-abrir-cookies]').forEach((botao) => {
   botao.addEventListener('click', () => {
     const escolha = escolhaSalva();
-    if (escolha && opcoes) {
-      opcoes.querySelector('input[name="analiticos"]').checked = Boolean(escolha.analiticos);
-      opcoes.querySelector('input[name="marketing"]').checked = Boolean(escolha.marketing);
-    }
+    if (escolha) marcarOpcoes(escolha);
     abrirBanner(true);
     banner?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   });

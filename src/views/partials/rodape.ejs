@@ -54,24 +54,36 @@
 
 <div class="cookies" id="cookies" hidden>
   <div class="cookies__caixa" role="dialog" aria-modal="false" aria-labelledby="cookies-titulo">
-    <p class="cookies__texto" id="cookies-titulo">Usamos cookies para o site funcionar e, com sua permissão, para medir audiência. <a href="/politica-de-privacidade">Política de privacidade</a>.</p>
+    <div class="cookies__cabeca">
+      <h2 class="cookies__titulo" id="cookies-titulo">Sua privacidade no controle</h2>
+      <p class="cookies__texto">Usamos cookies necessários para o site funcionar com segurança. Com sua permissão, também usamos cookies analíticos e de marketing para melhorar conteúdos e medir campanhas. Veja os detalhes abaixo ou consulte a <a href="/politica-de-privacidade">Política de privacidade</a>.</p>
+    </div>
 
-    <div class="cookies__acoes">
-      <button type="button" class="botao botao--fantasma" data-cookies="recusar">Só essenciais</button>
-      <button type="button" class="botao botao--verde" data-cookies="aceitar">Aceitar</button>
+    <div class="cookies__acoes cookies__acoes--principal">
+      <button type="button" class="botao botao--fantasma" data-cookies="recusar">Somente necessários</button>
+      <button type="button" class="botao botao--fantasma" data-cookies="ajustar">Personalizar</button>
+      <button type="button" class="botao botao--verde" data-cookies="aceitar">Aceitar todos</button>
     </div>
 
     <div class="cookies__opcoes" id="cookies-opcoes" hidden>
-      <% cookiesCategorias.filter(function (c) { return !c.obrigatorio; }).forEach(function (categoria) { %>
-        <label class="cookies__opcao">
-          <input type="checkbox" name="<%= categoria.chave %>">
-          <span><%= categoria.titulo %></span>
+      <% cookiesCategorias.forEach(function (categoria) { %>
+        <label class="cookies__opcao <%= categoria.obrigatorio ? 'is-obrigatorio' : '' %>">
+          <span class="cookies__controle">
+            <input type="checkbox" name="<%= categoria.chave %>" <%= categoria.obrigatorio ? 'checked disabled' : '' %>>
+            <span class="cookies__estado"><%= categoria.obrigatorio ? 'Sempre ativo' : 'Opcional' %></span>
+          </span>
+          <span class="cookies__conteudo">
+            <strong><%= categoria.titulo %></strong>
+            <small><%= categoria.texto %></small>
+          </span>
         </label>
       <% }); %>
-      <button type="button" class="botao botao--verde" data-cookies="salvar">Salvar</button>
-    </div>
 
-    <button type="button" class="cookies__ajustar" data-cookies="ajustar">Personalizar</button>
+      <div class="cookies__acoes cookies__acoes--opcoes">
+        <button type="button" class="botao botao--fantasma" data-cookies="voltar">Voltar</button>
+        <button type="button" class="botao botao--verde" data-cookies="salvar">Salvar preferências</button>
+      </div>
+    </div>
   </div>
 </div>
 
