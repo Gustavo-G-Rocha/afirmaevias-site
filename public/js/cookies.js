@@ -31,6 +31,12 @@ function marcarOpcoes(escolha) {
   if (marketing) marketing.checked = Boolean(escolha.marketing);
 }
 
+function abrirDetalhes() {
+  const escolha = escolhaSalva();
+  if (escolha) marcarOpcoes(escolha);
+  abrirBanner(true);
+}
+
 async function registrar(escolha) {
   localStorage.setItem(CHAVE, JSON.stringify({ ...escolha, em: new Date().toISOString() }));
   if (banner) banner.hidden = true;
@@ -62,7 +68,7 @@ if (banner) {
     const acao = evento.target.closest('[data-cookies]')?.dataset.cookies;
     if (!acao) return;
 
-    if (acao === 'ajustar') return abrirBanner(true);
+    if (acao === 'ajustar') return abrirDetalhes();
     if (acao === 'voltar') return abrirBanner(false);
     if (acao === 'aceitar') return registrar({ analiticos: true, marketing: true });
     if (acao === 'recusar') return registrar({ analiticos: false, marketing: false });
@@ -77,9 +83,7 @@ if (banner) {
 
 document.querySelectorAll('[data-abrir-cookies]').forEach((botao) => {
   botao.addEventListener('click', () => {
-    const escolha = escolhaSalva();
-    if (escolha) marcarOpcoes(escolha);
-    abrirBanner(true);
+    abrirBanner(false);
     banner?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   });
 });
