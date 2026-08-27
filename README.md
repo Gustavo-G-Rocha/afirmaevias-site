@@ -56,17 +56,61 @@ npm run dev               # http://localhost:3000
 
 A migration é idempotente: roda a cada deploy sem quebrar nada.
 
-## O que falta você colocar
+## O que falta
 
-- **Logos oficiais.** `public/img/logo-horizontal.svg` e `logo-vertical-claro.svg` são placeholders.
-  O manual proíbe alteração da logo, então substitua pelos arquivos originais mantendo os nomes.
-- **PDFs.** `public/documentos/certificado-iso-9001.pdf` e `codigo-de-etica-e-conduta.pdf`
-  (instruções em `public/documentos/LEIA-ME.txt`).
-- **Imagens de obra.** O layout hoje é tipográfico e funciona sem fotos. Se quiser fotos,
-  siga a tela "Fotografia" do manual: pontos de cor azulados ou esverdeados.
-- **Envio de e-mail.** Os formulários gravam no banco e aparecem no `/admin`. Se quiser
-  notificação por e-mail, plugue Resend ou SMTP em `src/routes/forms.ts`.
-- **CNPJ** na política de privacidade (`src/content.ts`, seção 1).
+Depende de dado que só a empresa tem:
+
+- **Registro no CREA** da pessoa jurídica e do responsável técnico. A Lei 5.194/1966,
+  art. 63 exige em toda publicidade de firma de engenharia. Não está em lugar nenhum do site.
+- **Nome do Encarregado (DPO).** O e-mail já está publicado; o art. 41, §1º da LGPD pede
+  a identidade, não só o contato. Campo `emailEncarregado` em `src/content.ts`.
+- **Data do comunicado ISO/IEC 17025** e decisão sobre exibir o aviso na Home e em Serviços.
+- **Data de validade do certificado ISO 9001**, para exibir junto ao link do PDF.
+- **A caixa `privacidade@afirmaevias.com.br` precisa existir.** O site já a publica como
+  canal do titular; se ninguém lê, o prazo de 15 dias da LGPD corre em silêncio.
+
+Configuração de ambiente:
+
+- **`RESEND_API_KEY`** — sem ela os avisos por e-mail ficam desligados e os registros
+  seguem apenas no `/admin`. Veja "Avisos por e-mail" abaixo.
+- **`SESSION_SECRET`** — sem ela o segredo é sorteado a cada boot e o painel desloga
+  a cada redeploy.
+- **Backup do banco.** Não há nada configurado, e o banco guarda currículos, relatos de
+  integridade e requisições LGPD.
+
+Decisão de arquitetura em aberto:
+
+- **Currículos são gravados como `bytea` no Postgres.** Funciona, mas o banco cresce com
+  cada anexo e o backup fica pesado. Vale mover para storage externo antes do volume subir.
+
+## Avisos por e-mail
+
+`src/notificacoes.ts` avisa a equipe quando chega contato, currículo, relato de integridade
+ou requisição LGPD. Usa a API HTTP da Resend via `fetch` nativo — sem dependência nova.
+
+| Variável | Para que serve | Padrão |
+|---|---|---|
+| `RESEND_API_KEY` | Liga o envio. Ausente, o envio é ignorado com aviso no log. | — |
+| `EMAIL_REMETENTE` | Remetente. Precisa ser de domínio verificado na Resend. | `site@afirmaevias.com.br` |
+| `EMAIL_CONTATO` | Destino dos contatos comerciais | `comercial@` |
+| `EMAIL_RH` | Destino dos currículos | `comercial@` |
+| `EMAIL_COMPLIANCE` | Destino dos relatos de integridade | `comercial@` |
+| `EMAIL_ENCARREGADO` | Destino das requisições LGPD | `privacidade@` |
+
+O relato de integridade é o único que **não** vai com conteúdo nem identidade: o e-mail
+informa protocolo, categoria e se é anônimo, e manda ler no painel. Despejar o texto de uma
+denúncia numa caixa compartilhada derrubaria a proteção do canal.
+
+Se preferirem SMTP próprio no lugar da Resend, o ponto de troca é a função `avisarEquipe`.
+
+## Descarte automático
+
+`src/retencao.ts` roda ao subir e a cada 24 h, aplicando os prazos declarados na Política
+de Privacidade: currículos em 12 meses, contatos em 24 meses, requisições e consentimentos
+em 5 anos, e anonimização de IP e user-agent em 6 meses (Marco Civil). Relatos de
+integridade ficam de fora porque o prazo conta do fim da apuração, que é decisão humana.
+
+Os prazos espelham a seção "Por quanto tempo guardamos" de `src/content.ts`. Mudou lá, mude aqui.
 
 ## Decisões de marca
 

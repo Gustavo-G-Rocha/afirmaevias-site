@@ -18,6 +18,7 @@
     <p class="entrada__texto">Acesso restrito à equipe. Toda ação aqui fica registrada na trilha de auditoria.</p>
 
     <form method="post" action="/admin/login" class="formulario-admin">
+      <% if (aviso) { %><p class="alerta-admin alerta-admin--ok" role="status"><%= aviso %></p><% } %>
       <% if (erro) { %><p class="alerta-admin" role="alert"><%= erro %></p><% } %>
 
       <label class="campo-admin">

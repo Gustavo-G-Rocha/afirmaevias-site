@@ -12,6 +12,7 @@ import { config, producao } from './config.js';
 import * as conteudo from './content.js';
 import { pool } from './db.js';
 import { limparSessoesExpiradas } from './auth.js';
+import { aplicarRetencao } from './retencao.js';
 import { rotasSite } from './routes/site.js';
 import { rotasFormularios } from './routes/forms.js';
 import { rotasAdmin } from './routes/admin.js';
@@ -90,6 +91,12 @@ app.setErrorHandler((erro: any, request, reply) => {
 setInterval(() => {
   limparSessoesExpiradas().catch(() => {});
 }, 60 * 60 * 1000).unref();
+
+// descarte pelos prazos da politica: uma vez por dia, e uma vez ao subir
+setInterval(() => {
+  aplicarRetencao().catch(() => {});
+}, 24 * 60 * 60 * 1000).unref();
+aplicarRetencao().catch(() => {});
 
 try {
   await app.listen({ port: config.porta, host: '0.0.0.0' });

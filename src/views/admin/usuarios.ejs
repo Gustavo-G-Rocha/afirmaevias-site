@@ -9,6 +9,27 @@
 
 <div class="corpo duas-colunas-admin duas-colunas-admin--detalhe">
   <section class="cartao-admin">
+    <h2 class="cartao-admin__titulo">Minha senha</h2>
+    <% if (erro) { %><p class="alerta-admin" role="alert"><%= erro %></p><% } %>
+    <form method="post" action="/admin/minha-senha" class="formulario-admin">
+      <label class="campo-admin">
+        <span>Senha atual</span>
+        <input type="password" name="senhaAtual" required autocomplete="current-password">
+      </label>
+      <label class="campo-admin">
+        <span>Nova senha</span>
+        <input type="password" name="senhaNova" required minlength="10" autocomplete="new-password">
+      </label>
+      <label class="campo-admin">
+        <span>Repita a nova senha</span>
+        <input type="password" name="senhaRepetida" required minlength="10" autocomplete="new-password">
+      </label>
+      <p class="secundario">Mínimo de 10 caracteres. Trocar a senha encerra as outras sessões abertas.</p>
+      <button type="submit" class="botao-admin">Alterar senha</button>
+    </form>
+  </section>
+
+  <section class="cartao-admin">
     <h2 class="cartao-admin__titulo">Quem tem acesso</h2>
     <% if (aviso) { %><p class="alerta-admin alerta-admin--ok"><%= aviso %></p><% } %>
 

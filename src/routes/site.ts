@@ -30,6 +30,7 @@ export async function rotasSite(app: FastifyInstance) {
       descricao:
         'Supervisão e controle tecnológico, projetos em BIM, consultoria, laboratórios fixos e móveis, sondagens, ensaios e levantamentos.',
       rotaAtual: '/servicos',
+      notaMarcas: conteudo.notaMarcas,
       servicos: conteudo.servicos
     })
   );

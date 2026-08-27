@@ -192,7 +192,8 @@ export async function rotasAdmin(app: FastifyInstance) {
   app.get('/login', async (request, reply) => {
     const usuario = await usuarioDaRequisicao(request);
     if (usuario) return reply.redirect('/admin');
-    return reply.view('admin/login', { titulo: 'Entrar', erro: null, email: '', usuario: null });
+    const aviso = limpar((request.query as any)?.aviso, 120) || null;
+    return reply.view('admin/login', { titulo: 'Entrar', erro: null, aviso, email: '', usuario: null });
   });
 
   app.post(
@@ -209,6 +210,7 @@ export async function rotasAdmin(app: FastifyInstance) {
         return reply.code(401).view('admin/login', {
           titulo: 'Entrar',
           erro: 'E-mail ou senha não conferem.',
+          aviso: null,
           email,
           usuario: null
         });
@@ -490,6 +492,45 @@ export async function rotasAdmin(app: FastifyInstance) {
       erro: null,
       aviso: limpar((request.query as any).aviso, 120) || null
     });
+  });
+
+  // Nao havia como trocar a propria senha: a inicial vinha de ADMIN_PASSWORD e
+  // so mudava mexendo no banco. Exige a senha atual para que uma sessao roubada
+  // nao consiga tomar a conta.
+  app.post('/minha-senha', { preHandler: exigirLogin }, async (request, reply) => {
+    const corpo = request.body as Record<string, string>;
+    const atual = String(corpo.senhaAtual ?? '');
+    const nova = String(corpo.senhaNova ?? '');
+    const repetida = String(corpo.senhaRepetida ?? '');
+
+    let erro: string | null = null;
+    if (!(await autenticar(request.usuario!.email, atual))) erro = 'A senha atual não confere.';
+    else if (nova.length < 10) erro = 'A nova senha precisa de pelo menos 10 caracteres.';
+    else if (nova !== repetida) erro = 'A confirmação não bate com a nova senha.';
+    else if (nova === atual) erro = 'A nova senha precisa ser diferente da atual.';
+
+    if (erro) {
+      const usuarios = await consultar(
+        'SELECT id, nome, email, papel, ativo, ultimo_acesso, criado_em FROM admin_usuarios ORDER BY criado_em'
+      );
+      return reply.code(400).view('admin/usuarios', {
+        titulo: 'Usuários do painel',
+        usuario: request.usuario,
+        rotaAtual: '/admin/usuarios',
+        usuarios,
+        erro,
+        aviso: null
+      });
+    }
+
+    await consultar('UPDATE admin_usuarios SET senha_hash = $1 WHERE id = $2', [
+      await gerarHashSenha(nova),
+      request.usuario!.id
+    ]);
+    // derruba as outras sessoes: trocar a senha tem de expulsar quem estava dentro
+    await consultar('DELETE FROM admin_sessoes WHERE usuario_id = $1', [request.usuario!.id]);
+    await registrarAuditoria({ usuario: request.usuario!, acao: 'senha.alterada', ip: request.ip });
+    return reply.redirect('/admin/login?aviso=Senha+alterada.+Entre+de+novo.');
   });
 
   app.post('/usuarios', { preHandler: exigirLogin }, async (request, reply) => {

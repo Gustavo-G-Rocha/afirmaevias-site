@@ -295,6 +295,8 @@ export const acreditacao = {
   },
   politicaQualidade:
     'A Afirma E-vias está comprometida em fornecer soluções de engenharia, controle tecnológico e ensaios laboratoriais com imparcialidade e competência técnica. Buscamos sempre a satisfação dos clientes, atendendo aos requisitos aplicáveis das partes interessadas por meio do cumprimento das normas ABNT NBR ISO/IEC 17025 e ABNT NBR ISO 9001, garantindo uma operação consistente.',
+  politicaQualidadeNota:
+    'Nota: a acreditação ISO/IEC 17025 encontra-se temporariamente suspensa em razão da mudança de endereço. O Sistema de Gestão da Qualidade segue integralmente aplicado. Veja o comunicado completo ao final desta página.',
   missao:
     'Desenvolver soluções inovadoras e integradas de engenharia viária, impulsionando a eficiência, a qualidade e os resultados dos nossos clientes.',
   visao:
@@ -323,6 +325,9 @@ export const acreditacao = {
       'Esta é uma etapa normativa prevista e necessária para assegurar a integridade do processo de acreditação. Assim que a avaliação das novas instalações for concluída e a suspensão levantada, faremos um novo comunicado.'
   }
 };
+
+export const notaMarcas =
+  'Revit, Civil 3D, Navisworks e InfraWorks são marcas da Autodesk, Inc. MeDiNa é método do DNIT/IPR. As demais marcas citadas pertencem aos respectivos titulares. A menção é descritiva e não indica parceria, patrocínio ou representação.';
 
 export const integridade = {
   eyebrow: 'Programa de integridade',
