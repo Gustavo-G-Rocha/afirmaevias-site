@@ -908,3 +908,45 @@ input[type='reset'] {
 .secao--escura .formulario__extra > summary, .chamada .formulario__extra > summary { color: var(--claro-70); }
 .alerta p { margin: 0; }
 .alerta p + p { margin-top: 0.4rem; }
+
+/* =========================================================================
+   Correções de responsividade
+   ========================================================================= */
+
+/* .formulario e .campo eram grids sem coluna declarada: a coluna implícita é
+   dimensionada pelo min-content do <input>, que tem largura intrínseca de ~193px
+   por causa do atributo size padrão. A coluna ficava maior que o próprio
+   formulário e vazava a viewport em toda página com formulário. */
+.formulario { grid-template-columns: minmax(0, 1fr); }
+.formulario--linha { grid-template-columns: minmax(0, 1fr) auto; }
+.campo { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.campo input, .campo select, .campo textarea { width: 100%; min-width: 0; }
+
+/* min(100%, 160px) impede que as duas colunas somem mais que o contêiner
+   quando ele é menor que 160px (celular de 320px) */
+.campo-duplo { grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
+.campo-duplo > .campo { min-width: 0; }
+
+/* caixas de 13px eram pequenas demais para o dedo e para enxergar */
+.opcao input, .aceite input { width: 1.15rem; height: 1.15rem; margin-top: 0.15rem; }
+
+/* o índice de serviços rola na horizontal; a máscara avisa que há mais itens */
+.indice__lista { scroll-snap-type: x proximity; scrollbar-width: none; }
+.indice__lista::-webkit-scrollbar { display: none; }
+.indice__lista li { scroll-snap-align: start; }
+
+@media (max-width: 700px) {
+  .indice__lista {
+    -webkit-mask-image: linear-gradient(to right, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 82%, transparent 100%);
+  }
+  /* campo e botão empilham: lado a lado não cabem em 320px */
+  .formulario--linha { grid-template-columns: minmax(0, 1fr); }
+  /* alvos de toque do rodapé iam a 21px; abaixo do mínimo de 24px da WCAG 2.5.8 */
+  .rodape__lista a, .rodape__legal a, .rodape__link-botao {
+    display: inline-block; padding-block: 0.35rem;
+  }
+  /* rótulos em caixa alta a 11,5px ficam ilegíveis no celular */
+  .campo__rotulo, .sobrancelha { font-size: 0.78rem; }
+  .documento__indice-rotulo { font-size: 0.74rem; }
+}
