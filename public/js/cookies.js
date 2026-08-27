@@ -40,6 +40,7 @@ function abrirDetalhes() {
 async function registrar(escolha) {
   localStorage.setItem(CHAVE, JSON.stringify({ ...escolha, em: new Date().toISOString() }));
   if (banner) banner.hidden = true;
+  reservarEspaco();
   document.dispatchEvent(new CustomEvent('cookies:escolhido', { detail: escolha }));
 
   try {
@@ -59,6 +60,7 @@ function abrirBanner(mostrarOpcoes) {
   if (opcoes) opcoes.hidden = !mostrarOpcoes;
   if (acoesPrincipais) acoesPrincipais.hidden = Boolean(mostrarOpcoes);
   banner.classList.toggle('is-detalhando', Boolean(mostrarOpcoes));
+  reservarEspaco();
 }
 
 if (banner) {
@@ -87,3 +89,17 @@ document.querySelectorAll('[data-abrir-cookies]').forEach((botao) => {
     banner?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   });
 });
+
+// O banner e fixo no rodape e cobria o fim da pagina: no /contato ele tapava
+// justamente a caixa de aceite e o botao de enviar. Reservamos no body a
+// altura que ele ocupa, medida de verdade porque ela muda ao abrir as opcoes.
+function reservarEspaco() {
+  const altura = !banner || banner.hidden ? 0 : Math.ceil(banner.getBoundingClientRect().height);
+  document.body.style.setProperty('--espaco-cookies', altura + 'px');
+}
+
+if (banner) {
+  if (typeof ResizeObserver === 'function') new ResizeObserver(reservarEspaco).observe(banner);
+  window.addEventListener('resize', reservarEspaco);
+  reservarEspaco();
+}

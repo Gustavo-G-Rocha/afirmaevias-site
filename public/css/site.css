@@ -950,3 +950,22 @@ input[type='reset'] {
   .campo__rotulo, .sobrancelha { font-size: 0.78rem; }
   .documento__indice-rotulo { font-size: 0.74rem; }
 }
+
+/* espaço reservado para o banner de cookies, medido em cookies.js */
+body { padding-bottom: var(--espaco-cookies, 0px); }
+
+/* No celular o banner chegava a 196px (23% da tela): texto quebrava em 3 linhas
+   e os botões empilhavam. Some o traço dos botões e cabe tudo em duas linhas. */
+@media (max-width: 900px) {
+  .cookies__acoes .botao { font-size: 0.68rem; padding: 0.55rem 0.95rem; }
+  .cookies__acoes .botao::after { display: none; }
+}
+
+@media (max-width: 560px) {
+  .cookies { padding: 0.5rem; }
+  .cookies__caixa { padding: 0.7rem 0.85rem; gap: 0.5rem 0.75rem; border-radius: 10px; }
+  .cookies__texto { font-size: 0.78rem; line-height: 1.4; flex: 1 1 100%; }
+  .cookies__acoes--principal { width: 100%; justify-content: space-between; gap: 0.5rem; }
+  .cookies__acoes .botao { font-size: 0.65rem; padding: 0.5rem 0.85rem; }
+  .cookies__link { font-size: 0.74rem; }
+}
