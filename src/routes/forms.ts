@@ -75,45 +75,63 @@ export async function rotasFormularios(app: FastifyInstance) {
 
   // -------------------------------------------------------- trabalhe conosco
   app.post('/trabalhe-com-a-gente', limite, async (request, reply) => {
-    const partes = request.parts();
     const valores: Record<string, string> = {};
     let arquivoNome = '';
     let arquivoTipo = '';
     let arquivoDados: Buffer | null = null;
+    let arquivoGrande = false;
 
-    for await (const parte of partes) {
-      if (parte.type === 'file') {
-        arquivoNome = limpar(parte.filename, 200);
-        arquivoTipo = parte.mimetype;
-        arquivoDados = await parte.toBuffer();
-      } else {
-        valores[parte.fieldname] = limpar(parte.value as string, 5000);
+    try {
+      for await (const parte of request.parts()) {
+        if (parte.type === 'file') {
+          arquivoNome = limpar(parte.filename, 200);
+          arquivoTipo = parte.mimetype;
+          arquivoDados = await parte.toBuffer();
+        } else {
+          valores[parte.fieldname] = limpar(parte.value as string, 5000);
+        }
       }
+    } catch (falha: any) {
+      // o limite do multipart estoura dentro do toBuffer: sem isto virava
+      // pagina de erro generica em vez de aviso no formulario
+      if (falha?.code !== 'FST_REQ_FILE_TOO_LARGE') throw falha;
+      arquivoGrande = true;
     }
 
+    // um campo so para o nome; a tabela continua com nome e sobrenome separados
+    const nomeCompleto = limpar(valores.nome, 240).replace(/\s+/g, ' ');
+    const [primeiroNome, ...restanteNome] = nomeCompleto.split(' ');
+
     const consentimento = valores.consentimento === 'on';
-    const permitidos = [
+
+    const tiposPermitidos = [
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ];
+    const extensao = (arquivoNome.match(/\.([a-z0-9]+)$/i)?.[1] ?? '').toLowerCase();
+    // no celular o arquivo costuma chegar como octet-stream: ai vale a extensao
+    const tipoAceito =
+      tiposPermitidos.includes(arquivoTipo) ||
+      (['pdf', 'doc', 'docx'].includes(extensao) &&
+        (arquivoTipo === 'application/octet-stream' || arquivoTipo === ''));
 
-    let erro: string | null = null;
-    if (!valores.nome) erro = 'Escreva seu nome.';
-    else if (!emailValido(valores.email ?? '')) erro = 'Confira o e-mail digitado.';
-    else if (!arquivoDados || arquivoDados.length === 0) erro = 'Anexe seu currículo em PDF ou DOC.';
-    else if (!permitidos.includes(arquivoTipo)) erro = 'Aceitamos apenas PDF, DOC ou DOCX.';
-    else if (arquivoDados.length > config.uploadMaximoBytes) erro = 'O arquivo passou de 5 MB.';
-    else if (!consentimento) erro = 'Marque o aceite da Política de Privacidade para guardarmos seu currículo.';
+    const erros: string[] = [];
+    if (!primeiroNome) erros.push('Escreva seu nome.');
+    if (!emailValido(valores.email ?? '')) erros.push('Confira o e-mail digitado.');
+    if (arquivoGrande) erros.push('O currículo passou de 5 MB. Salve como PDF e tente de novo.');
+    else if (!arquivoDados || arquivoDados.length === 0) erros.push('Anexe seu currículo.');
+    else if (!tipoAceito) erros.push('O currículo precisa ser PDF, DOC ou DOCX.');
+    if (!consentimento) erros.push('Marque o aceite para guardarmos seu currículo.');
 
-    if (erro) {
+    if (erros.length > 0) {
       return reply.code(400).view('pages/vagas', {
         titulo: 'Trabalhe com a gente | Afirma E-vias',
         descricao: 'Envie seu currículo.',
         rotaAtual: '/trabalhe-com-a-gente',
         vagas: conteudo.vagas,
         enviado: false,
-        erro,
+        erros,
         valores
       });
     }
@@ -122,8 +140,8 @@ export async function rotasFormularios(app: FastifyInstance) {
       `INSERT INTO candidaturas (nome, sobrenome, email, telefone, area, mensagem, arquivo_nome, arquivo_tipo, arquivo_bytes, arquivo_dados, consentimento, ip, user_agent)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
       [
-        valores.nome,
-        valores.sobrenome ?? '',
+        primeiroNome,
+        restanteNome.join(' '),
         valores.email,
         valores.telefone ?? '',
         valores.area ?? '',
@@ -144,7 +162,7 @@ export async function rotasFormularios(app: FastifyInstance) {
       rotaAtual: '/trabalhe-com-a-gente',
       vagas: conteudo.vagas,
       enviado: true,
-      erro: null,
+      erros: [],
       valores: {}
     });
   });

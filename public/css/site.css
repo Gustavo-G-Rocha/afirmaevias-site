@@ -889,3 +889,22 @@ input[type='reset'] {
   .heroi { background: #fff; color: #000; padding-block: 1rem; }
   .heroi__faixa { display: none; }
 }
+
+/* retorno do arquivo escolhido no formulário de currículo */
+.campo__ajuda--ok { color: var(--verde); font-weight: 500; }
+.campo__ajuda--erro { color: #9b2c2c; font-weight: 500; }
+
+/* campos opcionais recolhidos: o formulário abre curto */
+.formulario__extra { margin-top: 0.5rem; border-top: 1px solid var(--azul-12); padding-top: 1rem; }
+.formulario__extra > summary {
+  cursor: pointer; font-size: 0.85rem; color: var(--azul-60);
+  list-style: none; display: flex; align-items: center; gap: 0.5rem;
+}
+.formulario__extra > summary::-webkit-details-marker { display: none; }
+.formulario__extra > summary::before { content: '+'; color: var(--verde); font-weight: 600; }
+.formulario__extra[open] > summary::before { content: '−'; }
+.formulario__extra[open] > summary { margin-bottom: 1.25rem; }
+.formulario__extra > .campo { margin-bottom: 1.25rem; }
+.secao--escura .formulario__extra > summary, .chamada .formulario__extra > summary { color: var(--claro-70); }
+.alerta p { margin: 0; }
+.alerta p + p { margin-top: 0.4rem; }

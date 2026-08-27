@@ -81,3 +81,32 @@ if (opcoesAnonimo.length > 0 && blocoIdentificacao) {
   opcoesAnonimo.forEach((opcao) => opcao.addEventListener('change', alternar));
   alternar();
 }
+
+// currículo: confirma o arquivo escolhido e barra o tamanho antes do upload,
+// para o candidato nao esperar 5 MB subirem so para receber recusa
+document.querySelectorAll('input[type="file"][data-limite-mb]').forEach((campo) => {
+  const alvo = document.querySelector(campo.dataset.alvo);
+  if (!alvo) return;
+  const padrao = alvo.textContent;
+  const limite = Number(campo.dataset.limiteMb) * 1024 * 1024;
+
+  campo.addEventListener('change', () => {
+    const arquivo = campo.files[0];
+    if (!arquivo) {
+      alvo.textContent = padrao;
+      alvo.classList.remove('campo__ajuda--erro', 'campo__ajuda--ok');
+      return;
+    }
+    const mb = (arquivo.size / 1024 / 1024).toFixed(1).replace('.', ',');
+    if (arquivo.size > limite) {
+      campo.value = '';
+      alvo.textContent = `${arquivo.name} tem ${mb} MB e o limite e 5 MB. Salve como PDF e anexe de novo.`;
+      alvo.classList.add('campo__ajuda--erro');
+      alvo.classList.remove('campo__ajuda--ok');
+      return;
+    }
+    alvo.textContent = `${arquivo.name} · ${mb} MB`;
+    alvo.classList.add('campo__ajuda--ok');
+    alvo.classList.remove('campo__ajuda--erro');
+  });
+});

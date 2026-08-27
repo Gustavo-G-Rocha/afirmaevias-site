@@ -75,7 +75,7 @@ export async function rotasSite(app: FastifyInstance) {
       rotaAtual: '/trabalhe-com-a-gente',
       vagas: conteudo.vagas,
       enviado: false,
-      erro: null,
+      erros: [],
       valores: {}
     })
   );

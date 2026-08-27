@@ -28,48 +28,30 @@
       </div>
     <% } else { %>
       <form class="formulario" method="post" action="/trabalhe-com-a-gente" enctype="multipart/form-data">
-        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
-
-        <div class="campo-duplo">
-          <label class="campo">
-            <span class="campo__rotulo">Nome</span>
-            <input type="text" name="nome" required maxlength="120" value="<%= valores.nome || '' %>">
-          </label>
-          <label class="campo">
-            <span class="campo__rotulo">Sobrenome</span>
-            <input type="text" name="sobrenome" maxlength="120" value="<%= valores.sobrenome || '' %>">
-          </label>
-        </div>
-
-        <div class="campo-duplo">
-          <label class="campo">
-            <span class="campo__rotulo">E-mail</span>
-            <input type="email" name="email" required maxlength="200" value="<%= valores.email || '' %>">
-          </label>
-          <label class="campo">
-            <span class="campo__rotulo">Telefone</span>
-            <input type="tel" name="telefone" maxlength="40" value="<%= valores.telefone || '' %>">
-          </label>
-        </div>
+        <% if (erros && erros.length > 0) { %>
+          <div class="alerta" role="alert">
+            <% erros.forEach(function (mensagem) { %><p><%= mensagem %></p><% }); %>
+          </div>
+        <% } %>
 
         <label class="campo">
-          <span class="campo__rotulo">Área de interesse</span>
-          <select name="area">
-            <% vagas.areas.forEach(function (area) { %>
-              <option value="<%= area %>" <%= valores.area === area ? 'selected' : '' %>><%= area %></option>
-            <% }); %>
-          </select>
+          <span class="campo__rotulo">Nome completo</span>
+          <input type="text" name="nome" required maxlength="240" autocomplete="name"
+                 value="<%= valores.nome || '' %>">
+        </label>
+
+        <label class="campo">
+          <span class="campo__rotulo">E-mail</span>
+          <input type="email" name="email" required maxlength="200" autocomplete="email"
+                 inputmode="email" value="<%= valores.email || '' %>">
         </label>
 
         <label class="campo campo--arquivo">
           <span class="campo__rotulo">Currículo</span>
-          <input type="file" name="curriculo" accept=".pdf,.doc,.docx" required>
-          <span class="campo__ajuda">PDF, DOC ou DOCX, até 5 MB.</span>
-        </label>
-
-        <label class="campo">
-          <span class="campo__rotulo">Quer contar mais alguma coisa?</span>
-          <textarea name="mensagem" rows="4" maxlength="5000" placeholder="Opcional"><%= valores.mensagem || '' %></textarea>
+          <input type="file" name="curriculo" required
+                 accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                 data-limite-mb="5" data-alvo="#arquivo-escolhido">
+          <span class="campo__ajuda" id="arquivo-escolhido">PDF, DOC ou DOCX, até 5 MB.</span>
         </label>
 
         <label class="aceite">
@@ -78,6 +60,32 @@
         </label>
 
         <button type="submit" class="botao botao--verde botao--largo">Enviar currículo</button>
+
+        <!-- o resto e opcional: fica recolhido para o formulario abrir com tres campos -->
+        <details class="formulario__extra">
+          <summary>Quer contar mais sobre você? (opcional)</summary>
+
+          <label class="campo">
+            <span class="campo__rotulo">Telefone</span>
+            <input type="tel" name="telefone" maxlength="40" autocomplete="tel" inputmode="tel"
+                   value="<%= valores.telefone || '' %>">
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo">Área de interesse</span>
+            <select name="area">
+              <option value="">Ainda não sei / outra área</option>
+              <% vagas.areas.forEach(function (area) { %>
+                <option value="<%= area %>" <%= valores.area === area ? 'selected' : '' %>><%= area %></option>
+              <% }); %>
+            </select>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo">Recado para o RH</span>
+            <textarea name="mensagem" rows="4" maxlength="5000"><%= valores.mensagem || '' %></textarea>
+          </label>
+        </details>
       </form>
     <% } %>
   </div>
