@@ -979,3 +979,56 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
 }
 .nota-marcas { margin: 0; font-size: 0.8rem; color: var(--azul-30); max-width: 80ch; }
 .secao--estreita { padding-block: 2rem; }
+
+/* =========================================================================
+   Fotografia
+   ========================================================================= */
+
+/* Herói com foto de fundo. A imagem entra pela direita e o gradiente devolve
+   azul sólido sob o texto: o título nunca disputa contraste com a foto, e a
+   imagem (900px de origem) não precisa cobrir a largura toda esticada. */
+.heroi--imagem::before,
+.heroi--imagem::after { content: ''; position: absolute; inset: 0; }
+.heroi--imagem::before {
+  background-image: var(--heroi-imagem);
+  background-size: cover;
+  background-position: center right;
+}
+.heroi--imagem::after {
+  background: linear-gradient(100deg,
+    var(--azul) 0%, var(--azul) 34%, rgba(0, 35, 59, 0.82) 58%, rgba(0, 35, 59, 0.55) 100%);
+}
+.heroi--imagem > * { position: relative; z-index: 1; }
+
+/* no celular a coluna some: a foto vira faixa no topo e o texto fica sobre azul */
+@media (max-width: 860px) {
+  .heroi--imagem::before { background-position: center; }
+  .heroi--imagem::after {
+    background: linear-gradient(180deg, rgba(0, 35, 59, 0.62) 0%, var(--azul) 46%, var(--azul) 100%);
+  }
+}
+
+.figura { margin: 0; }
+.figura img {
+  width: 100%; height: auto;
+  border-radius: var(--raio-botao);
+  /* a foto não encosta na cor de fundo sem mediação */
+  outline: 1px solid var(--azul-12); outline-offset: -1px;
+}
+.secao--escura .figura img { outline-color: var(--claro-18); }
+.figura figcaption {
+  margin-top: 0.75rem; font-size: 0.82rem; color: var(--azul-30);
+  max-width: 52ch;
+}
+.secao--escura .figura figcaption { color: var(--claro-45); }
+
+/* bloco de duas colunas: texto de um lado, foto do outro */
+.grade-figura {
+  display: grid; gap: clamp(1.75rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+@media (min-width: 861px) {
+  .grade-figura { grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); }
+  .grade-figura--invertida > .figura { order: -1; }
+}
