@@ -181,7 +181,7 @@ img { display: block; max-width: 100%; }
 /* -------------------------------------------------------------- métricas */
 
 .grade-metricas {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: 1px; background: var(--azul-12); border: 1px solid var(--azul-12);
   margin-bottom: 1.75rem;
 }
@@ -220,7 +220,10 @@ img { display: block; max-width: 100%; }
 }
 .cartao-admin__cabeca .cartao-admin__titulo { margin: 0; }
 
-.duas-colunas-admin { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+/* min(100%, 320px) impede que a coluna exija 320px quando o espaco disponivel
+   e menor: num celular de 320px a area util e 280px e o cartao vazava 20px */
+.duas-colunas-admin { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1.5rem; }
+.cartao-admin { min-width: 0; }
 .duas-colunas-admin--detalhe { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
 .coluna-acoes { min-width: 0; }
 
@@ -357,3 +360,32 @@ input[type='reset'] {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* =========================================================================
+   Correções de responsividade do painel
+   ========================================================================= */
+
+/* Mesmo defeito que o site publico tinha: grid sem grid-template-columns usa
+   coluna implicita de min-content, e o <input> tem largura intrinseca de ~428px
+   vinda do atributo size padrao. O formulario estourava o cartao no celular. */
+.formulario-admin, .campo-admin { grid-template-columns: minmax(0, 1fr); }
+.campo-admin { min-width: 0; }
+.campo-admin input, .campo-admin select, .campo-admin textarea { width: 100%; min-width: 0; }
+
+/* itens flex nao encolhem abaixo do conteudo sem isto: as 14 colunas do
+   grafico somavam mais que a tela e empurravam a pagina */
+.grafico { min-width: 0; }
+.grafico__coluna { min-width: 0; }
+
+/* Em telas muito estreitas os 14 rótulos de data do gráfico não cabem, e texto
+   não quebra abaixo do próprio tamanho: a faixa passa a rolar em vez de
+   empurrar a página. */
+@media (max-width: 380px) {
+  .grafico { overflow-x: auto; gap: 3px; }
+  .grafico__coluna { flex: 0 0 20px; }
+}
+
+/* Tabela não encolhe abaixo do próprio conteúdo: um e-mail ou razão social
+   comprido numa célula empurrava o cartão para fora da tela no celular. */
+.tabela-admin td, .tabela-admin th { overflow-wrap: anywhere; }
+.definicoes { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
