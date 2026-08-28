@@ -504,14 +504,20 @@ input[type='reset'] {
 }
 .indice__lista a:hover, .indice__lista a.is-visivel { color: var(--azul); border-color: var(--verde); }
 
-.servico { padding-block: clamp(3rem, 5vw, 5rem); border-top: 1px solid var(--azul-12); }
-.servico--alternado { background: var(--bege); }
+/* Cada area de atuacao e um cartao branco sobre o off-white. Antes as secoes
+   alternavam entre #EFEBDC e #F2F1EF, que diferem 19 pontos so no canal azul:
+   nao lia como ritmo, lia como mancha. O cartao separa os oito servicos por
+   forma, nao por cor, e o branco ainda sobe o contraste do verde de 4,76 para
+   5,67 - o acento da marca pode ficar. */
+.servico { padding-block: clamp(0.75rem, 1.6vw, 1.5rem); }
+.servico:first-of-type { padding-top: clamp(1.5rem, 3vw, 3rem); }
+.servico:last-of-type { padding-bottom: clamp(1.5rem, 3vw, 3rem); }
 .servico__grade {
   display: grid;
   grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 4vw, 4rem);
 }
-.servico__cabeca { position: sticky; top: 9rem; align-self: start; }
+.servico__cabeca { position: sticky; top: 10rem; align-self: start; }
 .servico__marca { display: block; width: 3rem; height: 4px; background: var(--verde); margin-bottom: 1.25rem; }
 .servico__titulo {
   font-family: 'Poppins', sans-serif; font-weight: 400;
@@ -1032,4 +1038,22 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
 @media (min-width: 861px) {
   .grade-figura { grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); }
   .grade-figura--invertida > .figura { order: -1; }
+}
+
+/* cartao do servico */
+.servico__grade {
+  background: var(--branco);
+  border: 1px solid rgba(0, 35, 59, 0.1);
+  border-radius: 14px;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+/* rotulo do indice estava em azul a 30% sobre branco: contraste 1,91 */
+.indice__rotulo { color: var(--verde); }
+/* links do indice estavam em 4,41, logo abaixo do minimo de 4,5 */
+.indice__lista a { color: var(--azul-80); }
+
+@media (max-width: 860px) {
+  /* no celular o cartao encosta nas bordas: o respiro ja vem do conteiner */
+  .servico__grade { border-radius: 12px; padding: 1.5rem 1.25rem; }
 }
