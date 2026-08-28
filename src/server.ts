@@ -55,20 +55,27 @@ await app.register(view, {
   }
 });
 
-app.addHook('onSend', async (_req, reply, payload) => {
+app.addHook('onSend', async (req, reply, payload) => {
   reply.header('X-Content-Type-Options', 'nosniff');
   reply.header('X-Frame-Options', 'SAMEORIGIN');
   reply.header('Referrer-Policy', 'strict-origin-when-cross-origin');
   reply.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-  // o site nao usa CDN, fonte externa nem analytics: da para fechar tudo.
-  // 'unsafe-inline' fica so em style-src por causa do --heroi-imagem no atributo style.
+  // O site nao usa CDN, fonte externa nem analytics: da para fechar tudo.
+  // 'unsafe-inline' fica so em style-src por causa do --heroi-imagem no
+  // atributo style. A /bruno_magalhaes e a unica excecao: ela carrega a API
+  // do player do YouTube, entao ganha uma politica propria em vez de abrir
+  // o dominio inteiro para todo mundo.
+  const base =
+    "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
+    "font-src 'self'; connect-src 'self'; form-action 'self'; " +
+    "frame-ancestors 'self'; base-uri 'self'; object-src 'none'";
+  const easterEgg = req.url.startsWith('/bruno_magalhaes');
   reply.header(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self' data:; font-src 'self'; connect-src 'self'; " +
-      // o embed do YouTube da /bruno_magalhaes, carregado so no clique
-      "frame-src https://www.youtube-nocookie.com; " +
-      "form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+    easterEgg
+      ? `${base}; script-src 'self' https://www.youtube.com https://s.ytimg.com; ` +
+        'frame-src https://www.youtube.com https://www.youtube-nocookie.com'
+      : `${base}; script-src 'self'`
   );
   if (producao) reply.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   return payload;

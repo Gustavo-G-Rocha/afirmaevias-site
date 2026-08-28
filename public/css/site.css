@@ -1065,11 +1065,41 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
 .bruno__heroi { padding-bottom: clamp(2rem, 4vw, 3.5rem); }
 .bruno__galeria { padding-block: clamp(2rem, 4vw, 4rem); }
 
-.tocador { margin-top: 2rem; display: grid; gap: 0.75rem; justify-items: start; }
-.tocador__aviso { margin: 0; font-size: 0.8rem; color: var(--claro-70); max-width: 46ch; }
-.tocador__moldura {
-  width: min(100%, 560px); aspect-ratio: 16 / 9;
-  border: 0; border-radius: var(--raio-botao); overflow: hidden;
+/* camada dos brunos voadores: cobre a tela toda e nao intercepta clique */
+.palco {
+  position: fixed; inset: 0; z-index: 40;
+  pointer-events: none; overflow: hidden;
+}
+.palco__bruno {
+  position: absolute; top: 0; left: 0;
+  width: 289px; height: 440px;
+  will-change: transform;
+  filter: drop-shadow(0 12px 24px rgba(0, 35, 59, 0.35));
+}
+
+/* o player fica fora de vista: so o audio interessa */
+.som {
+  position: fixed; width: 1px; height: 1px;
+  bottom: 0; left: 0; opacity: 0.01; pointer-events: none; border: 0;
+}
+.som iframe { width: 100%; height: 100%; border: 0; }
+
+/* aparece so quando o navegador barra o autoplay */
+.destravar {
+  position: fixed; inset: 0; z-index: 60;
+  display: grid; place-items: center;
+  background: rgba(0, 35, 59, 0.88);
+  cursor: pointer;
+}
+.destravar[hidden] { display: none; }
+.destravar__texto {
+  margin: 0; text-align: center; color: var(--off-white);
+  font-size: clamp(1.5rem, 1rem + 3vw, 3rem); font-weight: 600; line-height: 1.2;
+}
+.destravar__texto span {
+  display: block; margin-top: 0.75rem;
+  font-size: 0.9rem; font-weight: 300; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--verde-claro);
 }
 
 .camisas {
