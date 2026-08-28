@@ -1,0 +1,20 @@
+{
+  "name": "Afirma E-vias — engenharia viária",
+  "short_name": "Afirma E-vias",
+  "description": "Engenharia viária: controle tecnológico, projetos, supervisão de obras e laboratórios fixos e móveis.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F2F1EF",
+  "theme_color": "#00233B",
+  "categories": ["business", "engineering"],
+  "icons": [
+    { "src": "/img/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/img/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/img/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

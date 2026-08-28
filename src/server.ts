@@ -4,6 +4,7 @@ import Fastify from 'fastify';
 import cookie from '@fastify/cookie';
 import formbody from '@fastify/formbody';
 import multipart from '@fastify/multipart';
+import compress from '@fastify/compress';
 import estatico from '@fastify/static';
 import view from '@fastify/view';
 import rateLimit from '@fastify/rate-limit';
@@ -13,6 +14,8 @@ import * as conteudo from './content.js';
 import { pool } from './db.js';
 import { limparSessoesExpiradas } from './auth.js';
 import { aplicarRetencao } from './retencao.js';
+import { asset } from './assets.js';
+import { dadosEstruturados } from './seo.js';
 import { rotasSite } from './routes/site.js';
 import { rotasFormularios } from './routes/forms.js';
 import { rotasAdmin } from './routes/admin.js';
@@ -27,13 +30,15 @@ const app = Fastify({
 
 await app.register(cookie, { secret: config.sessionSecret });
 await app.register(formbody);
+// texto ia sem compressao nenhuma: o CSS cai de 43 KB para 8 KB em brotli
+await app.register(compress, { encodings: ['br', 'gzip'], threshold: 1024 });
 await app.register(multipart, { limits: { fileSize: config.uploadMaximoBytes, files: 1 } });
 await app.register(rateLimit, { global: false, max: 20, timeWindow: '10 minutes' });
 
 await app.register(estatico, {
   root: path.resolve(aqui, '../public'),
   prefix: '/',
-  maxAge: producao ? '7d' : 0
+  maxAge: producao ? '365d' : 0
 });
 
 await app.register(view, {
@@ -44,7 +49,9 @@ await app.register(view, {
     siteUrl: config.siteUrl,
     navegacao: conteudo.navegacao,
     empresa: conteudo.empresa,
-    cookiesCategorias: conteudo.cookies.categorias
+    cookiesCategorias: conteudo.cookies.categorias,
+    asset,
+    dadosEstruturados
   }
 });
 
@@ -53,6 +60,14 @@ app.addHook('onSend', async (_req, reply, payload) => {
   reply.header('X-Frame-Options', 'SAMEORIGIN');
   reply.header('Referrer-Policy', 'strict-origin-when-cross-origin');
   reply.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  // o site nao usa CDN, fonte externa nem analytics: da para fechar tudo.
+  // 'unsafe-inline' fica so em style-src por causa do --heroi-imagem no atributo style.
+  reply.header(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
+      "img-src 'self' data:; font-src 'self'; connect-src 'self'; " +
+      "form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+  );
   if (producao) reply.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   return payload;
 });

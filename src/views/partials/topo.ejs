@@ -12,12 +12,19 @@
 <meta property="og:description" content="<%= descricao %>">
 <meta property="og:image" content="<%= siteUrl %>/img/og.png">
 <meta name="theme-color" content="#00233B">
-<link rel="icon" href="/img/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32">
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:url" content="<%= siteUrl %><%= rotaAtual %>">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Afirma E-vias — engenharia viária">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/fontes/poppins-300.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="<%= asset('/css/site.css') %>">
+<script type="application/ld+json"><%- dadosEstruturados(rotaAtual, titulo, descricao) %></script>
 </head>
 <body data-rota="<%= rotaAtual %>">
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>

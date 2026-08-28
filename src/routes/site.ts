@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import * as conteudo from '../content.js';
+import { config } from '../config.js';
 
 export async function rotasSite(app: FastifyInstance) {
   app.get('/', async (_req, reply) =>
@@ -72,7 +73,8 @@ export async function rotasSite(app: FastifyInstance) {
   app.get('/trabalhe-com-a-gente', async (_req, reply) =>
     reply.view('pages/vagas', {
       titulo: 'Trabalhe com a gente | Afirma E-vias',
-      descricao: 'Envie seu currículo e faça parte da equipe da Afirma E-vias.',
+      descricao:
+        'Vagas em engenharia de projetos, supervisão de obras, laboratório, topografia e BIM. Envie seu currículo para a Afirma E-vias — guardamos por 12 meses e avaliamos cada envio.',
       rotaAtual: '/trabalhe-com-a-gente',
       vagas: conteudo.vagas,
       enviado: false,
@@ -84,7 +86,8 @@ export async function rotasSite(app: FastifyInstance) {
   app.get('/contato', async (_req, reply) =>
     reply.view('pages/contato', {
       titulo: 'Contato | Afirma E-vias',
-      descricao: 'Fale com a Afirma E-vias. Curitiba/PR e Marília/SP.',
+      descricao:
+        'Fale com a Afirma E-vias sobre controle tecnológico, projetos viários, sondagens ou laboratório. Escritórios em Curitiba/PR e Marília/SP, com atendimento por telefone, WhatsApp e formulário.',
       rotaAtual: '/contato',
       enviado: false,
       erro: null,
@@ -105,7 +108,8 @@ export async function rotasSite(app: FastifyInstance) {
   app.get('/termos-de-uso', async (_req, reply) =>
     reply.view('pages/termos', {
       titulo: 'Termos de uso | Afirma E-vias',
-      descricao: 'Condições de uso do site da Afirma E-vias.',
+      descricao:
+        'Condições de uso do site da Afirma E-vias: responsabilidades, propriedade intelectual, uso dos formulários e canais oficiais de atendimento.',
       rotaAtual: '/termos-de-uso',
       termos: conteudo.termos
     })
@@ -128,7 +132,7 @@ export async function rotasSite(app: FastifyInstance) {
   app.get('/robots.txt', async (_req, reply) => {
     reply.type('text/plain');
     return `User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: ${
-      (app as any).siteUrl ?? 'https://www.afirmaevias.com.br'
+      config.siteUrl.replace(/\/$/, '')
     }/sitemap.xml\n`;
   });
 
@@ -146,7 +150,7 @@ export async function rotasSite(app: FastifyInstance) {
       '/termos-de-uso',
       '/portal-do-titular'
     ];
-    const base = process.env.SITE_URL ?? 'https://www.afirmaevias.com.br';
+    const base = config.siteUrl.replace(/\/$/, '');
     reply.type('application/xml');
     return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
