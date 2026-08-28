@@ -1,0 +1,39 @@
+<%- include('../partials/topo') %>
+<link rel="stylesheet" href="<%= asset('/css/extra.css') %>">
+
+<div class="tela" id="tela" aria-hidden="true"
+     data-video="2yJgwwDcgV8"
+     data-pecas='<%- JSON.stringify(pecas.map(function (c) { return c.arquivo; })) %>'></div>
+
+<div class="cortina" id="cortina" hidden>
+  <p class="cortina__texto">Clique em qualquer lugar<br><span>o navegador segurou o som</span></p>
+</div>
+
+<div class="som" id="som" aria-hidden="true"></div>
+
+<section class="heroi heroi--pagina extra__topo">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha sobrancelha--claro">64 cores</p>
+    <h1 class="titulo-display">Bruno Magalhães</h1>
+    <p class="heroi__chamada">Uma peca para cada matiz da roda de cores, mais preto, branco, cinza e bege.</p>
+  </div>
+</section>
+
+<section class="secao extra__grade">
+  <div class="conteiner">
+    <ul class="pecas" role="list">
+      <% pecas.forEach(function (peca, i) { %>
+        <li class="peca" style="--i: <%= i %>">
+          <img src="/img/pecas/<%= peca.arquivo %>" width="289" height="440"
+               loading="<%= i < 8 ? 'eager' : 'lazy' %>" decoding="async"
+               alt="Camisa <%= peca.rotulo %>">
+          <span class="peca__rotulo"><%= peca.rotulo %></span>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</section>
+
+<script src="<%= asset('/js/extra.js') %>" defer></script>
+<%- include('../partials/rodape') %>

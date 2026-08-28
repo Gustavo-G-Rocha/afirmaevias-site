@@ -62,17 +62,16 @@ app.addHook('onSend', async (req, reply, payload) => {
   reply.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
   // O site nao usa CDN, fonte externa nem analytics: da para fechar tudo.
   // 'unsafe-inline' fica so em style-src por causa do --heroi-imagem no
-  // atributo style. A /bruno_magalhaes e a unica excecao: ela carrega a API
-  // do player do YouTube, entao ganha uma politica propria em vez de abrir
-  // o dominio inteiro para todo mundo.
+  // atributo style. Uma rota abre excecao para o player de video e recebe
+  // politica propria, em vez de afrouxar o cabecalho de todas as paginas.
   const base =
     "default-src 'self'; style-src 'self' 'unsafe-inline'; " +
     "font-src 'self'; connect-src 'self'; form-action 'self'; " +
     "frame-ancestors 'self'; base-uri 'self'; object-src 'none'";
-  const easterEgg = req.url.startsWith('/bruno_magalhaes');
+  const comVideo = req.url.startsWith('/bruno_magalhaes');
   reply.header(
     'Content-Security-Policy',
-    easterEgg
+    comVideo
       ? `${base}; script-src 'self' https://www.youtube.com https://s.ytimg.com; ` +
         "img-src 'self' data: https://i.ytimg.com; " +
         'frame-src https://www.youtube.com https://www.youtube-nocookie.com'

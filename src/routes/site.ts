@@ -130,12 +130,12 @@ export async function rotasSite(app: FastifyInstance) {
   );
 
   app.get('/bruno_magalhaes', async (_req, reply) =>
-    reply.view('pages/bruno', {
+    reply.view('pages/extra', {
       titulo: 'Bruno Magalhães | Afirma E-vias',
-      descricao: 'As 64 cores da camisa.',
+      descricao: '',
       rotaAtual: '/bruno_magalhaes',
       naoIndexar: true,
-      camisas: conteudo.camisas
+      pecas: conteudo.pecas
     })
   );
 

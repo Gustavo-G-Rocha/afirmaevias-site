@@ -1,20 +1,20 @@
-// Easter egg. Duas coisas acontecem aqui: a musica tenta tocar sozinha no
-// volume maximo, e os brunos atravessam a tela em trajetorias sorteadas.
+// Duas coisas acontecem aqui: o audio tenta tocar sozinho no volume maximo,
+// e as pecas atravessam a tela em trajetorias sorteadas.
 //
 // Sobre o autoplay: navegador nenhum libera som sem gesto do usuario, a menos
 // que a pessoa ja tenha historico de interacao com o dominio. Entao tentamos
-// tocar direto e, se o player recusar, um aviso cobre a tela e o primeiro
+// tocar direto e, se o player recusar, um cortina cobre a tela e o primeiro
 // clique em qualquer lugar destrava. Nao ha como forcar mais do que isso.
 (function () {
-  const palco = document.getElementById('palco');
-  const aviso = document.getElementById('destravar');
-  if (!palco) return;
+  const tela = document.getElementById('tela');
+  const cortina = document.getElementById('cortina');
+  if (!tela) return;
 
-  const ID = palco.dataset.video;
-  const ARQUIVOS = JSON.parse(palco.dataset.camisas || '[]');
+  const ID = tela.dataset.video;
+  const ARQUIVOS = JSON.parse(tela.dataset.pecas || '[]');
   const CALMO = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ------------------------------------------------------------ os brunos
+  // ------------------------------------------------------------- as pecas
   const CONCORRENTES = CALMO ? 6 : 26;
   const sorte = (min, max) => min + Math.random() * (max - min);
 
@@ -43,20 +43,20 @@
       { duration: duracao * 1000, easing: 'linear' }
     );
     animacao.onfinish = () => {
-      el.src = `/img/camisas/${ARQUIVOS[(Math.random() * ARQUIVOS.length) | 0]}`;
+      el.src = `/img/pecas/${ARQUIVOS[(Math.random() * ARQUIVOS.length) | 0]}`;
       lancar(el);
     };
   }
 
   for (let i = 0; i < CONCORRENTES; i++) {
     const el = document.createElement('img');
-    el.className = 'palco__bruno';
-    el.src = `/img/camisas/${ARQUIVOS[(Math.random() * ARQUIVOS.length) | 0]}`;
+    el.className = 'tela__peca';
+    el.src = `/img/pecas/${ARQUIVOS[(Math.random() * ARQUIVOS.length) | 0]}`;
     el.alt = '';
     el.setAttribute('aria-hidden', 'true');
     el.decoding = 'async';
-    palco.appendChild(el);
-    // escalona a largada para nao entrarem todos juntos
+    tela.appendChild(el);
+    // escalona a largada para nao entrarem todas juntas
     setTimeout(() => lancar(el), Math.random() * (CALMO ? 8000 : 5000));
   }
 
@@ -78,27 +78,27 @@
           }, 1200);
         },
         onStateChange: (e) => {
-          if (e.data === YT.PlayerState.PLAYING) aviso?.setAttribute('hidden', '');
+          if (e.data === YT.PlayerState.PLAYING) cortina?.setAttribute('hidden', '');
         }
       }
     });
   };
 
   function mostrarAviso() {
-    if (!aviso) return;
-    aviso.removeAttribute('hidden');
+    if (!cortina) return;
+    cortina.removeAttribute('hidden');
   }
 
-  function destravar() {
+  function cortina() {
     if (!player) return;
     player.unMute();
     player.setVolume(100);
     player.playVideo();
   }
 
-  document.addEventListener('click', destravar);
-  document.addEventListener('keydown', destravar);
-  document.addEventListener('touchstart', destravar, { passive: true });
+  document.addEventListener('click', cortina);
+  document.addEventListener('keydown', cortina);
+  document.addEventListener('touchstart', cortina, { passive: true });
 
   const api = document.createElement('script');
   api.src = 'https://www.youtube.com/iframe_api';

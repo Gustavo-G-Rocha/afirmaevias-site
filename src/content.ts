@@ -1,4 +1,4 @@
-export { camisas } from './camisas.js';
+export { pecas } from './extra.js';
 
 // Todo o texto do site fica aqui. Uma fonte unica, sem CMS.
 // Trocar copy = editar este arquivo e redeployar.
