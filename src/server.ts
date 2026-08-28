@@ -33,17 +33,7 @@ await app.register(formbody);
 // texto ia sem compressao nenhuma: o CSS cai de 43 KB para 8 KB em brotli
 await app.register(compress, { encodings: ['br', 'gzip'], threshold: 1024 });
 await app.register(multipart, { limits: { fileSize: config.uploadMaximoBytes, files: 1 } });
-// A mensagem padrao do plugin vem em ingles e aparecia crua na pagina de erro
-await app.register(rateLimit, {
-  global: false,
-  max: 20,
-  timeWindow: '10 minutes',
-  errorResponseBuilder: (_req, contexto) => ({
-    statusCode: 429,
-    error: 'Too Many Requests',
-    message: `Muitas tentativas em pouco tempo. Aguarde ${contexto.after} e tente de novo.`
-  })
-});
+await app.register(rateLimit, { global: false, max: 20, timeWindow: '10 minutes' });
 
 await app.register(estatico, {
   root: path.resolve(aqui, '../public'),
@@ -114,9 +104,16 @@ app.setNotFoundHandler((request, reply) => {
 app.setErrorHandler((erro: any, request, reply) => {
   request.log.error(erro);
   const status = erro?.statusCode && erro.statusCode < 500 ? erro.statusCode : 500;
+  // O plugin de limite formata o tempo em ingles ("9 minutes"), entao a espera
+  // e remontada a partir do retry-after, que vem em segundos.
+  const segundos = Number(reply.getHeader('retry-after')) || 0;
+  const espera =
+    segundos >= 60
+      ? `${Math.ceil(segundos / 60)} minuto${Math.ceil(segundos / 60) > 1 ? 's' : ''}`
+      : `${segundos || 60} segundos`;
   const conhecidos: Record<number, string> = {
     413: 'O arquivo enviado passou do tamanho permitido.',
-    429: erro.message,
+    429: `Muitas tentativas em pouco tempo. Tente de novo em ${espera}.`,
     400: 'Os dados enviados não foram aceitos. Confira o formulário e tente de novo.'
   };
   return reply.code(status).view('pages/erro', {
