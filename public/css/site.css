@@ -1002,9 +1002,10 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
 
 /* no celular a coluna some: a foto vira faixa no topo e o texto fica sobre azul */
 @media (max-width: 860px) {
-  .heroi--imagem::before { background-position: center; }
+  .heroi--imagem::before { background-position: center top; }
   .heroi--imagem::after {
-    background: linear-gradient(180deg, rgba(0, 35, 59, 0.62) 0%, var(--azul) 46%, var(--azul) 100%);
+    background: linear-gradient(180deg,
+      rgba(0, 35, 59, 0.35) 0%, rgba(0, 35, 59, 0.70) 26%, var(--azul) 62%, var(--azul) 100%);
   }
 }
 
@@ -1017,10 +1018,10 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
 }
 .secao--escura .figura img { outline-color: var(--claro-18); }
 .figura figcaption {
-  margin-top: 0.75rem; font-size: 0.82rem; color: var(--azul-30);
+  margin-top: 0.75rem; font-size: 0.82rem; color: var(--azul-60);
   max-width: 52ch;
 }
-.secao--escura .figura figcaption { color: var(--claro-45); }
+.secao--escura .figura figcaption { color: var(--claro-70); }
 
 /* bloco de duas colunas: texto de um lado, foto do outro */
 .grade-figura {
