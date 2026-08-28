@@ -65,7 +65,7 @@ export async function rotasSite(app: FastifyInstance) {
       integridade: conteudo.integridade,
       enviado: null,
       protocolo: null,
-      erro: null,
+      erros: [],
       valores: {}
     })
   );
@@ -90,7 +90,7 @@ export async function rotasSite(app: FastifyInstance) {
         'Fale com a Afirma E-vias sobre controle tecnológico, projetos viários, sondagens ou laboratório. Escritórios em Curitiba/PR e Marília/SP, com atendimento por telefone, WhatsApp e formulário.',
       rotaAtual: '/contato',
       enviado: false,
-      erro: null,
+      erros: [],
       valores: {}
     })
   );
@@ -124,7 +124,7 @@ export async function rotasSite(app: FastifyInstance) {
       tipos: conteudo.tiposSolicitacaoLgpd,
       enviado: null,
       protocolo: null,
-      erro: null,
+      erros: [],
       valores: {}
     })
   );

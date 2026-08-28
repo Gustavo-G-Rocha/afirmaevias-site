@@ -37,36 +37,40 @@
       </div>
     <% } else { %>
       <form class="formulario" method="post" action="/contato">
-        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
+        <% if (erros && erros.length > 0) { %>
+          <div class="alerta" role="alert" tabindex="-1">
+            <% erros.forEach(function (mensagem) { %><p><%= mensagem %></p><% }); %>
+          </div>
+        <% } %>
         <input type="hidden" name="origem" value="contato">
-        <p class="mel"><label>Deixe em branco<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+        <p class="mel"><label>Deixe em branco<input type="text" name="website" autocomplete="off" tabindex="-1"></label></p>
 
         <div class="campo-duplo">
           <label class="campo">
             <span class="campo__rotulo">Nome</span>
-            <input type="text" name="nome" required maxlength="120" value="<%= valores.nome || '' %>">
+            <input type="text" name="nome" autocomplete="given-name" required maxlength="120" value="<%= valores.nome || '' %>">
           </label>
           <label class="campo">
             <span class="campo__rotulo">Sobrenome</span>
-            <input type="text" name="sobrenome" maxlength="120" value="<%= valores.sobrenome || '' %>">
+            <input type="text" name="sobrenome" autocomplete="family-name" maxlength="120" value="<%= valores.sobrenome || '' %>">
           </label>
         </div>
 
         <div class="campo-duplo">
           <label class="campo">
             <span class="campo__rotulo">E-mail</span>
-            <input type="email" name="email" required maxlength="200" value="<%= valores.email || '' %>">
+            <input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="200" value="<%= valores.email || '' %>">
           </label>
           <label class="campo">
             <span class="campo__rotulo">Telefone</span>
-            <input type="tel" name="telefone" maxlength="40" value="<%= valores.telefone || '' %>">
+            <input type="tel" name="telefone" autocomplete="tel" inputmode="tel" maxlength="40" value="<%= valores.telefone || '' %>">
           </label>
         </div>
 
         <div class="campo-duplo">
           <label class="campo">
             <span class="campo__rotulo">Empresa ou órgão</span>
-            <input type="text" name="empresa" maxlength="160" value="<%= valores.empresa || '' %>">
+            <input type="text" name="empresa" autocomplete="organization" maxlength="160" value="<%= valores.empresa || '' %>">
           </label>
           <label class="campo">
             <span class="campo__rotulo">Assunto</span>

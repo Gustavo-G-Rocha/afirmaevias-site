@@ -48,7 +48,11 @@
       </div>
     <% } else { %>
       <form class="formulario formulario--claro" method="post" action="/programa-de-integridade">
-        <% if (erro) { %><p class="alerta" role="alert"><%= erro %></p><% } %>
+        <% if (erros && erros.length > 0) { %>
+          <div class="alerta" role="alert" tabindex="-1">
+            <% erros.forEach(function (mensagem) { %><p><%= mensagem %></p><% }); %>
+          </div>
+        <% } %>
 
         <fieldset class="opcoes">
           <legend class="campo__rotulo">Como você quer enviar</legend>
@@ -60,11 +64,11 @@
           <div class="campo-duplo">
             <label class="campo">
               <span class="campo__rotulo">Nome</span>
-              <input type="text" name="nome" maxlength="120" value="<%= valores.nome || '' %>">
+              <input type="text" name="nome" autocomplete="given-name" maxlength="120" value="<%= valores.nome || '' %>">
             </label>
             <label class="campo">
               <span class="campo__rotulo">E-mail para retorno</span>
-              <input type="email" name="email" maxlength="200" value="<%= valores.email || '' %>">
+              <input type="email" name="email" autocomplete="email" inputmode="email" maxlength="200" value="<%= valores.email || '' %>">
             </label>
           </div>
         </div>

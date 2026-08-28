@@ -33,6 +33,7 @@
     <h2 class="cartao-admin__titulo">Quem tem acesso</h2>
     <% if (aviso) { %><p class="alerta-admin alerta-admin--ok"><%= aviso %></p><% } %>
 
+    <div class="tabela-envolvida-admin">
     <table class="tabela-admin tabela-admin--lista">
       <thead><tr><th>Nome</th><th>Papel</th><th>Último acesso</th><th>Situação</th><th></th></tr></thead>
       <tbody>
@@ -53,6 +54,7 @@
         <% }); %>
       </tbody>
     </table>
+    </div>
   </section>
 
   <% if (usuario.papel === 'admin') { %>

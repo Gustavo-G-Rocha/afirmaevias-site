@@ -110,3 +110,12 @@ document.querySelectorAll('input[type="file"][data-limite-mb]').forEach((campo) 
     alvo.classList.remove('campo__ajuda--erro');
   });
 });
+
+// Quando o formulário volta com erro, o aviso fica no topo e o visitante já
+// rolou até o botão: sem mover o foco, quem usa teclado ou leitor de tela não
+// descobre que algo falhou.
+const avisoDeErro = document.querySelector('.alerta[role="alert"]');
+if (avisoDeErro) {
+  avisoDeErro.scrollIntoView({ block: 'center' });
+  avisoDeErro.focus({ preventScroll: true });
+}

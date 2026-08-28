@@ -27,21 +27,22 @@ export async function rotasFormularios(app: FastifyInstance) {
     // campo escondido: se veio preenchido, e robo
     if (limpar(corpo.website, 100)) return reply.redirect('/contato?ok=1');
 
-    let erro: string | null = null;
-    if (!valores.nome) erro = 'Escreva seu nome.';
-    else if (!emailValido(valores.email)) erro = 'Confira o e-mail digitado.';
-    else if (valores.mensagem.length < 10) erro = 'Conte um pouco mais sobre o que você precisa.';
-    else if (!consentimento) erro = 'Marque o aceite da Política de Privacidade para enviarmos sua mensagem.';
+    // todos os erros de uma vez: a cascata de else-if obrigava um envio por defeito
+    const erros: string[] = [];
+    if (!valores.nome) erros.push('Escreva seu nome.');
+    if (!emailValido(valores.email)) erros.push('Confira o e-mail digitado.');
+    if (valores.mensagem.length < 10) erros.push('Conte um pouco mais sobre o que você precisa.');
+    if (!consentimento) erros.push('Marque o aceite da Política de Privacidade para enviarmos sua mensagem.');
 
     const pagina = origem === 'home' ? 'pages/contato' : 'pages/contato';
 
-    if (erro) {
+    if (erros.length > 0) {
       return reply.code(400).view(pagina, {
         titulo: 'Contato | Afirma E-vias',
         descricao: 'Fale com a Afirma E-vias.',
         rotaAtual: '/contato',
         enviado: false,
-        erro,
+        erros,
         valores
       });
     }
@@ -83,7 +84,7 @@ export async function rotasFormularios(app: FastifyInstance) {
       descricao: 'Fale com a Afirma E-vias.',
       rotaAtual: '/contato',
       enviado: true,
-      erro: null,
+      erros: [],
       valores: {}
     });
   });
@@ -208,12 +209,12 @@ export async function rotasFormularios(app: FastifyInstance) {
       email: anonimo ? '' : limpar(corpo.email, 200)
     };
 
-    let erro: string | null = null;
-    if (!valores.titulo) erro = 'Dê um título ao relato.';
-    else if (valores.relato.length < 20) erro = 'Descreva o que aconteceu com mais detalhes.';
-    else if (!anonimo && !emailValido(valores.email)) erro = 'Confira o e-mail para retorno.';
+    const erros: string[] = [];
+    if (!valores.titulo) erros.push('Dê um título ao relato.');
+    if (valores.relato.length < 20) erros.push('Descreva o que aconteceu com mais detalhes.');
+    if (!anonimo && !emailValido(valores.email)) erros.push('Confira o e-mail para retorno.');
 
-    if (erro) {
+    if (erros.length > 0) {
       return reply.code(400).view('pages/integridade', {
         titulo: 'Programa de integridade | Afirma E-vias',
         descricao: 'Compliance e canal de denúncias.',
@@ -221,7 +222,7 @@ export async function rotasFormularios(app: FastifyInstance) {
         integridade: conteudo.integridade,
         enviado: null,
         protocolo: null,
-        erro,
+        erros,
         valores
       });
     }
@@ -252,7 +253,7 @@ export async function rotasFormularios(app: FastifyInstance) {
       integridade: conteudo.integridade,
       enviado: true,
       protocolo,
-      erro: null,
+      erros: [],
       valores: {}
     });
   });
@@ -270,13 +271,13 @@ export async function rotasFormularios(app: FastifyInstance) {
     const confirma = corpo.confirmacao === 'on';
     const tiposValidos = conteudo.tiposSolicitacaoLgpd.map((t) => t.valor);
 
-    let erro: string | null = null;
-    if (!tiposValidos.includes(valores.tipo)) erro = 'Escolha o que você quer solicitar.';
-    else if (!valores.nome) erro = 'Escreva seu nome completo.';
-    else if (!emailValido(valores.email)) erro = 'Confira o e-mail digitado.';
-    else if (!confirma) erro = 'Confirme que os dados são seus para seguirmos com a solicitação.';
+    const erros: string[] = [];
+    if (!tiposValidos.includes(valores.tipo)) erros.push('Escolha o que você quer solicitar.');
+    if (!valores.nome) erros.push('Escreva seu nome completo.');
+    if (!emailValido(valores.email)) erros.push('Confira o e-mail digitado.');
+    if (!confirma) erros.push('Confirme que os dados são seus para seguirmos com a solicitação.');
 
-    if (erro) {
+    if (erros.length > 0) {
       return reply.code(400).view('pages/lgpd', {
         titulo: 'Portal do titular | Afirma E-vias',
         descricao: 'Exerça seus direitos previstos na LGPD.',
@@ -284,7 +285,7 @@ export async function rotasFormularios(app: FastifyInstance) {
         tipos: conteudo.tiposSolicitacaoLgpd,
         enviado: null,
         protocolo: null,
-        erro,
+        erros,
         valores
       });
     }
@@ -316,7 +317,7 @@ export async function rotasFormularios(app: FastifyInstance) {
       tipos: conteudo.tiposSolicitacaoLgpd,
       enviado: true,
       protocolo,
-      erro: null,
+      erros: [],
       valores: {}
     });
   });

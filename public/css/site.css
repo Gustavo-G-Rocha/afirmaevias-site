@@ -891,6 +891,10 @@ input[type='reset'] {
 
 @media print {
   .cabecalho, .rodape, .cookies, .chamada, .indice, .pular { display: none !important; }
+  /* a política e os termos são as páginas que as pessoas de fato imprimem */
+  .documento__indice { position: static; border: 0; padding: 0; }
+  .servico__grade { border: 0; padding: 0; }
+  a[href^="http"]::after { content: ' (' attr(href) ')'; font-size: 0.85em; word-break: break-all; }
   body { background: #fff; color: #000; }
   .heroi { background: #fff; color: #000; padding-block: 1rem; }
   .heroi__faixa { display: none; }
