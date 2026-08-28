@@ -9,6 +9,7 @@ import {
   type UsuarioAdmin
 } from '../auth.js';
 import { registrarAuditoria } from '../audit.js';
+import { cabecalhoAnexo } from '../utils.js';
 import { emailValido, limpar, paraCsv } from '../utils.js';
 
 declare module 'fastify' {
@@ -435,7 +436,7 @@ export async function rotasAdmin(app: FastifyInstance) {
     });
 
     reply.header('Content-Type', registro.arquivo_tipo || 'application/octet-stream');
-    reply.header('Content-Disposition', `attachment; filename="${registro.arquivo_nome.replace(/"/g, '')}"`);
+    reply.header('Content-Disposition', cabecalhoAnexo(registro.arquivo_nome));
     return reply.send(registro.arquivo_dados);
   });
 

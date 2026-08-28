@@ -342,7 +342,12 @@ export async function rotasFormularios(app: FastifyInstance) {
   });
 
   // consulta publica de protocolo
-  app.get('/protocolo/:codigo', async (request, reply) => {
+  // Sem limite aqui dava para varrer protocolos: o de integridade revela que
+  // existe um relato e em que pe esta, o que fragiliza o canal de denuncia.
+  app.get(
+    '/protocolo/:codigo',
+    { config: { rateLimit: { max: 20, timeWindow: '10 minutes' } } },
+    async (request, reply) => {
     const codigo = limpar((request.params as any).codigo, 40).toUpperCase();
     let registro: any = null;
     let tipo = '';
