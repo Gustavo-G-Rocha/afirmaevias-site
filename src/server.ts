@@ -66,7 +66,7 @@ app.addHook('onSend', async (req, reply, payload) => {
   // do player do YouTube, entao ganha uma politica propria em vez de abrir
   // o dominio inteiro para todo mundo.
   const base =
-    "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
+    "default-src 'self'; style-src 'self' 'unsafe-inline'; " +
     "font-src 'self'; connect-src 'self'; form-action 'self'; " +
     "frame-ancestors 'self'; base-uri 'self'; object-src 'none'";
   const easterEgg = req.url.startsWith('/bruno_magalhaes');
@@ -74,8 +74,9 @@ app.addHook('onSend', async (req, reply, payload) => {
     'Content-Security-Policy',
     easterEgg
       ? `${base}; script-src 'self' https://www.youtube.com https://s.ytimg.com; ` +
+        "img-src 'self' data: https://i.ytimg.com; " +
         'frame-src https://www.youtube.com https://www.youtube-nocookie.com'
-      : `${base}; script-src 'self'`
+      : `${base}; img-src 'self' data:; script-src 'self'`
   );
   if (producao) reply.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   return payload;
