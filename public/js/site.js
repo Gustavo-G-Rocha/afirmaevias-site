@@ -110,3 +110,23 @@ document.querySelectorAll('input[type="file"][data-limite-mb]').forEach((campo) 
     alvo.classList.remove('campo__ajuda--erro');
   });
 });
+
+// Tocador da /bruno_magalhaes. O iframe do YouTube so e criado no clique:
+// antes disso nenhum dado do visitante sai daqui, o que mantem a promessa da
+// politica de privacidade de nao carregar terceiros sem consentimento.
+// O clique tambem e o gesto que os navegadores exigem para liberar som.
+const tocador = document.getElementById('tocador');
+if (tocador) {
+  tocador.querySelector('[data-tocar]')?.addEventListener('click', (evento) => {
+    const id = tocador.dataset.video;
+    if (!id) return;
+    const quadro = document.createElement('iframe');
+    quadro.className = 'tocador__moldura';
+    quadro.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
+    quadro.title = 'Música da página';
+    quadro.allow = 'autoplay; encrypted-media; picture-in-picture';
+    quadro.referrerPolicy = 'strict-origin-when-cross-origin';
+    quadro.setAttribute('allowfullscreen', '');
+    evento.target.replaceWith(quadro);
+  });
+}

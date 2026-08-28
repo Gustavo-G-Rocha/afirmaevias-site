@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%= titulo %></title>
 <meta name="description" content="<%= descricao %>">
+<% if (typeof naoIndexar !== 'undefined' && naoIndexar) { %><meta name="robots" content="noindex, nofollow"><% } %>
 <link rel="canonical" href="<%= siteUrl %><%= rotaAtual %>">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Afirma E-vias">

@@ -66,6 +66,8 @@ app.addHook('onSend', async (_req, reply, payload) => {
     'Content-Security-Policy',
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; font-src 'self'; connect-src 'self'; " +
+      // o embed do YouTube da /bruno_magalhaes, carregado so no clique
+      "frame-src https://www.youtube-nocookie.com; " +
       "form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
   );
   if (producao) reply.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');

@@ -1057,3 +1057,45 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
   /* no celular o cartao encosta nas bordas: o respiro ja vem do conteiner */
   .servico__grade { border-radius: 12px; padding: 1.5rem 1.25rem; }
 }
+
+/* =========================================================================
+   /bruno_magalhaes — as 64 camisas
+   ========================================================================= */
+
+.bruno__heroi { padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+.bruno__galeria { padding-block: clamp(2rem, 4vw, 4rem); }
+
+.tocador { margin-top: 2rem; display: grid; gap: 0.75rem; justify-items: start; }
+.tocador__aviso { margin: 0; font-size: 0.8rem; color: var(--claro-70); max-width: 46ch; }
+.tocador__moldura {
+  width: min(100%, 560px); aspect-ratio: 16 / 9;
+  border: 0; border-radius: var(--raio-botao); overflow: hidden;
+}
+
+.camisas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(96px, 14vw, 150px), 1fr));
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  align-items: end;
+}
+.camisas__item {
+  display: grid; justify-items: center; gap: 0.4rem;
+  /* o "espalhado": cada peca ganha inclinacao e altura proprias, derivadas do
+     indice, entao o desenho e sempre o mesmo e nada depende de sorteio */
+  transform: rotate(calc((var(--i) % 7 - 3) * 1.6deg))
+             translateY(calc((var(--i) % 5) * 0.45rem));
+  transition: transform var(--transicao);
+}
+.camisas__item:hover,
+.camisas__item:focus-within { transform: rotate(0deg) translateY(-0.5rem) scale(1.06); z-index: 2; }
+.camisas__item img { width: 100%; height: auto; }
+.camisas__rotulo {
+  font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--azul-30);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camisas__item { transform: none; }
+  .camisas__item:hover, .camisas__item:focus-within { transform: scale(1.04); }
+}

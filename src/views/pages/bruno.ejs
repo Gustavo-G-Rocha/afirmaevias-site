@@ -1,0 +1,36 @@
+<%- include('../partials/topo') %>
+
+<section class="heroi heroi--pagina bruno__heroi">
+  <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="conteiner">
+    <p class="sobrancelha sobrancelha--claro">64 cores</p>
+    <h1 class="titulo-display">Bruno Magalhães</h1>
+    <p class="heroi__chamada">Uma camisa para cada matiz da roda de cores, mais preto, branco, cinza e bege.</p>
+
+    <div class="tocador" id="tocador" data-video="2yJgwwDcgV8">
+      <button type="button" class="botao botao--claro tocador__gatilho" data-tocar>
+        Tocar a música
+      </button>
+      <p class="tocador__aviso">
+        O vídeo vem do YouTube e só é carregado quando você clica — antes disso, nada é enviado ao Google.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="secao bruno__galeria">
+  <div class="conteiner">
+    <ul class="camisas" role="list">
+      <% camisas.forEach(function (camisa, i) { %>
+        <li class="camisas__item" style="--i: <%= i %>">
+          <img src="/img/camisas/<%= camisa.arquivo %>" width="289" height="440"
+               loading="<%= i < 8 ? 'eager' : 'lazy' %>" decoding="async"
+               alt="Camisa <%= camisa.rotulo %>">
+          <span class="camisas__rotulo"><%= camisa.rotulo %></span>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</section>
+
+<%- include('../partials/rodape') %>
