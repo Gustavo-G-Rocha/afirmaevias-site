@@ -33,7 +33,24 @@ await app.register(formbody);
 // texto ia sem compressao nenhuma: o CSS cai de 43 KB para 8 KB em brotli
 await app.register(compress, { encodings: ['br', 'gzip'], threshold: 1024 });
 await app.register(multipart, { limits: { fileSize: config.uploadMaximoBytes, files: 1 } });
-await app.register(rateLimit, { global: false, max: 20, timeWindow: '10 minutes' });
+// O plugin responde 429 sozinho, sem passar pelo setErrorHandler, entao a
+// pagina de erro do site nao chega a ser renderizada aqui - o corpo e JSON.
+// O que da para fazer e devolver uma mensagem util e em portugues: o campo
+// pronto do plugin traz o tempo formatado em ingles ("9 minutes"), por isso a
+// espera e calculada a partir do ttl, que vem em milissegundos.
+await app.register(rateLimit, {
+  global: false,
+  max: 20,
+  timeWindow: '10 minutes',
+  errorResponseBuilder: (_req, contexto) => {
+    const minutos = Math.max(1, Math.ceil((contexto.ttl ?? 0) / 60000));
+    return {
+      statusCode: 429,
+      error: 'Too Many Requests',
+      message: `Muitas tentativas em pouco tempo. Tente de novo em ${minutos} minuto${minutos > 1 ? 's' : ''}.`
+    };
+  }
+});
 
 await app.register(estatico, {
   root: path.resolve(aqui, '../public'),
@@ -104,20 +121,12 @@ app.setNotFoundHandler((request, reply) => {
 app.setErrorHandler((erro: any, request, reply) => {
   request.log.error(erro);
   const status = erro?.statusCode && erro.statusCode < 500 ? erro.statusCode : 500;
-  // O plugin de limite formata o tempo em ingles ("9 minutes"), entao a espera
-  // e remontada a partir do retry-after, que vem em segundos.
-  const segundos = Number(reply.getHeader('retry-after')) || 0;
-  const espera =
-    segundos >= 60
-      ? `${Math.ceil(segundos / 60)} minuto${Math.ceil(segundos / 60) > 1 ? 's' : ''}`
-      : `${segundos || 60} segundos`;
   const conhecidos: Record<number, string> = {
     413: 'O arquivo enviado passou do tamanho permitido.',
-    429: `Muitas tentativas em pouco tempo. Tente de novo em ${espera}.`,
     400: 'Os dados enviados não foram aceitos. Confira o formulário e tente de novo.'
   };
   return reply.code(status).view('pages/erro', {
-    titulo: status === 429 ? 'Devagar aí' : 'Algo quebrou aqui',
+    titulo: 'Algo quebrou aqui',
     descricao: 'Tivemos um problema ao carregar esta página.',
     rotaAtual: '',
     mensagem: conhecidos[status] ?? (status === 500 ? 'Erro interno do servidor.' : erro.message)
