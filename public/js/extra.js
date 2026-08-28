@@ -3,7 +3,7 @@
 //
 // Sobre o autoplay: navegador nenhum libera som sem gesto do usuario, a menos
 // que a pessoa ja tenha historico de interacao com o dominio. Entao tentamos
-// tocar direto e, se o player recusar, um cortina cobre a tela e o primeiro
+// tocar direto e, se o player recusar, uma cortina cobre a tela e o primeiro
 // clique em qualquer lugar destrava. Nao ha como forcar mais do que isso.
 (function () {
   const tela = document.getElementById('tela');
@@ -74,7 +74,7 @@
           e.target.playVideo();
           // se em 1,2 s nao estiver tocando, o navegador barrou: pede o clique
           setTimeout(() => {
-            if (e.target.getPlayerState() !== YT.PlayerState.PLAYING) mostrarAviso();
+            if (e.target.getPlayerState() !== YT.PlayerState.PLAYING) pedirClique();
           }, 1200);
         },
         onStateChange: (e) => {
@@ -84,21 +84,21 @@
     });
   };
 
-  function mostrarAviso() {
+  function pedirClique() {
     if (!cortina) return;
     cortina.removeAttribute('hidden');
   }
 
-  function cortina() {
+  function liberarSom() {
     if (!player) return;
     player.unMute();
     player.setVolume(100);
     player.playVideo();
   }
 
-  document.addEventListener('click', cortina);
-  document.addEventListener('keydown', cortina);
-  document.addEventListener('touchstart', cortina, { passive: true });
+  document.addEventListener('click', liberarSom);
+  document.addEventListener('keydown', liberarSom);
+  document.addEventListener('touchstart', liberarSom, { passive: true });
 
   const api = document.createElement('script');
   api.src = 'https://www.youtube.com/iframe_api';
