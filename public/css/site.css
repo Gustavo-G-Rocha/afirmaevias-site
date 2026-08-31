@@ -1069,33 +1069,32 @@ body[data-rota="/"] .heroi--imagem { --heroi-imagem: url('/img/obra-viaduto.webp
 body[data-rota="/afirma-evias"] .heroi--imagem { --heroi-imagem: url('/img/obra-entroncamento.webp'); }
 body[data-rota="/servicos"] .heroi--imagem { --heroi-imagem: url('/img/obra-pavimentacao.webp'); }
 
-/* Mural de contratantes. Cada marca vem com 96px de altura, mas a largura varia
-   quase 10x entre um monograma e um logotipo por extenso: a célula de tamanho
-   fixo com object-fit contain iguala o peso visual sem distorcer nenhuma. */
+/* Mural de contratantes. Cada marca vem com 96px de altura nativa, mas a
+   largura varia quase 10x entre um monograma e um logotipo por extenso.
+   A altura maxima e em pixel, nao em porcentagem: dentro de um grid com
+   place-items center a porcentagem nao resolvia contra a celula e as marcas
+   quadradas renderizavam nos 96px nativos, vazando ate 25px para fora do
+   cartao e colidindo com a nota abaixo. */
 .clientes {
-  list-style: none; margin: 0 0 1.5rem; padding: 0;
+  --marca-altura: 52px;
+  --marca-respiro: 1rem;
+  list-style: none; margin: 0 0 2rem; padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
-  gap: clamp(0.75rem, 2vw, 1.5rem);
+  gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 .clientes__item {
-  display: grid; place-items: center;
+  display: flex; align-items: center; justify-content: center;
   background: var(--branco);
   border: 1px solid var(--azul-12);
   border-radius: var(--raio-botao);
-  padding: 1rem;
+  padding: var(--marca-respiro);
   min-width: 0;
-  height: 88px;
+  height: calc(var(--marca-altura) + var(--marca-respiro) * 2);
 }
 .clientes__item img {
-  max-width: 100%; max-height: 100%; width: auto; height: auto;
+  max-width: 100%;
+  max-height: var(--marca-altura);
+  width: auto; height: auto;
   object-fit: contain;
-  /* dessatura no repouso para o mural não competir com a página */
-  filter: grayscale(1); opacity: 0.75;
-  transition: filter var(--transicao), opacity var(--transicao);
-}
-.clientes__item:hover img { filter: none; opacity: 1; }
-
-@media (prefers-reduced-motion: reduce) {
-  .clientes__item img { transition: none; }
 }
