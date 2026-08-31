@@ -10,7 +10,9 @@ export async function rotasSite(app: FastifyInstance) {
         'Estudos, projetos, supervisão e controle tecnológico de obras rodoviárias e urbanas. Mais de 20 anos de tradição e inovação.',
       rotaAtual: '/',
       home: conteudo.home,
-      indicadores: conteudo.indicadores
+      indicadores: conteudo.indicadores,
+      clientes: conteudo.clientes,
+      notaClientes: conteudo.notaClientes
     })
   );
 

@@ -72,5 +72,23 @@
   </div>
 </section>
 
+<section class="secao secao--clara">
+  <div class="conteiner">
+    <div class="cabeca-secao">
+      <p class="sobrancelha">Quem confia</p>
+      <h2 class="titulo-secao">Concessionárias, órgãos públicos e <em>indústria</em>.</h2>
+    </div>
+    <ul class="clientes" role="list">
+      <% clientes.forEach(function (cliente) { %>
+        <li class="clientes__item">
+          <img src="/img/clientes/<%= cliente.arquivo %>" height="96" loading="lazy" decoding="async"
+               alt="<%= cliente.nome %>">
+        </li>
+      <% }); %>
+    </ul>
+    <p class="nota-marcas"><%= notaClientes %></p>
+  </div>
+</section>
+
 <%- include('../partials/chamada-contato') %>
 <%- include('../partials/rodape') %>

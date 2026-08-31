@@ -530,3 +530,29 @@ export const termos = {
     }
   ]
 };
+
+// Logomarcas exibidas com anuência dos contratantes, confirmada pela diretoria
+// em 31/08/2026. Marca de terceiro: uso apenas identificador, sem sugestão de
+// endosso. Se algum contrato mudar, retire a entrada daqui.
+export const clientes = [
+  { arquivo: 'arteris.webp', nome: 'Arteris' },
+  { arquivo: 'epr.webp', nome: 'EPR' },
+  { arquivo: 'via-brasil.webp', nome: 'Via Brasil MT-246' },
+  { arquivo: 'tcp.webp', nome: 'TCP — Terminal de Contêineres de Paranaguá' },
+  { arquivo: 'ellenco.webp', nome: 'Ellenco' },
+  { arquivo: 'via-araucaria.webp', nome: 'Via Araucária' },
+  { arquivo: 'eixo-sp.webp', nome: 'EIXO SP' },
+  { arquivo: 'entrevias.webp', nome: 'Entrevias' },
+  { arquivo: 'rodovias-do-tiete.webp', nome: 'Rodovias do Tietê' },
+  { arquivo: 'ecorodovias.webp', nome: 'Ecorodovias' },
+  { arquivo: 'ccr.webp', nome: 'CCR' },
+  { arquivo: 'votorantim.webp', nome: 'Votorantim' },
+  { arquivo: 'ippuc.webp', nome: 'IPPUC' },
+  { arquivo: 'der-parana.webp', nome: 'DER Paraná' },
+  { arquivo: 'klabin.webp', nome: 'Klabin' }
+];
+
+export const notaClientes =
+  'As marcas acima pertencem aos respectivos titulares e são exibidas com anuência, ' +
+  'apenas para identificar contratantes atendidos. A exibição não implica endosso, ' +
+  'parceria comercial ou representação.';
