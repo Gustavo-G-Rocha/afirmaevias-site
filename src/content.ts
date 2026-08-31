@@ -549,6 +549,7 @@ export const clientes = [
   { arquivo: 'ecorodovias.webp', nome: 'Ecorodovias' },
   { arquivo: 'ccr.webp', nome: 'CCR' },
   { arquivo: 'votorantim.webp', nome: 'Votorantim' },
+  { arquivo: 'compasa.webp', nome: 'Compasa do Brasil' },
   { arquivo: 'prefeitura-curitiba.webp', nome: 'Prefeitura de Curitiba' },
   { arquivo: 'ippuc.webp', nome: 'IPPUC' },
   { arquivo: 'der-parana.webp', nome: 'DER Paraná' },
