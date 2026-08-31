@@ -1,0 +1,62 @@
+name: CI
+
+# Roda a cada push e em cada pull request para main. O objetivo é simples:
+# nenhuma alteração chega ao Railway sem o TypeScript compilar e os testes
+# passarem. Antes disso, a única verificação era eu rodar à mão.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # ci em vez de install: respeita o package-lock e falha se ele divergir
+      - run: npm ci
+
+      - name: Tipos e testes
+        run: npm test
+
+      - name: Build de produção
+        run: npm run build
+
+      # as views não passam pelo tsc: um erro de sintaxe em EJS só apareceria
+      # quando a página fosse aberta em produção
+      - name: Compilar os templates EJS
+        run: |
+          node -e "
+          const ejs = require('ejs');
+          const fs = require('fs');
+          const path = require('path');
+          const raiz = 'src/views';
+          let falhas = 0;
+          const varrer = (dir) => {
+            for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+              const alvo = path.join(dir, item.name);
+              if (item.isDirectory()) { varrer(alvo); continue; }
+              if (!alvo.endsWith('.ejs')) continue;
+              try {
+                ejs.compile(fs.readFileSync(alvo, 'utf8'), { filename: alvo });
+              } catch (erro) {
+                falhas++;
+                console.error('ERRO', alvo, '->', erro.message.split('\n')[0]);
+              }
+            }
+          };
+          varrer(raiz);
+          console.log(falhas ? falhas + ' template(s) com erro' : 'todos os templates compilam');
+          process.exit(falhas ? 1 : 0);
+          "
+
+      # os scripts do navegador também não passam pelo tsc
+      - name: Checar sintaxe dos scripts do cliente
+        run: for arquivo in public/js/*.js; do node --check "$arquivo" || exit 1; done

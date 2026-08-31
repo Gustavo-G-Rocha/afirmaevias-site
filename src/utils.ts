@@ -35,10 +35,16 @@ export function formatarDataCurta(valor: Date | string | null) {
 export function paraCsv(linhas: Record<string, any>[]) {
   if (linhas.length === 0) return '';
   const colunas = Object.keys(linhas[0]);
+  // Injecao de formula: o texto vem de formulario publico e a planilha avalia
+  // celulas que comecam com = + - @ (e com tab ou CR antes desses). As aspas
+  // do CSV nao protegem, porque o Excel as remove ao abrir. O apostrofo na
+  // frente faz a planilha tratar a celula como texto.
+  const perigoso = /^[\u0009\u000d]*[=+\-@]/;
   const escapar = (valor: any) => {
     if (valor === null || valor === undefined) return '';
-    const texto = String(valor).replace(/"/g, '""');
-    return `"${texto}"`;
+    const bruto = String(valor);
+    const seguro = perigoso.test(bruto) ? `'${bruto}` : bruto;
+    return `"${seguro.replace(/"/g, '""')}"`;
   };
   const corpo = linhas.map((linha) => colunas.map((coluna) => escapar(linha[coluna])).join(';'));
   return [colunas.join(';'), ...corpo].join('\r\n');

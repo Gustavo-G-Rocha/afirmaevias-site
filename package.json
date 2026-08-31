@@ -12,7 +12,8 @@
     "start": "node dist/server.js",
     "migrate": "node dist/migrate.js",
     "migrate:dev": "tsx src/migrate.ts",
-    "postbuild": "node -e \"require('fs').cpSync('src/views','dist/views',{recursive:true})\""
+    "postbuild": "node -e \"require('fs').cpSync('src/views','dist/views',{recursive:true})\"",
+    "test": "tsc -p tsconfig.json && node --test \"dist/**/*.test.js\""
   },
   "dependencies": {
     "@fastify/compress": "^9.2.0",
