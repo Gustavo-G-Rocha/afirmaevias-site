@@ -24,7 +24,7 @@
   <div class="conteiner">
     <ul class="pecas" role="list">
       <% pecas.forEach(function (peca, i) { %>
-        <li class="peca" style="--i: <%= i %>">
+        <li class="peca">
           <img src="/img/pecas/<%= peca.arquivo %>" width="289" height="440"
                loading="<%= i < 8 ? 'eager' : 'lazy' %>" decoding="async"
                alt="Camisa <%= peca.rotulo %>">

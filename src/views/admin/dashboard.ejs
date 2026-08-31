@@ -46,7 +46,9 @@
       <% const maximo = Math.max(1, ...serie.map(function (p) { return Number(p.total); })); %>
       <% serie.forEach(function (ponto) { %>
         <div class="grafico__coluna" title="<%= ponto.rotulo %>: <%= ponto.total %>">
-          <div class="grafico__barra" style="height: <%= Math.max(2, (Number(ponto.total) / maximo) * 100) %>%"></div>
+          <%# a altura vira classe em degraus de 2%: atributo style obrigaria a CSP
+              a permitir 'unsafe-inline' em style-src no painel inteiro %>
+          <div class="grafico__barra grafico__barra--<%= Math.max(2, Math.round((Number(ponto.total) / maximo) * 50) * 2) %>"></div>
           <span class="grafico__rotulo"><%= ponto.rotulo %></span>
         </div>
       <% }); %>

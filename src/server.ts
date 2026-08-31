@@ -78,11 +78,12 @@ app.addHook('onSend', async (req, reply, payload) => {
   reply.header('Referrer-Policy', 'strict-origin-when-cross-origin');
   reply.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
   // O site nao usa CDN, fonte externa nem analytics: da para fechar tudo.
-  // 'unsafe-inline' fica so em style-src por causa do --heroi-imagem no
-  // atributo style. Uma rota abre excecao para o player de video e recebe
+  // Nenhum atributo style sobrou nos templates, entao style-src pode ficar em
+  // 'self' puro: sem 'unsafe-inline' o navegador recusa qualquer estilo que um
+  // XSS tentasse injetar. Uma rota abre excecao para o player de video e recebe
   // politica propria, em vez de afrouxar o cabecalho de todas as paginas.
   const base =
-    "default-src 'self'; style-src 'self' 'unsafe-inline'; " +
+    "default-src 'self'; style-src 'self'; " +
     "font-src 'self'; connect-src 'self'; form-action 'self'; " +
     "frame-ancestors 'self'; base-uri 'self'; object-src 'none'";
   const comVideo = req.url.startsWith('/bruno_magalhaes');

@@ -1061,3 +1061,10 @@ body { padding-bottom: var(--espaco-cookies, 0px); }
   /* no celular o cartao encosta nas bordas: o respiro ja vem do conteiner */
   .servico__grade { border-radius: 12px; padding: 1.5rem 1.25rem; }
 }
+
+/* Imagem de fundo de cada herói. Ficava em atributo style no template, o que
+   obrigava a CSP a permitir 'unsafe-inline' em style-src no site inteiro.
+   Como a rota já está no body, a regra mora aqui e a diretiva pôde fechar. */
+body[data-rota="/"] .heroi--imagem { --heroi-imagem: url('/img/obra-viaduto.webp'); }
+body[data-rota="/afirma-evias"] .heroi--imagem { --heroi-imagem: url('/img/obra-entroncamento.webp'); }
+body[data-rota="/servicos"] .heroi--imagem { --heroi-imagem: url('/img/obra-pavimentacao.webp'); }
