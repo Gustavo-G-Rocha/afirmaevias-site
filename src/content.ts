@@ -402,7 +402,23 @@ export const privacidade = {
         'Registro do seu consentimento de cookies, guardado como prova de escolha.'
       ],
       paragrafos: [
-        'Não coletamos dados pessoais sensíveis por meio deste site e pedimos que você não os inclua em mensagens ou currículos.'
+        'Nenhum campo deste site pede dado pessoal sensível, e pedimos que você não inclua esse tipo de informação em mensagens ou currículos. Ainda assim, se um dado sensível chegar até nós — por exemplo, informação de saúde escrita em um currículo —, ele continua sob nossa responsabilidade como controlador: fica no mesmo armazenamento restrito dos demais registros, com acesso limitado à equipe que precisa dele, toda consulta anotada na trilha de auditoria, e é eliminado junto com o registro ao fim do prazo de guarda ou antes, se você pedir.'
+      ]
+    },
+    {
+      titulo: 'Candidatos menores de 18 anos',
+      paragrafos: [
+        'Abrimos vagas de estágio, que podem interessar a adolescentes a partir de 16 anos. O tratamento de dados de criança e adolescente exige cuidado próprio, previsto no art. 14 da LGPD, e deve atender ao melhor interesse do titular.',
+        'Se você tem menos de 18 anos, envie o currículo somente com a ciência e a autorização de um dos seus pais ou do seu responsável legal. Antes de avançar com a candidatura, nossa equipe de Recursos Humanos solicita essa autorização por escrito ao responsável e a arquiva junto do processo seletivo.',
+        'Não condicionamos a participação no processo seletivo ao fornecimento de mais dados do que o necessário para avaliar a candidatura, e o responsável legal pode, a qualquer momento, pedir acesso, correção ou eliminação dos dados pelo canal do Encarregado.'
+      ]
+    },
+    {
+      titulo: 'Dados de terceiros citados em relatos de integridade',
+      paragrafos: [
+        'Um relato de integridade quase sempre menciona outra pessoa além de quem relata. Essa pessoa também é titular de dados, e o tratamento dessas informações se apoia no legítimo interesse de manter o programa de compliance e apurar o que foi noticiado (art. 7º, IX), além do cumprimento da Lei 14.457/2022 quanto ao canal de denúncias.',
+        'O conteúdo de um relato não circula por e-mail nem por caixa compartilhada: o aviso que a equipe recebe informa apenas o protocolo, a categoria e se o relato é anônimo, e a leitura acontece no painel administrativo, com acesso restrito e registro de quem abriu cada registro.',
+        'Os direitos do art. 18 valem também para quem é citado em um relato. O exercício desses direitos, porém, é ponderado caso a caso com a proteção de quem relatou e com a integridade da apuração: atender um pedido de acesso não pode servir para identificar o denunciante nem para inviabilizar a investigação. Pedidos desse tipo devem ser dirigidos ao Encarregado, que responde no prazo legal explicando a decisão.'
       ]
     },
     {
@@ -560,3 +576,48 @@ export const notaClientes =
   'As marcas acima pertencem aos respectivos titulares e são exibidas com anuência, ' +
   'apenas para identificar contratantes atendidos. A exibição não implica endosso, ' +
   'parceria comercial ou representação.';
+
+// Declaração de acessibilidade. Só afirma o que foi efetivamente medido nas
+// páginas públicas — sem declarar nível A ou AA da WCAG, o que exigiria
+// auditoria completa com leitor de tela e viraria compromisso auditável em
+// edital. Se um cliente exigir o nível formal, contrate a auditoria e troque
+// este texto pelo laudo.
+export const acessibilidade = {
+  eyebrow: 'Acessibilidade',
+  titulo: 'Declaração de acessibilidade',
+  atualizadoEm: '31 de agosto de 2026',
+  intro:
+    'Este site foi construído para ser usado por qualquer pessoa, inclusive quem navega por teclado, ' +
+    'usa leitor de tela, precisa ampliar a página ou tem sensibilidade a movimento. Abaixo está o que ' +
+    'verificamos, o que ainda não verificamos e como falar conosco se algo não funcionar para você.',
+  verificado: {
+    titulo: 'O que foi verificado',
+    lista: [
+      'Todas as imagens têm texto alternativo descritivo, e as decorativas são marcadas como tal.',
+      'Cada página tem um único título de nível 1 e não pula níveis de título.',
+      'A página pode ser ampliada: não usamos parâmetros que bloqueiem o zoom no celular.',
+      'Toda a navegação funciona por teclado, com indicador de foco visível, e há link para pular direto ao conteúdo.',
+      'Todos os campos de formulário têm rótulo associado, e o erro de envio é anunciado e recebe o foco.',
+      'O contraste de texto foi medido nas páginas públicas: o menor valor encontrado é 5,69:1, acima do mínimo de 4,5:1.',
+      'Quem configura o sistema para reduzir movimento não vê as animações de entrada nem o movimento decorativo.',
+      'As tabelas e blocos largos rolam dentro da própria caixa, sem empurrar a página para os lados.'
+    ]
+  },
+  limites: {
+    titulo: 'O que ainda não foi verificado',
+    paragrafos: [
+      'Não realizamos auditoria completa com leitor de tela em todas as páginas, e por isso não declaramos ' +
+        'conformidade formal com um nível da WCAG 2.1. Declarar nível sem laudo seria assumir um compromisso ' +
+        'que não podemos comprovar.',
+      'Os documentos em PDF disponibilizados para download — certificado e código de conduta — não passaram ' +
+        'por adequação de acessibilidade. Se você precisar do conteúdo deles em outro formato, peça pelo canal abaixo ' +
+        'e enviamos.'
+    ]
+  },
+  contato: {
+    titulo: 'Encontrou uma barreira?',
+    texto:
+      'Escreva contando o que aconteceu, em qual página e com qual recurso de acessibilidade você navega. ' +
+      'Respondemos e corrigimos o que estiver ao nosso alcance.'
+  }
+};

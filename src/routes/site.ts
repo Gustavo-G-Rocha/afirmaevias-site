@@ -141,6 +141,16 @@ export async function rotasSite(app: FastifyInstance) {
     })
   );
 
+  app.get('/acessibilidade', async (_req, reply) =>
+    reply.view('pages/acessibilidade', {
+      titulo: 'Declaração de acessibilidade | Afirma E-vias',
+      descricao:
+        'O que foi verificado, o que ainda não foi e como relatar uma barreira de acessibilidade no site da Afirma E-vias.',
+      rotaAtual: '/acessibilidade',
+      acessibilidade: conteudo.acessibilidade
+    })
+  );
+
   app.get('/robots.txt', async (_req, reply) => {
     reply.type('text/plain');
     return `User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: ${
@@ -160,7 +170,8 @@ export async function rotasSite(app: FastifyInstance) {
       '/contato',
       '/politica-de-privacidade',
       '/termos-de-uso',
-      '/portal-do-titular'
+      '/portal-do-titular',
+      '/acessibilidade'
     ];
     const base = config.siteUrl.replace(/\/$/, '');
     reply.type('application/xml');
