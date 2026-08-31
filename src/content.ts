@@ -543,10 +543,13 @@ export const clientes = [
   { arquivo: 'via-araucaria.webp', nome: 'Via Araucária' },
   { arquivo: 'eixo-sp.webp', nome: 'EIXO SP' },
   { arquivo: 'entrevias.webp', nome: 'Entrevias' },
+  { arquivo: 'cart.webp', nome: 'CART — Concessionária Auto Raposo Tavares' },
+  { arquivo: 'via-appia.webp', nome: 'Via Appia' },
   { arquivo: 'rodovias-do-tiete.webp', nome: 'Rodovias do Tietê' },
   { arquivo: 'ecorodovias.webp', nome: 'Ecorodovias' },
   { arquivo: 'ccr.webp', nome: 'CCR' },
   { arquivo: 'votorantim.webp', nome: 'Votorantim' },
+  { arquivo: 'prefeitura-curitiba.webp', nome: 'Prefeitura de Curitiba' },
   { arquivo: 'ippuc.webp', nome: 'IPPUC' },
   { arquivo: 'der-parana.webp', nome: 'DER Paraná' },
   { arquivo: 'klabin.webp', nome: 'Klabin' }
