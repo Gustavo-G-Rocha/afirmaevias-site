@@ -1098,3 +1098,24 @@ body[data-rota="/servicos"] .heroi--imagem { --heroi-imagem: url('/img/obra-pavi
   width: auto; height: auto;
   object-fit: contain;
 }
+
+/* Dessaturado em repouso, cor no hover: o mural não compete com a página e a
+   marca acende quando a pessoa mira nela. Só onde existe hover de verdade —
+   no toque não há estado intermediário, e sem isto as marcas ficariam cinzas
+   para sempre no celular. */
+@media (hover: hover) {
+  .clientes__item img {
+    filter: grayscale(1);
+    opacity: 0.82;
+    transition: filter var(--transicao), opacity var(--transicao);
+  }
+  .clientes__item:hover img,
+  .clientes__item:focus-within img {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .clientes__item img { transition: none; }
+}
