@@ -180,6 +180,35 @@ export const colecoes: Record<string, Colecao> = {
   }
 };
 
+// As consultas do painel interpolam nome de tabela e de coluna direto na SQL,
+// porque parametro do Postgres so vale para valor, nao para identificador. Hoje
+// tudo vem deste mapa e nada do visitante - os valores de busca, status e
+// resposta passam por $1, $2 e assim por diante. O risco e futuro: uma coluna
+// nova escrita errada, ou algum dia montada a partir de entrada externa. Esta
+// checagem roda uma vez, ao subir, e derruba o processo em vez de deixar a
+// consulta quebrada chegar em producao.
+function conferirIdentificadores() {
+  const valido = /^[a-z_][a-z0-9_]*$/;
+  const problemas: string[] = [];
+  const checar = (valor: string, onde: string) => {
+    if (!valido.test(valor)) problemas.push(`${onde}: ${JSON.stringify(valor)}`);
+  };
+
+  for (const [chave, colecao] of Object.entries(colecoes)) {
+    checar(colecao.tabela, `${chave}.tabela`);
+    colecao.camposBusca.forEach((c) => checar(c, `${chave}.camposBusca`));
+    colecao.colunasCsv.forEach((c) => checar(c, `${chave}.colunasCsv`));
+    colecao.colunasLista.forEach((c) => checar(c.campo, `${chave}.colunasLista`));
+    colecao.camposDetalhe.forEach((c) => checar(c.campo, `${chave}.camposDetalhe`));
+  }
+
+  if (problemas.length > 0) {
+    throw new Error(`Identificador de SQL invalido em colecoes -> ${problemas.join('; ')}`);
+  }
+}
+
+conferirIdentificadores();
+
 async function exigirLogin(request: FastifyRequest, reply: FastifyReply) {
   const usuario = await usuarioDaRequisicao(request);
   if (!usuario) {

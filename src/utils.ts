@@ -51,6 +51,34 @@ export function paraCsv(linhas: Record<string, any>[]) {
 }
 
 /**
+ * Confere se o conteudo do arquivo bate com a extensao declarada.
+ *
+ * A validacao por MIME sozinha nao serve: o celular manda octet-stream para
+ * PDF legitimo, entao o tipo declarado precisa ceder para a extensao. Mas ai
+ * qualquer arquivo renomeado para .pdf passaria. Ler os primeiros bytes fecha
+ * a brecha - eles sao fixos por formato e nao dependem do que o cliente diz.
+ *
+ * Nao substitui antivirus: um PDF pode ser valido e malicioso ao mesmo tempo.
+ */
+export function assinaturaConfere(dados: Buffer, extensao: string) {
+  const comeca = (bytes: number[]) => bytes.every((b, i) => dados[i] === b);
+
+  switch (extensao.toLowerCase()) {
+    case 'pdf':
+      // %PDF-
+      return comeca([0x25, 0x50, 0x44, 0x46, 0x2d]);
+    case 'docx':
+      // OOXML e um zip: PK\x03\x04
+      return comeca([0x50, 0x4b, 0x03, 0x04]);
+    case 'doc':
+      // formato OLE2 do Word antigo
+      return comeca([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
+    default:
+      return false;
+  }
+}
+
+/**
  * Monta o Content-Disposition de um anexo.
  *
  * Dois problemas resolvidos aqui. O nome do arquivo vem do visitante e o

@@ -13,9 +13,19 @@ const ambiente = process.env.NODE_ENV ?? (noRailway ? 'production' : 'developmen
 
 // Sem SESSION_SECRET o segredo e sorteado a cada boot: as sessoes do painel
 // caem a cada redeploy, mas nenhum ambiente assina cookie com valor publicado.
+// O sorteio e a opcao menos ruim, nao a correta - por isso o aviso abaixo, para
+// a consequencia aparecer no log em vez de virar "o painel me desloga sozinho".
 const segredoSessao =
   process.env.SESSION_SECRET ??
   (ambiente === 'production' ? crypto.randomBytes(32).toString('hex') : 'dev-secret-nao-use-em-producao');
+
+if (!process.env.SESSION_SECRET && ambiente === 'production') {
+  console.warn(
+    '[atencao] SESSION_SECRET nao configurada. Um segredo aleatorio foi gerado para este boot, ' +
+      'entao todo mundo que estiver no /admin sera deslogado no proximo deploy. ' +
+      'Defina a variavel no painel do Railway: openssl rand -hex 32'
+  );
+}
 
 export const config = {
   ambiente,

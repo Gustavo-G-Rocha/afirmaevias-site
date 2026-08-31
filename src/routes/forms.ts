@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { consultar, consultarUm } from '../db.js';
 import { config } from '../config.js';
 import * as conteudo from '../content.js';
-import { emailValido, gerarProtocolo, hashIp, limpar } from '../utils.js';
+import { assinaturaConfere, emailValido, gerarProtocolo, hashIp, limpar } from '../utils.js';
 import { registrarAuditoria } from '../audit.js';
 import { avisarEquipe } from '../notificacoes.js';
 
@@ -138,6 +138,10 @@ export async function rotasFormularios(app: FastifyInstance) {
     if (arquivoGrande) erros.push('O currículo passou de 5 MB. Salve como PDF e tente de novo.');
     else if (!arquivoDados || arquivoDados.length === 0) erros.push('Anexe seu currículo.');
     else if (!tipoAceito) erros.push('O currículo precisa ser PDF, DOC ou DOCX.');
+    // aceitar a extensao quando o tipo chega generico abriu espaco para renomear
+    // qualquer arquivo para .pdf: os primeiros bytes precisam bater com o formato
+    else if (!assinaturaConfere(arquivoDados, extensao))
+      erros.push('O arquivo não parece ser um PDF, DOC ou DOCX de verdade. Salve de novo e reenvie.');
     if (!consentimento) erros.push('Marque o aceite para guardarmos seu currículo.');
 
     if (erros.length > 0) {
