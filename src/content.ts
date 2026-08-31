@@ -396,7 +396,7 @@ export const privacidade = {
       lista: [
         'Dados de contato que você digita nos formulários: nome, sobrenome, e-mail, telefone, empresa e o conteúdo da mensagem.',
         'Currículo enviado na página Trabalhe com a gente, incluindo os dados que você optar por incluir no arquivo.',
-        'Dados de requisição de titular: nome, e-mail e, quando necessário para confirmar sua identidade, número de documento.',
+        'Dados de requisição de titular: nome, e-mail e, opcionalmente, CPF — que pedimos apenas para localizar seus registros e confirmar que a requisição é sua.',
         'Relatos de integridade, que podem ser enviados de forma totalmente anônima.',
         'Dados técnicos de navegação: endereço IP, agente de usuário, páginas visitadas e data e hora do acesso.',
         'Registro do seu consentimento de cookies, guardado como prova de escolha.'
