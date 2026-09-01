@@ -3,14 +3,16 @@ import { consultar, consultarUm, contar } from '../db.js';
 import {
   abrirSessao,
   autenticar,
+  contaEstaFreada,
   fecharSessao,
   gerarHashSenha,
-  usuarioDaRequisicao,
-  type UsuarioAdmin
+  limparTentativas,
+  registrarTentativaFalha,
+  type UsuarioAdmin,
+  usuarioDaRequisicao
 } from '../auth.js';
 import { registrarAuditoria } from '../audit.js';
-import { cabecalhoAnexo } from '../utils.js';
-import { emailValido, limpar, paraCsv } from '../utils.js';
+import { cabecalhoAnexo, emailValido, limpar, paraCsv } from '../utils.js';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -261,10 +263,24 @@ export async function rotasAdmin(app: FastifyInstance) {
       const corpo = request.body as Record<string, string>;
       const email = limpar(corpo.email, 200);
       const senha = String(corpo.senha ?? '');
+
+      const freada = await contaEstaFreada(email);
+      // Mesmo freada, a senha e conferida: parar antes economizaria os ~264ms
+      // do bcrypt e devolveria a diferenca de tempo que a enumeracao explora.
       const usuario = await autenticar(email, senha);
 
-      if (!usuario) {
-        await registrarAuditoria({ acao: 'login.falhou', detalhes: { email }, ip: request.ip });
+      if (freada || !usuario) {
+        // Enquanto freada nao registramos nova tentativa. Se registrasse, um
+        // ataque continuo empurraria a janela para sempre e o administrador
+        // legitimo nunca mais entraria - o freio viraria o proprio ataque.
+        if (!freada) await registrarTentativaFalha(email, request.ip);
+        await registrarAuditoria({
+          acao: freada ? 'login.freado' : 'login.falhou',
+          detalhes: { email },
+          ip: request.ip
+        });
+        // Mensagem identica nos dois casos: dizer "conta bloqueada" confirmaria
+        // que a conta existe.
         return reply.code(401).view('admin/login', {
           titulo: 'Entrar',
           erro: 'E-mail ou senha não conferem.',
@@ -273,6 +289,8 @@ export async function rotasAdmin(app: FastifyInstance) {
           usuario: null
         });
       }
+
+      await limparTentativas(email);
 
       await abrirSessao(reply, usuario, request.ip, String(request.headers['user-agent'] ?? ''));
       await registrarAuditoria({ usuario, acao: 'login.ok', ip: request.ip });

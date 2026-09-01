@@ -34,6 +34,12 @@ const REGRAS: Regra[] = [
     sql: `DELETE FROM solicitacoes_lgpd WHERE criado_em < now() - interval '5 years'`
   },
   {
+    // o freio de login usa janela de 15 minutos; guardar mais que um dia so
+    // faria a tabela crescer sem servir para nada
+    rotulo: 'tentativas de login com mais de 24 horas',
+    sql: `DELETE FROM tentativas_login WHERE criado_em < now() - interval '24 hours'`
+  },
+  {
     rotulo: 'consentimentos de cookies com mais de 5 anos',
     sql: `DELETE FROM consentimentos_cookies WHERE criado_em < now() - interval '5 years'`
   }

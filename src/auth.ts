@@ -86,3 +86,38 @@ export async function usuarioDaRequisicao(request: FastifyRequest): Promise<Usua
 export async function limparSessoesExpiradas() {
   await consultar('DELETE FROM admin_sessoes WHERE expira_em < now()');
 }
+
+// ------------------------------------------------------------ freio por conta
+//
+// O limite do @fastify/rate-limit conta por IP. Quem tem muitos IPs contorna,
+// e o alvo obvio e a conta de administrador. Aqui a contagem e por e-mail.
+//
+// Duas decisoes deliberadas:
+//
+// 1. A janela expira sozinha. Nao ha bloqueio permanente nem desbloqueio
+//    manual, porque conta travada de vez transforma o freio em negacao de
+//    servico contra o proprio administrador - basta o atacante errar de
+//    proposito para deixar a equipe de fora.
+//
+// 2. A contagem usa o e-mail digitado, exista ou nao. Contar so para contas
+//    reais faria o site responder diferente para e-mail existente e inventado,
+//    o que devolveria a enumeracao de usuario pela porta dos fundos.
+const LIMITE_POR_CONTA = 8;
+const JANELA_MINUTOS = 15;
+
+export async function registrarTentativaFalha(email: string, ip: string) {
+  await consultar('INSERT INTO tentativas_login (email, ip) VALUES (lower($1), $2)', [email.trim(), ip]);
+}
+
+export async function contaEstaFreada(email: string) {
+  const linha = await consultarUm<{ total: string }>(
+    `SELECT count(*) AS total FROM tentativas_login
+      WHERE email = lower($1) AND criado_em > now() - ($2 || ' minutes')::interval`,
+    [email.trim(), String(JANELA_MINUTOS)]
+  );
+  return Number(linha?.total ?? 0) >= LIMITE_POR_CONTA;
+}
+
+export async function limparTentativas(email: string) {
+  await consultar('DELETE FROM tentativas_login WHERE email = lower($1)', [email.trim()]);
+}

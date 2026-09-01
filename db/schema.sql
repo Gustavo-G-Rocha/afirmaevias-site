@@ -143,3 +143,15 @@ CREATE INDEX IF NOT EXISTS idx_relatos_criado ON relatos_integridade (criado_em 
 CREATE INDEX IF NOT EXISTS idx_relatos_status ON relatos_integridade (status);
 CREATE INDEX IF NOT EXISTS idx_lgpd_criado ON solicitacoes_lgpd (criado_em DESC);
 CREATE INDEX IF NOT EXISTS idx_consent_criado ON consentimentos_cookies (criado_em DESC);
+
+-- Tentativas de login malsucedidas, para frear ataque de senha contra uma conta
+-- específica. A chave é o e-mail digitado, exista ele ou não: se só contássemos
+-- para contas reais, o comportamento diferente entre um e-mail existente e um
+-- inventado devolveria a enumeração de usuário que o hash de espera fechou.
+CREATE TABLE IF NOT EXISTS tentativas_login (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email           TEXT        NOT NULL,
+  ip              TEXT,
+  criado_em       TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_tentativas_email ON tentativas_login (email, criado_em DESC);
