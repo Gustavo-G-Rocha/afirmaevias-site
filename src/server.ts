@@ -78,6 +78,10 @@ app.addHook('onSend', async (req, reply, payload) => {
   reply.header('X-Frame-Options', 'SAMEORIGIN');
   reply.header('Referrer-Policy', 'strict-origin-when-cross-origin');
   reply.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  // isolamento entre origens: impede que outra pagina abra esta em popup e
+  // mantenha referencia ao window, e que terceiros embutam nossos recursos
+  reply.header('Cross-Origin-Opener-Policy', 'same-origin');
+  reply.header('Cross-Origin-Resource-Policy', 'same-origin');
   // O site nao usa CDN, fonte externa nem analytics: da para fechar tudo.
   // Nenhum atributo style sobrou nos templates, entao style-src pode ficar em
   // 'self' puro: sem 'unsafe-inline' o navegador recusa qualquer estilo que um
@@ -100,9 +104,10 @@ app.addHook('onSend', async (req, reply, payload) => {
   return payload;
 });
 
-app.get('/health', async () => {
+app.get('/health', async (_req, reply) => {
   await pool.query('SELECT 1');
-  return { ok: true, ambiente: config.ambiente };
+  reply.header('Cache-Control', 'no-store');
+  return { ok: true };
 });
 
 await app.register(rotasSite);

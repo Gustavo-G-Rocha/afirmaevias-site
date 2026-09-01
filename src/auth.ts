@@ -19,12 +19,21 @@ export async function gerarHashSenha(senha: string) {
   return bcrypt.hash(senha, 12);
 }
 
+// Hash descartavel, so para gastar tempo. Sem ele, um e-mail inexistente
+// respondia na hora e um e-mail real levava os ~264ms do bcrypt: a diferenca e
+// visivel pela rede e revela quais enderecos sao administradores. Comparar
+// contra este hash iguala os dois caminhos.
+const HASH_DE_ESPERA = bcrypt.hashSync('comparacao-de-tempo-constante', 12);
+
 export async function autenticar(email: string, senha: string): Promise<UsuarioAdmin | null> {
   const usuario = await consultarUm<UsuarioAdmin & { senha_hash: string }>(
     'SELECT id, nome, email, papel, ativo, senha_hash FROM admin_usuarios WHERE lower(email) = lower($1)',
     [email.trim()]
   );
-  if (!usuario || !usuario.ativo) return null;
+  if (!usuario || !usuario.ativo) {
+    await bcrypt.compare(senha, HASH_DE_ESPERA);
+    return null;
+  }
   const confere = await bcrypt.compare(senha, usuario.senha_hash);
   if (!confere) return null;
   return { id: usuario.id, nome: usuario.nome, email: usuario.email, papel: usuario.papel, ativo: usuario.ativo };
