@@ -150,6 +150,43 @@ setInterval(() => {
 }, 24 * 60 * 60 * 1000).unref();
 aplicarRetencao().catch(() => {});
 
+// O Railway manda SIGTERM a cada redeploy. Sem tratar, a requisicao que estava
+// no meio do caminho e cortada e o pool do Postgres morre com o processo, sem
+// devolver as conexoes. Quem estivesse enviando um formulario nesse instante
+// veria erro de rede em vez de resposta.
+//
+// app.close() para de aceitar conexao nova e espera as que estao em andamento;
+// so depois o pool fecha. O prazo existe porque encerramento pendurado e pior
+// que encerramento abrupto: o Railway mata o processo de qualquer forma e o
+// deploy fica travado esperando.
+let encerrando = false;
+
+async function encerrar(sinal: string) {
+  if (encerrando) return;
+  encerrando = true;
+  app.log.info(`${sinal} recebido: encerrando`);
+
+  const prazo = setTimeout(() => {
+    app.log.error('encerramento passou de 10s, saindo a forca');
+    process.exit(1);
+  }, 10_000);
+  prazo.unref();
+
+  try {
+    await app.close();
+    await pool.end();
+    clearTimeout(prazo);
+    process.exit(0);
+  } catch (erro) {
+    app.log.error(erro);
+    process.exit(1);
+  }
+}
+
+for (const sinal of ['SIGTERM', 'SIGINT'] as const) {
+  process.on(sinal, () => void encerrar(sinal));
+}
+
 try {
   await app.listen({ port: config.porta, host: '0.0.0.0' });
   console.log(`site no ar em http://0.0.0.0:${config.porta}`);
