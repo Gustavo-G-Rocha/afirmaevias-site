@@ -621,3 +621,13 @@ export const acessibilidade = {
       'Respondemos e corrigimos o que estiver ao nosso alcance.'
   }
 };
+
+// Imagem de fundo de cada herói, por rota. Existe para o <head> conseguir
+// pré-carregar a imagem: ela é definida em CSS (background-image), e o
+// navegador só a descobre depois de baixar e interpretar a folha inteira —
+// era o que segurava o LCP. Se mudar aqui, mude também a regra em site.css.
+export const heroiPorRota: Record<string, string> = {
+  '/': '/img/obra-viaduto.webp',
+  '/afirma-evias': '/img/obra-entroncamento.webp',
+  '/servicos': '/img/obra-pavimentacao.webp'
+};

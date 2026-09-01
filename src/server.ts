@@ -67,6 +67,7 @@ await app.register(view, {
     navegacao: conteudo.navegacao,
     empresa: conteudo.empresa,
     cookiesCategorias: conteudo.cookies.categorias,
+    heroiPorRota: conteudo.heroiPorRota,
     asset,
     dadosEstruturados
   }

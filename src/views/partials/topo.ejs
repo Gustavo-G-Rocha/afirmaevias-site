@@ -24,7 +24,15 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Afirma E-vias — engenharia viária">
 <meta name="twitter:card" content="summary_large_image">
+<%# A imagem do heroi vem de background-image no CSS: sem este preload o
+    navegador so a descobre depois de baixar e interpretar a folha inteira,
+    e ela e justamente o maior elemento da tela. %>
+<% if (heroiPorRota[rotaAtual]) { %>
+<link rel="preload" href="<%= heroiPorRota[rotaAtual] %>" as="image" fetchpriority="high">
+<% } %>
 <link rel="preload" href="/fontes/poppins-300.woff2" as="font" type="font/woff2" crossorigin>
+<%# 600 aparece na sobrancelha e no botao, ambos acima da dobra %>
+<link rel="preload" href="/fontes/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="<%= asset('/css/site.css') %>">
 <script type="application/ld+json"><%- dadosEstruturados(rotaAtual, titulo, descricao) %></script>
 </head>
@@ -34,7 +42,7 @@
 <header class="cabecalho" id="cabecalho">
   <div class="cabecalho__interno">
     <a class="marca" href="/" aria-label="Afirma E-vias, página inicial">
-      <img src="/img/logo-horizontal-claro.png" alt="Afirma E-vias — engenharia viária" width="200" height="44">
+      <img src="/img/logo-horizontal-claro.webp" alt="Afirma E-vias — engenharia viária" width="200" height="44">
     </a>
 
     <nav class="navegacao" id="navegacao" aria-label="Navegação principal">
