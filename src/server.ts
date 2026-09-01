@@ -121,7 +121,8 @@ app.setNotFoundHandler((request, reply) => {
   return reply.code(404).view('pages/404', {
     titulo: 'Página não encontrada',
     descricao: 'O endereço que você acessou não existe.',
-    rotaAtual: ''
+    rotaAtual: '',
+    naoIndexar: true
   });
 });
 
@@ -132,11 +133,20 @@ app.setErrorHandler((erro: any, request, reply) => {
     413: 'O arquivo enviado passou do tamanho permitido.',
     400: 'Os dados enviados não foram aceitos. Confira o formulário e tente de novo.'
   };
+  // A pagina dizia "quebrou do nosso lado" para tudo, inclusive 400 e 413, que
+  // sao dado que o visitante mandou. Culpar o servidor por isso confunde quem
+  // esta tentando corrigir o proprio envio.
+  const nossoLado = status >= 500;
   return reply.code(status).view('pages/erro', {
-    titulo: 'Algo quebrou aqui',
+    titulo: nossoLado ? 'Algo quebrou aqui' : 'Não deu para seguir',
     descricao: 'Tivemos um problema ao carregar esta página.',
     rotaAtual: '',
-    mensagem: conhecidos[status] ?? (status === 500 ? 'Erro interno do servidor.' : erro.message)
+    naoIndexar: true,
+    cabecalho: nossoLado ? 'Algo quebrou<br>aqui do nosso lado.' : 'Não deu<br>para seguir.',
+    ajuda: nossoLado,
+    // erro.message de um 4xx desconhecido pode carregar detalhe interno de
+    // plugin ou de validacao; nao e informacao para o visitante
+    mensagem: conhecidos[status] ?? (nossoLado ? 'Erro interno do servidor.' : 'A requisição não pôde ser atendida.')
   });
 });
 
