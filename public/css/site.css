@@ -929,7 +929,10 @@ input[type='reset'] {
    formulário e vazava a viewport em toda página com formulário. */
 .formulario { grid-template-columns: minmax(0, 1fr); }
 .formulario--linha { grid-template-columns: minmax(0, 1fr) auto; }
-.campo { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+/* align-content start impede que as linhas internas do campo se distribuam na
+   altura sobrando: sem isto, um campo com texto de ajuda empurra o proprio
+   input para cima e desalinha do campo vizinho, que nao tem ajuda nenhuma. */
+.campo { grid-template-columns: minmax(0, 1fr); min-width: 0; align-content: start; }
 .campo input, .campo select, .campo textarea { width: 100%; min-width: 0; }
 
 /* min(100%, 160px) impede que as duas colunas somem mais que o contêiner
