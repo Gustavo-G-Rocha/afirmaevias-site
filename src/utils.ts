@@ -11,9 +11,21 @@ export function hashIp(ip: string) {
   return crypto.createHash('sha256').update(ip).digest('hex').slice(0, 32);
 }
 
+// Controles a remover: os C0 sem \n e \t, o DEL e a faixa C1. O trim() so
+// limpava as pontas, entao um caractere de controle no meio do texto seguia
+// para o banco, para a exportacao e para o e-mail de aviso.
+//
+// O byte nulo e o caso que passa de estetico: o Postgres recusa esse byte em
+// coluna de texto e devolve erro, entao um campo com ele derrubava o envio
+// inteiro com 500 em vez de gravar.
+//
+// \n e \t ficam de proposito: mensagem, relato e detalhes sao texto livre, e
+// tirar a quebra de linha embolaria o que a pessoa escreveu em paragrafos.
+const CONTROLES = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/g;
+
 export function limpar(valor: unknown, tamanhoMaximo = 2000) {
   if (typeof valor !== 'string') return '';
-  return valor.trim().slice(0, tamanhoMaximo);
+  return valor.replace(/\r\n?/g, '\n').replace(CONTROLES, '').trim().slice(0, tamanhoMaximo);
 }
 
 export function emailValido(email: string) {

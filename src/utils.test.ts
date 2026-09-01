@@ -20,6 +20,31 @@ test('limpar corta espaço das pontas e respeita o tamanho máximo', () => {
   assert.equal(limpar(42 as unknown as string), '');
 });
 
+// Regressão: byte nulo em campo de texto faz o Postgres recusar a linha
+// inteira, então um envio com esse byte derrubava o formulário com 500.
+// Os controles são montados por código: digitá-los literalmente aqui faria
+// o caractere se perder na primeira ferramenta que tocasse o arquivo.
+const ctrl = (codigo: number) => String.fromCharCode(codigo);
+
+test('limpar remove caracteres de controle do meio do texto', () => {
+  assert.equal(limpar('an' + ctrl(0) + 'tes'), 'antes');       // NUL
+  assert.equal(limpar('a' + ctrl(7) + 'b' + ctrl(27) + 'c'), 'abc'); // BEL e ESC
+  assert.equal(limpar('x' + ctrl(127) + 'y'), 'xy');           // DEL
+  assert.equal(limpar('z' + ctrl(155)), 'z');                  // faixa C1
+});
+
+// Mensagem, relato e detalhes são texto livre: tirar a quebra de linha
+// embolaria em um bloco só o que a pessoa escreveu em parágrafos.
+test('limpar preserva quebra de linha e tabulação, e normaliza CRLF', () => {
+  const LF = ctrl(10);
+  const TAB = ctrl(9);
+  const CR = ctrl(13);
+  assert.equal(limpar('linha um' + LF + 'linha dois'), 'linha um' + LF + 'linha dois');
+  assert.equal(limpar('col' + TAB + 'una'), 'col' + TAB + 'una');
+  assert.equal(limpar('windows' + CR + LF + 'unix'), 'windows' + LF + 'unix');
+  assert.equal(limpar('mac' + CR + 'antigo'), 'mac' + LF + 'antigo');
+});
+
 test('emailValido aceita endereço comum e recusa os quebrados', () => {
   for (const bom of ['a@b.co', 'gustavo.rocha@afirmaevias.com.br', 'x+y@dominio.com']) {
     assert.equal(emailValido(bom), true, bom);
