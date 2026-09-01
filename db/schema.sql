@@ -133,3 +133,13 @@ CREATE TABLE IF NOT EXISTS auditoria (
   criado_em       TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_auditoria_criado ON auditoria (criado_em DESC);
+
+-- Índices que faltavam para as consultas que o painel e o descarte realmente
+-- fazem: as três tabelas abaixo são listadas com ORDER BY criado_em DESC, e
+-- duas delas também são varridas por data pela rotina de retenção. Sem estes
+-- índices o Postgres faz varredura completa, o que só aparece quando a tabela
+-- cresce — consentimentos_cookies ganha uma linha por escolha de visitante.
+CREATE INDEX IF NOT EXISTS idx_relatos_criado ON relatos_integridade (criado_em DESC);
+CREATE INDEX IF NOT EXISTS idx_relatos_status ON relatos_integridade (status);
+CREATE INDEX IF NOT EXISTS idx_lgpd_criado ON solicitacoes_lgpd (criado_em DESC);
+CREATE INDEX IF NOT EXISTS idx_consent_criado ON consentimentos_cookies (criado_em DESC);

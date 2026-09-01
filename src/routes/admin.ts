@@ -209,6 +209,34 @@ function conferirIdentificadores() {
 
 conferirIdentificadores();
 
+// A tela de detalhe fazia SELECT * e depois apagava arquivo_dados do objeto.
+// Apagar em JS nao evita nada: o curriculo inteiro, ate 5 MB, ja veio do
+// Postgres para a memoria antes disso. Aqui a coluna binaria sai da propria
+// consulta. A lista vem do catalogo do banco, entao vale para qualquer coluna
+// binaria que venha a existir, sem precisar manter relacao a mao.
+const colunasEmCache = new Map<string, string>();
+
+async function colunasSemBinario(tabela: string) {
+  const pronta = colunasEmCache.get(tabela);
+  if (pronta) return pronta;
+
+  const linhas = await consultar<{ column_name: string }>(
+    `SELECT column_name FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = $1 AND data_type <> 'bytea'
+      ORDER BY ordinal_position`,
+    [tabela]
+  );
+  const nomes = linhas.map((l) => l.column_name);
+  // os nomes vem do catalogo, mas seguem a mesma regra dos demais
+  // identificadores interpolados: se algum destoar, e melhor falhar aqui
+  if (nomes.length === 0 || nomes.some((n) => !/^[a-z_][a-z0-9_]*$/.test(n))) {
+    throw new Error(`Colunas inesperadas em ${tabela}`);
+  }
+  const lista = nomes.join(', ');
+  colunasEmCache.set(tabela, lista);
+  return lista;
+}
+
 async function exigirLogin(request: FastifyRequest, reply: FastifyReply) {
   const usuario = await usuarioDaRequisicao(request);
   if (!usuario) {
@@ -368,9 +396,11 @@ export async function rotasAdmin(app: FastifyInstance) {
     const colecao = colecoes[chave];
     if (!colecao) return reply.callNotFound();
 
-    const registro = await consultarUm(`SELECT * FROM ${colecao.tabela} WHERE id = $1`, [id]);
+    const registro = await consultarUm(
+      `SELECT ${await colunasSemBinario(colecao.tabela)} FROM ${colecao.tabela} WHERE id = $1`,
+      [id]
+    );
     if (!registro) return reply.callNotFound();
-    delete (registro as any).arquivo_dados;
 
     return reply.view('admin/detalhe', {
       titulo: `${colecao.singular} · ${String(registro.protocolo ?? registro.nome ?? id).slice(0, 40)}`,
