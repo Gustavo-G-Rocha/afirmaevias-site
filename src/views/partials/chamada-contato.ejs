@@ -5,9 +5,9 @@
       <h2 class="titulo-display titulo-display--medio" data-revelar>Abrindo caminhos,<br>construindo o futuro.<br><em>Vamos juntos?</em></h2>
       <p class="chamada__texto" data-revelar>Conte o desafio da sua obra. Respondemos em até um dia útil.</p>
       <ul class="chamada__contatos">
-        <li data-revelar="esquerda"><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg></span><%= empresa.telefoneCelular %> · WhatsApp</a></li>
-        <li data-revelar="esquerda"><a href="tel:+554131238550"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-telefone"/></svg></span><%= empresa.telefoneFixo %></a></li>
-        <li data-revelar="esquerda"><a href="mailto:<%= empresa.email %>"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-email"/></svg></span><%= empresa.email %></a></li>
+        <li data-revelar="esquerda"><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg></span><span class="contato__rotulo" aria-hidden="true">WhatsApp</span><span class="contato__valor"><%= empresa.telefoneCelular %> · WhatsApp</span></a></li>
+        <li data-revelar="esquerda"><a href="tel:+554131238550"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-telefone"/></svg></span><span class="contato__rotulo" aria-hidden="true">Ligar</span><span class="contato__valor"><%= empresa.telefoneFixo %></span></a></li>
+        <li data-revelar="esquerda"><a href="mailto:<%= empresa.email %>"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-email"/></svg></span><span class="contato__rotulo" aria-hidden="true">E-mail</span><span class="contato__valor"><%= empresa.email %></span></a></li>
       </ul>
     </div>
 

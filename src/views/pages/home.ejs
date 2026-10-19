@@ -41,7 +41,8 @@
       <h2 class="titulo-secao" data-revelar>Serviços que transformam o seu projeto viário em <em>realidade</em>.</h2>
     </div>
 
-    <div class="grade-cartoes">
+    <%# no celular os cartoes viram carrossel de arrastar (mesma barra de progresso da galeria) %>
+    <div class="grade-cartoes" data-galeria>
       <% home.servicosResumo.forEach(function (servico, i) { %>
         <a class="cartao" href="<%= servico.href %>" data-revelar>
           <span class="cartao__topo" aria-hidden="true">
@@ -54,8 +55,9 @@
         </a>
       <% }); %>
     </div>
+    <div class="galeria__progresso" aria-hidden="true"><span></span></div>
 
-    <a class="botao botao--escuro" href="/servicos" data-revelar>Saiba mais sobre nossos serviços</a>
+    <a class="botao botao--escuro" href="/servicos" data-revelar>Ver todos os serviços</a>
   </div>
 </section>
 

@@ -354,6 +354,22 @@ export const aplicativo = {
       vitrine: 6
     },
     {
+      arquivo: 'laboratorio-inicio.webp',
+      app: 'Laboratório',
+      titulo: 'Tela inicial',
+      alt: 'Tela inicial do aplicativo do laboratório: saudação ao usuário e indicadores de clientes, ensaios do catálogo, fichas de serviço e amostras recebidas na semana.',
+      barra: 'escura',
+      vitrine: 8
+    },
+    {
+      arquivo: 'laboratorio-granulometria.webp',
+      app: 'Laboratório',
+      titulo: 'Ensaio de granulometria',
+      alt: 'Ensaio de granulometria preenchido no aplicativo: peneiras com a porcentagem passante calculada automaticamente para as duas determinações.',
+      barra: 'escura',
+      vitrine: 10
+    },
+    {
       arquivo: 'controle-dashboard.webp',
       app: 'Controle de obra',
       titulo: 'Dashboard',
@@ -376,6 +392,22 @@ export const aplicativo = {
       alt: 'Lista de ensaios realizados na obra: busca, filtros de período e registros com tipo, situação de aprovação, data e obra.',
       barra: 'escura',
       vitrine: 5
+    },
+    {
+      arquivo: 'controle-checklist-concretagem.webp',
+      app: 'Controle de obra',
+      titulo: 'Checklist de concretagem',
+      alt: 'Relatório de checklist de concretagem no aplicativo: dados da obra, condições climáticas, observações e ensaio de slump da carga de concreto, com resultado conforme.',
+      barra: 'clara',
+      vitrine: 7
+    },
+    {
+      arquivo: 'controle-inicio.webp',
+      app: 'Controle de obra',
+      titulo: 'Tela inicial',
+      alt: 'Tela inicial do aplicativo de controle de obra: faixa de boas-vindas com foto da equipe em campo e filtros por regional, obra, status, tipo de registro e período.',
+      barra: 'escura',
+      vitrine: 9
     }
   ] as TelaApp[]
 };

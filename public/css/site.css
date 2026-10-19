@@ -636,7 +636,7 @@ p, li { text-wrap: pretty; }
   inset: 0;
   z-index: -1;
   background: linear-gradient(180deg,
-    rgba(0, 35, 59, 0.5) 0%, rgba(0, 35, 59, 0.78) 34%, var(--azul) 78%, var(--azul) 100%);
+    rgba(0, 35, 59, 0.3) 0%, rgba(0, 35, 59, 0.55) 28%, rgba(0, 35, 59, 0.92) 60%, var(--azul) 80%);
 }
 
 /* GRAFISMO: a faixa de rodagem. Traços de larguras diferentes, derivados
@@ -673,6 +673,14 @@ p, li { text-wrap: pretty; }
 .heroi__apoio { color: var(--claro-70); max-width: 46ch; font-size: 0.95rem; margin: 0; }
 .heroi__acoes { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
 .heroi__acoes .botao { flex: 1 1 100%; }
+
+/* Home no celular: a primeira tela fica com o essencial - sobrancelha,
+   título, uma frase e uma ação. O segundo parágrafo volta no desktop, e o
+   segundo botão vira link discreto em vez de outra pílula de largura toda. */
+.heroi--inicio .heroi__apoio { display: none; }
+.heroi--inicio .heroi__acoes { flex-direction: column; align-items: stretch; gap: 0.25rem; margin-top: 1.75rem; }
+.heroi--inicio .heroi__acoes .botao { flex: none; }
+.heroi--inicio .heroi__acoes .botao--fantasma { border-color: transparent; min-height: 2.75rem; }
 .heroi .conteiner > .botao { margin-top: 0.75rem; }
 
 /* cartão de vidro com o número de destaque (só a partir do tablet: no
@@ -709,6 +717,8 @@ p, li { text-wrap: pretty; }
 
 @media (min-width: 600px) {
   .heroi__acoes .botao { flex: 0 0 auto; }
+  .heroi--inicio .heroi__acoes { flex-direction: row; align-items: center; gap: 0.75rem; margin-top: 2rem; }
+  .heroi--inicio .heroi__acoes .botao--fantasma { border-color: var(--claro-45); min-height: 3rem; }
 }
 
 @media (min-width: 900px) {
@@ -716,6 +726,7 @@ p, li { text-wrap: pretty; }
   .heroi--pagina { padding-block: 6.5rem 5.5rem; }
   .heroi--documento { padding-block: 5rem 4rem; }
   .heroi--inicio { padding-block: 7rem 8.5rem; }
+  .heroi--inicio .heroi__apoio { display: block; }
 
   .heroi--imagem::before { background-position: center right; }
   .heroi--imagem::after {
@@ -872,13 +883,33 @@ p, li { text-wrap: pretty; }
 
 /* ------------------------------------------------------------- cartões */
 
+/* no celular os quatro cartões empilhados ocupavam quase duas telas: viram
+   carrossel de arrastar, com a borda do próximo aparecendo como convite */
 .grade-cartoes {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
   gap: 1rem;
-  margin-bottom: 2.5rem;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0.5rem var(--gutter) 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
 }
-@media (min-width: 600px) { .grade-cartoes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; } }
+.grade-cartoes::-webkit-scrollbar { display: none; }
+.grade-cartoes > .cartao { flex: 0 0 78%; scroll-snap-align: start; }
+.grade-cartoes + .galeria__progresso { width: 100%; margin: 0 0 2rem; }
+@media (min-width: 600px) {
+  .grade-cartoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin: 0 0 2.5rem;
+    padding: 0;
+    overflow: visible;
+  }
+  .grade-cartoes + .galeria__progresso { display: none; }
+}
 @media (min-width: 1100px) { .grade-cartoes { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 /* Cartão, recurso, valor e bloco compartilham a mesma física: sobem no
@@ -965,6 +996,9 @@ p, li { text-wrap: pretty; }
 .destaque-app { overflow: hidden; }
 .destaque-app__grade { display: grid; gap: 2.75rem; align-items: center; }
 .destaque-app .botao { margin-top: 0.75rem; }
+/* no celular o parágrafo já diz o mesmo que a lista, e o disco mostra */
+.destaque-app .lista-marcada { display: none; }
+@media (min-width: 600px) { .destaque-app .lista-marcada { display: block; } }
 /* ---------------------------------------------------- moldura de celular */
 
 /* Celular desenhado só com CSS em volta do print do app. Tudo dentro dele é
@@ -1099,6 +1133,8 @@ p, li { text-wrap: pretty; }
 .vitrine__vaga[data-passo='-3'] { rotate: calc(var(--angulo) * -3); }
 .vitrine__vaga[data-passo='4'] { rotate: calc(var(--angulo) * 4); }
 .vitrine__vaga[data-passo='-4'] { rotate: calc(var(--angulo) * -4); }
+.vitrine__vaga[data-passo='5'] { rotate: calc(var(--angulo) * 5); }
+.vitrine__vaga[data-passo='-5'] { rotate: calc(var(--angulo) * -5); }
 @media (hover: hover) {
   .vitrine__vaga[data-passo='1']:hover,
   .vitrine__vaga[data-passo='-1']:hover { filter: brightness(1.08); }
@@ -1141,7 +1177,7 @@ p, li { text-wrap: pretty; }
 .vitrine__marca {
   position: relative;
   display: block;
-  width: 1.1rem; height: 1.75rem;
+  width: 0.65rem; height: 1.75rem;
   padding: 0;
   background: none; border: 0;
   cursor: pointer;
@@ -1157,7 +1193,11 @@ p, li { text-wrap: pretty; }
 .vitrine__marca::before { background: var(--claro-18); }
 .vitrine__marca:hover::before { background: var(--claro-45); }
 .vitrine__marca span { background: var(--verde-claro); transform-origin: left; transform: scaleX(0); }
-.vitrine__marca.is-ativo { width: 2.75rem; }
+.vitrine__marca.is-ativo { width: 1.9rem; }
+@media (min-width: 600px) {
+  .vitrine__marca { width: 1.1rem; }
+  .vitrine__marca.is-ativo { width: 2.75rem; }
+}
 /* a barra da marca ativa é o relógio do disco: quando ela termina de
    encher, o site.js gira para a próxima tela */
 .vitrine__marca.is-ativo span { animation: tempo-vitrine 4200ms linear forwards; }
@@ -1232,13 +1272,13 @@ p, li { text-wrap: pretty; }
     margin-inline: auto;
     padding: 1rem 0 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 3.5rem 2rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3.5rem 1.25rem;
     overflow: visible;
   }
   /* a largura vai também no font-size da moldura: precisa ser medida em px
      ou vw, nunca em %, que no font-size se refere à fonte do pai */
-  .telas-app__item { --celular-largura: clamp(220px, 19vw, 264px); }
+  .telas-app__item { --celular-largura: clamp(170px, 14.5vw, 215px); }
   .telas-app ~ .galeria__progresso { display: none; }
 }
 
@@ -1929,7 +1969,7 @@ body.cabecalho-escondido .indice { top: 0; }
 @media (min-width: 900px) {
   .chamada__grade { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(2.5rem, 5vw, 5rem); }
 }
-.chamada .titulo-display { margin-bottom: 1.25rem; color: var(--off-white); }
+.chamada .titulo-display { margin-bottom: 1.25rem; color: var(--off-white); font-size: clamp(1.8rem, 1.2rem + 2.8vw, 3.6rem); }
 .chamada__texto { color: var(--claro-70); max-width: 40ch; }
 
 /* canais de contato como botões grandes, fáceis de acertar com o dedo */
@@ -1956,6 +1996,28 @@ body.cabecalho-escondido .indice { top: 0; }
   color: var(--off-white);
 }
 .contato__icone .icone { width: 1.1rem; height: 1.1rem; }
+/* no fim de cada página os três canais viram atalhos lado a lado no
+   celular: ícone e uma palavra. O número e o e-mail por extenso aparecem a
+   partir do tablet e na página de contato. */
+.chamada .chamada__contatos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; max-width: none; }
+.chamada .chamada__contatos a {
+  flex-direction: column; justify-content: center;
+  gap: 0.55rem;
+  padding: 0.95rem 0.4rem;
+  font-size: 0.8rem; text-align: center;
+}
+.chamada .chamada__contatos a:hover { transform: translateY(-3px); }
+.contato__rotulo { display: none; }
+.chamada .contato__rotulo { display: block; }
+.chamada .contato__valor { display: none; }
+@media (min-width: 600px) {
+  .chamada .chamada__contatos { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; max-width: 26rem; }
+  .chamada .chamada__contatos a { flex-direction: row; justify-content: flex-start; gap: 0.9rem; padding: 0.7rem 1rem 0.7rem 0.7rem; font-size: 0.98rem; text-align: left; }
+  .chamada .chamada__contatos a:hover { transform: translateX(4px); }
+  .chamada .contato__rotulo { display: none; }
+  .chamada .contato__valor { display: inline; }
+}
+
 .chamada__contatos--escuro a {
   color: var(--texto);
   background: var(--superficie);
@@ -2270,6 +2332,9 @@ body.cabecalho-escondido .indice { top: 0; }
   pointer-events: none;
 }
 .flutuante--topo.is-visivel { opacity: 1; transform: none; pointer-events: auto; }
+/* no celular o cabeçalho já volta quando a pessoa sobe a tela; dois botões
+   flutuantes empilhados tapavam o conteúdo da borda direita */
+@media (max-width: 599px) { .flutuante--topo { display: none; } }
 .flutuante--topo.is-visivel:hover { transform: translateY(-3px); }
 .flutuante--topo .icone { width: 1.15rem; height: 1.15rem; }
 /* anel que fecha conforme a leitura avança */

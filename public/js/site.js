@@ -438,26 +438,30 @@ recurso('vitrine', () => {
 
 // --------------------------------------------- carrossel da galeria (home)
 
+// vale para todo carrossel com data-galeria seguido da sua barra de progresso
 recurso('galeria', () => {
-  const galeria = document.querySelector('[data-galeria]');
-  const barra = document.querySelector('.galeria__progresso span');
-  if (!galeria || !barra) return;
+  document.querySelectorAll('[data-galeria]').forEach((galeria) => {
+    const barra = galeria.nextElementSibling?.matches('.galeria__progresso')
+      ? galeria.nextElementSibling.querySelector('span')
+      : null;
+    if (!barra) return;
 
-  let pendente = 0;
-  const atualizar = () => {
-    pendente = 0;
-    const visto = (galeria.scrollLeft + galeria.clientWidth) / galeria.scrollWidth;
-    barra.style.transform = `scaleX(${Math.min(1, visto).toFixed(3)})`;
-  };
-  galeria.addEventListener(
-    'scroll',
-    () => {
-      if (!pendente) pendente = requestAnimationFrame(atualizar);
-    },
-    { passive: true }
-  );
-  window.addEventListener('resize', atualizar, { passive: true });
-  atualizar();
+    let pendente = 0;
+    const atualizar = () => {
+      pendente = 0;
+      const visto = (galeria.scrollLeft + galeria.clientWidth) / galeria.scrollWidth;
+      barra.style.transform = `scaleX(${Math.min(1, visto).toFixed(3)})`;
+    };
+    galeria.addEventListener(
+      'scroll',
+      () => {
+        if (!pendente) pendente = requestAnimationFrame(atualizar);
+      },
+      { passive: true }
+    );
+    window.addEventListener('resize', atualizar, { passive: true });
+    atualizar();
+  });
 });
 
 // ------------------------------------------------ pausa da esteira de marcas
