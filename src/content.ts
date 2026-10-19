@@ -330,36 +330,44 @@ export const aplicativo = {
   // começa na frente); a galeria da página mostra todas.
   telas: [
     {
-      arquivo: 'laboratorio-inicio.webp',
+      arquivo: 'laboratorio-composicao-mistura.webp',
       app: 'Laboratório',
-      titulo: 'Tela inicial',
-      alt: 'Tela inicial do aplicativo Afirma E-vias Laboratório: saudação ao usuário, indicadores de clientes, ensaios do catálogo, fichas de amostra e amostras recebidas na semana.',
+      titulo: 'Composição da mistura',
+      alt: 'Cálculo automático da composição da mistura de agregados no aplicativo: percentual passante por peneira e gráfico da graduação da mistura dentro dos limites da especificação e da faixa de trabalho.',
       barra: 'escura',
+      vitrine: 2
+    },
+    {
+      arquivo: 'laboratorio-notificacoes.webp',
+      app: 'Laboratório',
+      titulo: 'Notificações',
+      alt: 'Notificações do aplicativo do laboratório: alerta de não conformidade na verificação de uma balança, calibração vencendo, ensaio rejeitado na revisão e certificado aprovado.',
+      barra: 'escura',
+      vitrine: 4
+    },
+    {
+      arquivo: 'laboratorio-equipamentos.webp',
+      app: 'Laboratório',
+      titulo: 'Equipamentos e calibração',
+      alt: 'Lista de equipamentos do laboratório com alerta de calibração vencendo em até 30 dias, situação de uso e validade da calibração de cada equipamento.',
+      barra: 'escura',
+      vitrine: 6
+    },
+    {
+      arquivo: 'controle-dashboard.webp',
+      app: 'Controle de obra',
+      titulo: 'Dashboard',
+      alt: 'Dashboard do aplicativo de controle de obra: gráfico de barras dos registros por mês, comparando total e aprovados, e gráfico de rosca com a distribuição dos registros por tipo.',
+      barra: 'clara',
       vitrine: 1
     },
     {
-      arquivo: 'laboratorio-ensaios-realizados.webp',
-      app: 'Laboratório',
-      titulo: 'Ensaios realizados',
-      alt: 'Lista de ensaios do laboratório no aplicativo, com número de protocolo, nome do ensaio, responsável, data e situação, e filtros por status.',
-      barra: 'escura',
-      vitrine: 5
-    },
-    {
-      arquivo: 'laboratorio-granulometria.webp',
-      app: 'Laboratório',
-      titulo: 'Ensaio de granulometria',
-      alt: 'Ensaio de granulometria preenchido no aplicativo: peneiras com a porcentagem passante calculada automaticamente para as duas determinações.',
+      arquivo: 'controle-nao-conformidades.webp',
+      app: 'Controle de obra',
+      titulo: 'Gestão de não conformidades',
+      alt: 'Gestão de não conformidades no aplicativo: contadores de relatórios abertos, em tratativa e finalizados e a lista de RNCs com situação, rodovia e trecho.',
       barra: 'escura',
       vitrine: 3
-    },
-    {
-      arquivo: 'controle-inicio.webp',
-      app: 'Controle de obra',
-      titulo: 'Tela inicial',
-      alt: 'Tela inicial do aplicativo Afirma E-vias Controle: faixa de boas-vindas com foto da equipe em campo e filtros por regional, obra, status, tipo de registro e período.',
-      barra: 'escura',
-      vitrine: 4
     },
     {
       arquivo: 'controle-ensaios-realizados.webp',
@@ -367,15 +375,7 @@ export const aplicativo = {
       titulo: 'Ensaios realizados',
       alt: 'Lista de ensaios realizados na obra: busca, filtros de período e registros com tipo, situação de aprovação, data e obra.',
       barra: 'escura',
-      vitrine: 2
-    },
-    {
-      arquivo: 'controle-checklist-concretagem.webp',
-      app: 'Controle de obra',
-      titulo: 'Checklist de concretagem',
-      alt: 'Relatório de checklist de concretagem no aplicativo: dados da obra, condições climáticas, observações e ensaio de slump da carga de concreto, com resultado conforme.',
-      barra: 'clara',
-      vitrine: 6
+      vitrine: 5
     }
   ] as TelaApp[]
 };
