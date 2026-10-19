@@ -12,17 +12,17 @@
     <div class="rodape__bloco">
       <h2 class="rodape__titulo">Fale com a gente</h2>
       <ul class="rodape__lista">
-        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><%= empresa.telefoneCelular %> · WhatsApp</a></li>
-        <li><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></li>
-        <li><a href="mailto:<%= empresa.email %>"><%= empresa.email %></a></li>
+        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg><%= empresa.telefoneCelular %> · WhatsApp</a></li>
+        <li><a href="tel:+554131238550"><svg class="icone" aria-hidden="true"><use href="#i-telefone"/></svg><%= empresa.telefoneFixo %></a></li>
+        <li><a href="mailto:<%= empresa.email %>"><svg class="icone" aria-hidden="true"><use href="#i-email"/></svg><%= empresa.email %></a></li>
       </ul>
     </div>
 
     <div class="rodape__bloco">
       <h2 class="rodape__titulo">Nossos canais</h2>
       <ul class="rodape__lista">
-        <li><a href="<%= empresa.linkedin %>" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="<%= empresa.instagram %>" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="<%= empresa.linkedin %>" target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
+        <li><a href="<%= empresa.instagram %>" target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a></li>
         <li><a href="/trabalhe-com-a-gente">Trabalhe com a gente</a></li>
         <li><a href="/programa-de-integridade#canal">Canal de denúncias</a></li>
       </ul>
@@ -54,6 +54,19 @@
     </nav>
   </div>
 </footer>
+
+<div class="flutuantes">
+  <button type="button" class="flutuante flutuante--topo" data-voltar-topo aria-label="Voltar ao topo da página">
+    <svg class="anel" viewBox="0 0 36 36" aria-hidden="true">
+      <circle class="anel__trilha" cx="18" cy="18" r="15.9155"/>
+      <circle class="anel__progresso" cx="18" cy="18" r="15.9155" pathLength="100"/>
+    </svg>
+    <svg class="icone" aria-hidden="true"><use href="#i-topo"/></svg>
+  </button>
+  <a class="flutuante flutuante--whatsapp" href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener" aria-label="Conversar pelo WhatsApp">
+    <svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg>
+  </a>
+</div>
 
 <div class="cookies" id="cookies" hidden>
   <div class="cookies__caixa" role="dialog" aria-modal="false" aria-labelledby="cookies-titulo">

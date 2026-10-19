@@ -107,3 +107,18 @@ export function cabecalhoAnexo(nome: string) {
   const ascii = semAcento.replace(/[^\u0020-\u007e]/g, '_') || 'arquivo';
   return `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(limpo)}`;
 }
+
+/**
+ * Quebra um título com <br> em linhas mascaradas, para a entrada linha a linha
+ * do herói. É feito no servidor e não no navegador: se o site.js montasse as
+ * linhas, o título apareceria inteiro, sumiria e entraria de novo.
+ *
+ * Recebe HTML confiável (o texto vem de content.ts e das views), não entrada
+ * de visitante.
+ */
+export function linhasDeTitulo(html: string) {
+  return html
+    .split(/<br\s*\/?>/i)
+    .map((linha) => `<span class="linha"><span class="linha__texto">${linha.trim()}</span></span>`)
+    .join(' ');
+}

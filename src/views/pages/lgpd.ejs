@@ -4,7 +4,7 @@
   <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
   <div class="conteiner">
     <p class="sobrancelha sobrancelha--claro">Portal do titular · art. 18 da LGPD</p>
-    <h1 class="titulo-display titulo-display--claro">Seus dados,<br>suas decisões.</h1>
+    <h1 class="titulo-display titulo-display--claro"><%- linhas('Seus dados,<br>suas decisões.') %></h1>
     <p class="heroi__chamada heroi__chamada--clara">Peça acesso, correção ou eliminação dos seus dados pessoais. Você recebe um protocolo na hora e nossa resposta em até 15 dias.</p>
   </div>
 </section>
@@ -12,14 +12,14 @@
 <section class="secao">
   <div class="conteiner chamada__grade">
     <div>
-      <p class="sobrancelha">Como funciona</p>
+      <p class="sobrancelha" data-revelar>Como funciona</p>
       <ol class="passos">
-        <li><strong>Você registra o pedido.</strong> Escolha o direito que quer exercer e descreva o que precisa.</li>
-        <li><strong>Confirmamos quem você é.</strong> Podemos pedir um documento antes de liberar dados pessoais — é proteção contra pedido de terceiro.</li>
-        <li><strong>Respondemos em até 15 dias.</strong> A resposta vai para o e-mail cadastrado, com o protocolo.</li>
+        <li data-revelar><strong>Você registra o pedido.</strong> Escolha o direito que quer exercer e descreva o que precisa.</li>
+        <li data-revelar><strong>Confirmamos quem você é.</strong> Podemos pedir um documento antes de liberar dados pessoais — é proteção contra pedido de terceiro.</li>
+        <li data-revelar><strong>Respondemos em até 15 dias.</strong> A resposta vai para o e-mail cadastrado, com o protocolo.</li>
       </ol>
 
-      <div class="cartao-dpo">
+      <div class="cartao-dpo" data-revelar>
         <p class="cartao-dpo__rotulo">Encarregado pelo tratamento de dados</p>
         <p><a href="mailto:<%= empresa.emailEncarregado %>"><%= empresa.emailEncarregado %></a></p>
         <p><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></p>

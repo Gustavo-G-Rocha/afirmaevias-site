@@ -75,7 +75,7 @@
 .peca img { width: 100%; height: auto; }
 .peca__rotulo {
   font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--azul-30);
+  color: var(--texto-fraco, var(--azul-30));
 }
 
 @media (prefers-reduced-motion: reduce) {

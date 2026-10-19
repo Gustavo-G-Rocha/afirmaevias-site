@@ -16,6 +16,7 @@ import { limparSessoesExpiradas } from './auth.js';
 import { aplicarRetencao } from './retencao.js';
 import { asset } from './assets.js';
 import { dadosEstruturados } from './seo.js';
+import { linhasDeTitulo } from './utils.js';
 import { rotasSite } from './routes/site.js';
 import { rotasFormularios } from './routes/forms.js';
 import { rotasAdmin } from './routes/admin.js';
@@ -69,7 +70,8 @@ await app.register(view, {
     cookiesCategorias: conteudo.cookies.categorias,
     heroiPorRota: conteudo.heroiPorRota,
     asset,
-    dadosEstruturados
+    dadosEstruturados,
+    linhas: linhasDeTitulo
   }
 });
 

@@ -1,16 +1,17 @@
 <section class="chamada" id="contato">
   <div class="conteiner chamada__grade">
     <div>
-      <h2 class="titulo-display titulo-display--medio">Abrindo caminhos,<br>construindo o futuro.<br><em>Vamos juntos?</em></h2>
-      <p class="chamada__texto">Conte o desafio da sua obra. Respondemos em até um dia útil.</p>
+      <p class="sobrancelha" data-revelar>Contato</p>
+      <h2 class="titulo-display titulo-display--medio" data-revelar>Abrindo caminhos,<br>construindo o futuro.<br><em>Vamos juntos?</em></h2>
+      <p class="chamada__texto" data-revelar>Conte o desafio da sua obra. Respondemos em até um dia útil.</p>
       <ul class="chamada__contatos">
-        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><%= empresa.telefoneCelular %></a></li>
-        <li><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></li>
-        <li><a href="mailto:<%= empresa.email %>"><%= empresa.email %></a></li>
+        <li data-revelar="esquerda"><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg></span><%= empresa.telefoneCelular %> · WhatsApp</a></li>
+        <li data-revelar="esquerda"><a href="tel:+554131238550"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-telefone"/></svg></span><%= empresa.telefoneFixo %></a></li>
+        <li data-revelar="esquerda"><a href="mailto:<%= empresa.email %>"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-email"/></svg></span><%= empresa.email %></a></li>
       </ul>
     </div>
 
-    <form class="formulario" method="post" action="/contato">
+    <form class="formulario" method="post" action="/contato" data-revelar="direita">
       <input type="hidden" name="origem" value="<%= rotaAtual === '/' ? 'home' : rotaAtual.replace('/', '') %>">
       <p class="mel"><label>Deixe em branco<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
 

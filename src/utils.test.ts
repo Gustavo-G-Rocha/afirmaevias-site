@@ -10,7 +10,8 @@ import {
   cabecalhoAnexo,
   assinaturaConfere,
   gerarProtocolo,
-  hashIp
+  hashIp,
+  linhasDeTitulo
 } from './utils.js';
 
 test('limpar corta espaço das pontas e respeita o tamanho máximo', () => {
@@ -140,4 +141,13 @@ test('hashIp é determinístico e não devolve o IP', () => {
   assert.equal(h, hashIp('203.0.113.7'));
   assert.equal(h.length, 32);
   assert.ok(!h.includes('203'));
+});
+
+test('linhasDeTitulo vira uma linha mascarada por <br>', () => {
+  const html = linhasDeTitulo('Abrindo caminhos,<br>construindo o <em>futuro</em>.');
+  assert.equal((html.match(/class="linha"/g) ?? []).length, 2);
+  assert.ok(html.includes('<em>futuro</em>'));
+  assert.ok(!html.includes('<br>'));
+  // título sem quebra continua sendo uma linha só
+  assert.equal((linhasDeTitulo('Termos de uso').match(/class="linha"/g) ?? []).length, 1);
 });

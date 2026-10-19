@@ -4,7 +4,7 @@
   <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
   <div class="conteiner">
     <p class="sobrancelha">Contato</p>
-    <h1 class="titulo-display">Vamos falar<br>sobre a sua obra.</h1>
+    <h1 class="titulo-display"><%- linhas('Vamos falar<br>sobre a sua obra.') %></h1>
     <p class="heroi__chamada">Curitiba e Marília, atendendo obras em todo o Brasil. Respondemos em até um dia útil.</p>
   </div>
 </section>
@@ -14,16 +14,19 @@
     <div>
       <p class="sobrancelha">Canais diretos</p>
       <ul class="chamada__contatos chamada__contatos--escuro">
-        <li><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><%= empresa.telefoneCelular %> · WhatsApp</a></li>
-        <li><a href="tel:+554131238550"><%= empresa.telefoneFixo %></a></li>
-        <li><a href="mailto:<%= empresa.email %>"><%= empresa.email %></a></li>
+        <li data-revelar="esquerda"><a href="https://wa.me/<%= empresa.whatsapp %>" target="_blank" rel="noopener"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg></span><%= empresa.telefoneCelular %> · WhatsApp</a></li>
+        <li data-revelar="esquerda"><a href="tel:+554131238550"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-telefone"/></svg></span><%= empresa.telefoneFixo %></a></li>
+        <li data-revelar="esquerda"><a href="mailto:<%= empresa.email %>"><span class="contato__icone"><svg class="icone" aria-hidden="true"><use href="#i-email"/></svg></span><%= empresa.email %></a></li>
       </ul>
 
       <div class="grade-enderecos grade-enderecos--compacta">
         <% empresa.enderecos.forEach(function (endereco) { %>
-          <a class="endereco endereco--link" href="<%= endereco.mapsUrl %>" target="_blank" rel="noopener" aria-label="Abrir localização de <%= endereco.cidade %> no Google Maps">
-            <h2 class="endereco__cidade"><%= endereco.cidade %><span>/<%= endereco.uf %></span></h2>
-            <p><%= endereco.linha1 %><br><%= endereco.linha2 %></p>
+          <a class="endereco endereco--link" data-revelar href="<%= endereco.mapsUrl %>" target="_blank" rel="noopener" aria-label="Abrir localização de <%= endereco.cidade %> no Google Maps">
+            <span class="endereco__icone" aria-hidden="true"><svg class="icone"><use href="#i-local"/></svg></span>
+            <div class="endereco__texto">
+              <h2 class="endereco__cidade"><%= endereco.cidade %><span>/<%= endereco.uf %></span></h2>
+              <p><%= endereco.linha1 %><br><%= endereco.linha2 %></p>
+            </div>
           </a>
         <% }); %>
       </div>

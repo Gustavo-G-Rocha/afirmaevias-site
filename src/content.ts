@@ -61,19 +61,58 @@ export const home = {
   servicosResumo: [
     {
       titulo: 'Supervisão e controle tecnológico',
+      href: '/servicos#supervisao',
       texto: 'Fiscalização de obra com laboratório e app próprios, em tempo real.'
     },
     {
       titulo: 'Projetos em BIM',
+      href: '/servicos#bim',
       texto: 'Rodovias e vias urbanas modeladas do LOD 100 ao LOD 400.'
     },
     {
       titulo: 'Ensaios de laboratório',
+      href: '/servicos#ensaios',
       texto: 'Laboratório central de alta performance e unidades móveis em campo.'
     },
     {
       titulo: 'Levantamentos e cadastro',
+      href: '/servicos#levantamentos',
       texto: 'Fotogrametria georreferenciada, perfilômetro a laser e SIG.'
+    }
+  ],
+  // faixa de fotos da home: rola na horizontal no celular e vira grade no desktop
+  galeria: [
+    {
+      arquivo: 'obra-pavimentacao.webp',
+      largura: 1000,
+      altura: 834,
+      rotulo: 'Pavimentação',
+      legenda: 'Supervisão e controle tecnológico da camada asfáltica.',
+      alt: 'Rolo compactador sobre pavimento asfáltico recém-aplicado, em primeiro plano o agregado da camada.'
+    },
+    {
+      arquivo: 'obra-entroncamento.webp',
+      largura: 739,
+      altura: 595,
+      rotulo: 'Projetos viários',
+      legenda: 'Rodovias, acessos e entroncamentos modelados em BIM.',
+      alt: 'Vista aérea de um entroncamento rodoviário com viaduto e alças de acesso.'
+    },
+    {
+      arquivo: 'campo-ensaio.webp',
+      largura: 555,
+      altura: 469,
+      rotulo: 'Em campo',
+      legenda: 'O ensaio é registrado no app no ponto de coleta.',
+      alt: 'Técnico registra no celular a leitura de uma amostra de asfalto apoiada na balança, durante ensaio em campo.'
+    },
+    {
+      arquivo: 'laboratorio-ensaio.webp',
+      largura: 595,
+      altura: 469,
+      rotulo: 'Na bancada',
+      legenda: 'Laboratório central e unidades móveis sob procedimento controlado.',
+      alt: 'Técnica de laboratório, de óculos de proteção e luvas, verte líquido de um béquer em um cilindro metálico sobre a bancada.'
     }
   ]
 };

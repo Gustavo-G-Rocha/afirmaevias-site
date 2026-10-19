@@ -4,19 +4,19 @@
   <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
   <div class="conteiner">
     <p class="sobrancelha"><%= acreditacao.eyebrow %></p>
-    <h1 class="titulo-display"><%- acreditacao.titulo %></h1>
+    <h1 class="titulo-display"><%- linhas(acreditacao.titulo) %></h1>
     <p class="heroi__chamada"><%= acreditacao.chamada %></p>
   </div>
 </section>
 
 <section class="secao">
   <div class="conteiner duas-colunas duas-colunas--assimetrica">
-    <div class="selo" data-revelar>
+    <div class="selo" data-revelar="zoom">
       <span class="selo__norma">ISO</span>
       <span class="selo__numero">9001</span>
       <span class="selo__legenda">Sistema de Gestão da Qualidade</span>
     </div>
-    <div>
+    <div data-revelar="direita">
       <h2 class="titulo-bloco"><%= acreditacao.iso9001.titulo %></h2>
       <p><%= acreditacao.iso9001.texto %></p>
       <a class="botao botao--escuro" href="<%= acreditacao.iso9001.link %>" target="_blank" rel="noopener"><%= acreditacao.iso9001.linkRotulo %></a>
@@ -26,15 +26,15 @@
 
 <section class="secao secao--clara">
   <div class="conteiner grade-figura grade-figura--invertida">
-    <figure class="figura" data-revelar>
+    <figure class="figura" data-revelar="recorte">
       <img src="/img/campo-ensaio.webp" width="555" height="469" loading="lazy" decoding="async"
            alt="Técnico registra no celular a leitura de uma amostra de asfalto apoiada na balança, durante ensaio em campo.">
       <figcaption>Registro do ensaio na origem: o dado nasce digital e rastreável.</figcaption>
     </figure>
     <div>
-      <p class="sobrancelha">Método</p>
-      <h2 class="titulo-secao">Imparcialidade se prova com <em>registro</em>.</h2>
-      <p class="texto-apoio">Cada leitura é lançada no ponto de coleta, com data, hora e responsável. Não há etapa em que o número passe por transcrição manual — é isso que sustenta a rastreabilidade exigida pelo sistema de gestão.</p>
+      <p class="sobrancelha" data-revelar>Método</p>
+      <h2 class="titulo-secao" data-revelar>Imparcialidade se prova com <em>registro</em>.</h2>
+      <p class="texto-apoio" data-revelar>Cada leitura é lançada no ponto de coleta, com data, hora e responsável. Não há etapa em que o número passe por transcrição manual — é isso que sustenta a rastreabilidade exigida pelo sistema de gestão.</p>
     </div>
   </div>
 </section>
@@ -42,11 +42,11 @@
 <section class="secao">
   <div class="conteiner grade-figura">
     <div>
-      <p class="sobrancelha">Bancada</p>
-      <h2 class="titulo-secao">O ensaio que vale é o que <em>segue o método</em>.</h2>
-      <p class="texto-apoio">Equipamento aferido, procedimento escrito e técnico qualificado. O resultado só tem valor se o caminho até ele puder ser repetido por outra pessoa e chegar ao mesmo número.</p>
+      <p class="sobrancelha" data-revelar>Bancada</p>
+      <h2 class="titulo-secao" data-revelar>O ensaio que vale é o que <em>segue o método</em>.</h2>
+      <p class="texto-apoio" data-revelar>Equipamento aferido, procedimento escrito e técnico qualificado. O resultado só tem valor se o caminho até ele puder ser repetido por outra pessoa e chegar ao mesmo número.</p>
     </div>
-    <figure class="figura" data-revelar>
+    <figure class="figura" data-revelar="recorte">
       <img src="/img/laboratorio-ensaio.webp" width="595" height="469" loading="lazy" decoding="async"
            alt="Técnica de laboratório, de óculos de proteção e luvas, verte líquido de um béquer em um cilindro metálico sobre a bancada.">
       <figcaption>Ensaio de laboratório sob procedimento controlado.</figcaption>
@@ -56,8 +56,8 @@
 
 <section class="secao secao--escura">
   <div class="conteiner">
-    <p class="sobrancelha sobrancelha--claro">Política da qualidade</p>
-    <blockquote class="citacao"><%= acreditacao.politicaQualidade %></blockquote>
+    <p class="sobrancelha sobrancelha--claro" data-revelar>Política da qualidade</p>
+    <blockquote class="citacao" data-revelar><%= acreditacao.politicaQualidade %></blockquote>
     <p class="alerta-nota" role="note"><%= acreditacao.politicaQualidadeNota %></p>
     <p class="texto-claro texto-claro--menor">Os objetivos da qualidade são definidos a partir desta política e do planejamento estratégico da organização, e são monitorados pelas lideranças e pela gerência do laboratório.</p>
   </div>
@@ -77,8 +77,8 @@
     </div>
 
     <div class="cabeca-secao cabeca-secao--espacada">
-      <p class="sobrancelha">Valores</p>
-      <h2 class="titulo-secao">O que guia cada decisão</h2>
+      <p class="sobrancelha" data-revelar>Valores</p>
+      <h2 class="titulo-secao" data-revelar>O que guia cada decisão</h2>
     </div>
     <div class="grade-valores">
       <% acreditacao.valores.forEach(function (valor) { %>

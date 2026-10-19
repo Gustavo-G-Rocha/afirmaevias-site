@@ -4,7 +4,7 @@
   <div class="heroi__faixa" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
   <div class="conteiner">
     <p class="sobrancelha">Serviços</p>
-    <h1 class="titulo-display">Da primeira sondagem<br>à última medição.</h1>
+    <h1 class="titulo-display"><%- linhas('Da primeira sondagem<br>à última medição.') %></h1>
     <p class="heroi__chamada">Serviços especializados em engenharia viária, desenvolvidos para atender às necessidades da sua infraestrutura com excelência técnica, inovação e compromisso com resultados.</p>
   </div>
 </section>
@@ -22,8 +22,9 @@
 
 <% servicos.forEach(function (servico, indice) { %>
   <section class="servico" id="<%= servico.id %>">
-    <div class="conteiner servico__grade">
+    <div class="conteiner servico__grade" data-revelar>
       <header class="servico__cabeca">
+        <span class="servico__numero" aria-hidden="true"><%= String(indice + 1).padStart(2, '0') %> <span>/ <%= String(servicos.length).padStart(2, '0') %></span></span>
         <span class="servico__marca" aria-hidden="true"></span>
         <h2 class="servico__titulo"><%= servico.titulo %></h2>
       </header>
