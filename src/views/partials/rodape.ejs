@@ -52,6 +52,11 @@
       <a href="/portal-do-titular">Portal do titular (LGPD)</a>
       <button type="button" class="rodape__link-botao" data-abrir-cookies>Preferências de cookies</button>
     </nav>
+    <% if (sistemasInternos.length) { %>
+      <p class="rodape__equipe">Acesso da equipe:
+        <% sistemasInternos.forEach(function (sistema, i) { %><%= i ? ' · ' : '' %><a href="<%= sistema.url %>" target="_blank" rel="noopener noreferrer"><%= sistema.nome %></a><% }); %>
+      </p>
+    <% } %>
   </div>
 </footer>
 

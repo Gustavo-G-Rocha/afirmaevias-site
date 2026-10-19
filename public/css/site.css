@@ -2272,6 +2272,10 @@ body.cabecalho-escondido .indice { top: 0; }
 .rodape__legal { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
 .rodape__legal a, .rodape__link-botao { display: inline-block; padding-block: 0.35rem; text-decoration: none; font-size: 0.82rem; }
 .rodape__legal a:hover, .rodape__link-botao:hover { color: var(--verde-claro); }
+/* link discreto para os sistemas internos: é para quem já trabalha aqui */
+.rodape__equipe { margin: 0; font-size: 0.78rem; color: var(--claro-45); }
+.rodape__equipe a { color: var(--claro-70); text-underline-offset: 3px; }
+.rodape__equipe a:hover { color: var(--verde-claro); }
 
 @media (min-width: 600px) {
   .rodape__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
