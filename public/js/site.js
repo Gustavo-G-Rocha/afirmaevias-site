@@ -346,6 +346,96 @@ recurso('indices', () => {
   porId.forEach((_link, secao) => observador.observe(secao));
 });
 
+// ------------------------------------------------------ disco de celulares
+
+// As telas ficam numa roda (partials/vitrine.ejs). Girar é só trocar o
+// data-passo de cada vaga: o CSS leva o celular pelo arco. O relógio é a
+// animação da barra da marca ativa: quando ela enche, a roda gira. Pausar no
+// hover, no botão ou fora da tela pausa a barra, e com ela o giro.
+recurso('vitrine', () => {
+  document.querySelectorAll('[data-vitrine]').forEach((vitrine) => {
+    const vagas = [...vitrine.querySelectorAll('.vitrine__vaga')];
+    const marcas = [...vitrine.querySelectorAll('[data-vitrine-ir]')];
+    const appLegenda = vitrine.querySelector('.vitrine__legenda-app');
+    const tituloLegenda = vitrine.querySelector('.vitrine__legenda-titulo');
+    const legenda = vitrine.querySelector('.vitrine__legenda');
+    const botaoPausa = vitrine.querySelector('[data-vitrine-pausa]');
+    const total = vagas.length;
+    if (total < 2) return;
+    let atual = 0;
+
+    const mostrar = (indice) => {
+      atual = (indice + total) % total;
+      vagas.forEach((vaga, i) => {
+        let passo = (i - atual + total) % total;
+        if (passo > total / 2) passo -= total;
+        const antes = Number(vaga.dataset.passo);
+        // quem dá a volta por trás da roda troca de lado sem atravessar a frente
+        if (Math.abs(passo - antes) > 1) {
+          vaga.classList.add('sem-transicao');
+          vaga.dataset.passo = String(passo);
+          vaga.getBoundingClientRect();
+          vaga.classList.remove('sem-transicao');
+        } else {
+          vaga.dataset.passo = String(passo);
+        }
+        if (passo === 0) vaga.removeAttribute('aria-hidden');
+        else vaga.setAttribute('aria-hidden', 'true');
+      });
+
+      marcas.forEach((marca, i) => {
+        marca.classList.toggle('is-ativo', i === atual);
+        if (i === atual) marca.setAttribute('aria-current', 'true');
+        else marca.removeAttribute('aria-current');
+      });
+
+      const frente = vagas[atual];
+      if (appLegenda) appLegenda.textContent = frente.dataset.app;
+      if (tituloLegenda) tituloLegenda.textContent = frente.dataset.titulo;
+      if (legenda) {
+        legenda.classList.remove('is-trocando');
+        legenda.getBoundingClientRect();
+        legenda.classList.add('is-trocando');
+      }
+    };
+
+    vitrine.classList.add('is-girando');
+
+    // com menos movimento a roda não gira sozinha (e a animação reduzida a
+    // 0,01 ms faria a barra terminar na hora, girando sem parar)
+    if (!reduzirMovimento) {
+      vitrine.addEventListener('animationend', (evento) => {
+        if (evento.animationName === 'tempo-vitrine') mostrar(atual + 1);
+      });
+    }
+
+    vagas.forEach((vaga) => {
+      vaga.addEventListener('click', () => {
+        const passo = Number(vaga.dataset.passo);
+        if (passo === 1 || passo === -1) mostrar(atual + passo);
+      });
+    });
+    vitrine.querySelector('[data-vitrine-anterior]')?.addEventListener('click', () => mostrar(atual - 1));
+    vitrine.querySelector('[data-vitrine-proxima]')?.addEventListener('click', () => mostrar(atual + 1));
+    marcas.forEach((marca, i) => marca.addEventListener('click', () => mostrar(i)));
+
+    botaoPausa?.addEventListener('click', () => {
+      const pausada = vitrine.classList.toggle('is-pausada');
+      botaoPausa.setAttribute('aria-pressed', String(pausada));
+      botaoPausa.setAttribute('aria-label', pausada ? 'Retomar a troca de telas' : 'Pausar a troca de telas');
+    });
+
+    // fora da tela a barra para: ninguém perde telas que giraram sem ser vistas
+    if (temObservador) {
+      new IntersectionObserver((entradas) => {
+        entradas.forEach((entrada) => vitrine.classList.toggle('is-fora', !entrada.isIntersecting));
+      }, { threshold: 0.35 }).observe(vitrine);
+    } else {
+      vitrine.classList.remove('is-fora');
+    }
+  });
+});
+
 // --------------------------------------------- carrossel da galeria (home)
 
 recurso('galeria', () => {

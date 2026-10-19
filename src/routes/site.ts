@@ -13,7 +13,7 @@ export async function rotasSite(app: FastifyInstance) {
       indicadores: conteudo.indicadores,
       clientes: conteudo.clientes,
       notaClientes: conteudo.notaClientes,
-      telasApp: conteudo.aplicativo.telas
+      telasVitrine: conteudo.telasVitrine
     })
   );
 
@@ -45,7 +45,8 @@ export async function rotasSite(app: FastifyInstance) {
       descricao:
         'O app Afirma E-vias conecta campo e escritório: ensaios georreferenciados, alertas de não conformidade e dashboards analíticos.',
       rotaAtual: '/aplicativo',
-      aplicativo: conteudo.aplicativo
+      aplicativo: conteudo.aplicativo,
+      telasVitrine: conteudo.telasVitrine
     })
   );
 

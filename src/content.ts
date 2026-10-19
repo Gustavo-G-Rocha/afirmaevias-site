@@ -325,8 +325,9 @@ export const aplicativo = {
   // dado pessoal nem de cliente. Cada arquivo tem 780x1782 px, com uma faixa
   // de 94 px no topo na cor do cabeçalho do app, onde a moldura desenha a
   // barra de status. "barra" diz se essa faixa é clara ou escura, para a hora
-  // e os ícones saírem em contraste. As três com "vitrine" aparecem juntas na
-  // home e no topo da página do app; a galeria da página mostra todas.
+  // e os ícones saírem em contraste. As que têm "vitrine" entram no disco de
+  // celulares da home e do topo da página do app, na ordem do número (a 1
+  // começa na frente); a galeria da página mostra todas.
   telas: [
     {
       arquivo: 'laboratorio-inicio.webp',
@@ -341,7 +342,8 @@ export const aplicativo = {
       app: 'Laboratório',
       titulo: 'Ensaios realizados',
       alt: 'Lista de ensaios do laboratório no aplicativo, com número de protocolo, nome do ensaio, responsável, data e situação, e filtros por status.',
-      barra: 'escura'
+      barra: 'escura',
+      vitrine: 5
     },
     {
       arquivo: 'laboratorio-granulometria.webp',
@@ -356,7 +358,8 @@ export const aplicativo = {
       app: 'Controle de obra',
       titulo: 'Tela inicial',
       alt: 'Tela inicial do aplicativo Afirma E-vias Controle: faixa de boas-vindas com foto da equipe em campo e filtros por regional, obra, status, tipo de registro e período.',
-      barra: 'escura'
+      barra: 'escura',
+      vitrine: 4
     },
     {
       arquivo: 'controle-ensaios-realizados.webp',
@@ -371,7 +374,8 @@ export const aplicativo = {
       app: 'Controle de obra',
       titulo: 'Checklist de concretagem',
       alt: 'Relatório de checklist de concretagem no aplicativo: dados da obra, condições climáticas, observações e ensaio de slump da carga de concreto, com resultado conforme.',
-      barra: 'clara'
+      barra: 'clara',
+      vitrine: 6
     }
   ] as TelaApp[]
 };
@@ -382,9 +386,14 @@ type TelaApp = {
   titulo: string;
   alt: string;
   barra: 'clara' | 'escura';
-  /** posição na vitrine de três celulares: 1 fica na frente, 2 à esquerda, 3 à direita */
-  vitrine?: 1 | 2 | 3;
+  /** ordem no disco de celulares; sem número, a tela fica só na galeria */
+  vitrine?: number;
 };
+
+/** Telas do disco de celulares, na ordem em que passam pela frente. */
+export const telasVitrine = aplicativo.telas
+  .filter((tela) => tela.vitrine)
+  .sort((a, b) => (a.vitrine ?? 0) - (b.vitrine ?? 0));
 
 export const acreditacao = {
   eyebrow: 'Acreditação e certificação',

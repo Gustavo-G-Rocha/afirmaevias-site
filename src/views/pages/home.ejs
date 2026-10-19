@@ -73,11 +73,7 @@
       </ul>
       <a class="botao botao--verde" href="/aplicativo" data-revelar>Descubra as funcionalidades</a>
     </div>
-    <div class="vitrine" data-revelar="zoom">
-      <% telasApp.filter(function (tela) { return tela.vitrine; }).sort(function (a, b) { return a.vitrine - b.vitrine; }).forEach(function (tela, i) { %>
-        <%- include('../partials/celular', { tela: tela, paralaxe: [0.04, 0.09, 0.12][i] }) %>
-      <% }); %>
-    </div>
+    <%- include('../partials/vitrine') %>
   </div>
 </section>
 

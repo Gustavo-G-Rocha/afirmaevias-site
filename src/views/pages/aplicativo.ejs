@@ -35,11 +35,7 @@
       <h2 class="titulo-secao titulo-secao--claro" data-revelar>O ensaio sai do papel <em>ainda no campo</em>.</h2>
       <p class="texto-claro" data-revelar>O técnico lança a leitura no celular, com ou sem sinal. Quando a conexão volta, o envio pendente sobe sozinho e o dado já chega ao controle com data, hora e responsável.</p>
     </div>
-    <div class="vitrine" data-revelar="zoom">
-      <% aplicativo.telas.filter(function (tela) { return tela.vitrine; }).sort(function (a, b) { return a.vitrine - b.vitrine; }).forEach(function (tela, i) { %>
-        <%- include('../partials/celular', { tela: tela, paralaxe: [0.04, 0.09, 0.12][i] }) %>
-      <% }); %>
-    </div>
+    <%- include('../partials/vitrine') %>
   </div>
 </section>
 

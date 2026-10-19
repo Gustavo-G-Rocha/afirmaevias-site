@@ -1,0 +1,40 @@
+<%# Disco de celulares. As telas ficam numa roda: a de passo 0 esta na frente,
+    as de passo -1 e 1 aparecem inclinadas dos lados e as demais ficam
+    escondidas atras. O site.js gira a roda trocando o data-passo; o tempo de
+    cada tela e a animacao da barra da marca ativa (sem script, a roda fica
+    parada nas tres primeiras posicoes). %>
+<% var total = telasVitrine.length; %>
+<div class="vitrine is-fora" data-vitrine data-revelar="zoom">
+  <div class="vitrine__disco">
+    <% telasVitrine.forEach(function (tela, i) { var passo = i > total / 2 ? i - total : i; %>
+      <div class="vitrine__vaga" data-passo="<%= passo %>"<%- passo !== 0 ? ' aria-hidden="true"' : '' %>
+           data-app="<%= tela.app %>" data-titulo="<%= tela.titulo %>">
+        <%- include('celular', { tela: tela }) %>
+      </div>
+    <% }); %>
+  </div>
+
+  <div class="vitrine__controles">
+    <button type="button" class="vitrine__botao vitrine__botao--anterior" data-vitrine-anterior aria-label="Tela anterior">
+      <svg class="icone" aria-hidden="true"><use href="#i-seta"/></svg>
+    </button>
+    <ol class="vitrine__tempo">
+      <% telasVitrine.forEach(function (tela, i) { %>
+        <li><button type="button" class="vitrine__marca<%= i === 0 ? ' is-ativo' : '' %>" data-vitrine-ir="<%= i %>"
+                    aria-label="Mostrar <%= tela.app %>: <%= tela.titulo %>"<%- i === 0 ? ' aria-current="true"' : '' %>><span></span></button></li>
+      <% }); %>
+    </ol>
+    <button type="button" class="vitrine__botao vitrine__botao--pausa" data-vitrine-pausa aria-pressed="false" aria-label="Pausar a troca de telas">
+      <svg class="icone vitrine__icone-pausa" aria-hidden="true"><use href="#i-pausa"/></svg>
+      <svg class="icone vitrine__icone-tocar" aria-hidden="true"><use href="#i-tocar"/></svg>
+    </button>
+    <button type="button" class="vitrine__botao" data-vitrine-proxima aria-label="Próxima tela">
+      <svg class="icone" aria-hidden="true"><use href="#i-seta"/></svg>
+    </button>
+  </div>
+
+  <p class="vitrine__legenda">
+    <span class="vitrine__legenda-app"><%= telasVitrine[0].app %></span>
+    <span class="vitrine__legenda-titulo"><%= telasVitrine[0].titulo %></span>
+  </p>
+</div>
