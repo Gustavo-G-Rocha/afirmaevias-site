@@ -32,24 +32,37 @@
       <div class="servico__corpo">
         <p class="servico__resumo"><%= servico.resumo %></p>
 
-        <% if (servico.itens) { %>
-          <ul class="lista-marcada">
-            <% servico.itens.forEach(function (item) { %><li><%= item %></li><% }); %>
-          </ul>
-        <% } %>
+        <%# No celular as listas recolhem atras deste botao (site.js). Sem
+            script, ou do tablet para cima, o botao fica escondido e tudo
+            aparece aberto. %>
+        <% var totalItens = (servico.itens || []).length + (servico.grupos || []).reduce(function (soma, grupo) { return soma + grupo.itens.length; }, 0); %>
+        <button type="button" class="servico__alternar" aria-expanded="true" aria-controls="detalhes-<%= servico.id %>" hidden>
+          <span class="servico__alternar-texto">O que fazemos</span>
+          <span class="servico__alternar-total"><%= totalItens %> itens</span>
+        </button>
 
-        <% if (servico.grupos) { %>
-          <div class="servico__grupos">
-            <% servico.grupos.forEach(function (grupo) { %>
-              <div class="grupo">
-                <h3 class="grupo__titulo"><%= grupo.titulo %></h3>
-                <ul class="lista-marcada">
-                  <% grupo.itens.forEach(function (item) { %><li><%= item %></li><% }); %>
-                </ul>
+        <div class="servico__detalhes" id="detalhes-<%= servico.id %>">
+          <div class="servico__detalhes-interno">
+            <% if (servico.itens) { %>
+              <ul class="lista-marcada">
+                <% servico.itens.forEach(function (item) { %><li><%= item %></li><% }); %>
+              </ul>
+            <% } %>
+
+            <% if (servico.grupos) { %>
+              <div class="servico__grupos">
+                <% servico.grupos.forEach(function (grupo) { %>
+                  <div class="grupo">
+                    <h3 class="grupo__titulo"><%= grupo.titulo %></h3>
+                    <ul class="lista-marcada">
+                      <% grupo.itens.forEach(function (item) { %><li><%= item %></li><% }); %>
+                    </ul>
+                  </div>
+                <% }); %>
               </div>
-            <% }); %>
+            <% } %>
           </div>
-        <% } %>
+        </div>
       </div>
     </div>
   </section>

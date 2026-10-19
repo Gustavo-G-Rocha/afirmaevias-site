@@ -436,6 +436,45 @@ recurso('vitrine', () => {
   });
 });
 
+// ------------------------------------------- áreas de serviço no celular
+
+// No celular cada área recolhe as listas atrás de um botão; do tablet para
+// cima tudo fica aberto e o botão some. O conteúdo recolhido recebe inert:
+// sai da ordem de tabulação e do leitor de tela até ser aberto.
+recurso('servicos-recolher', () => {
+  const botoes = [...document.querySelectorAll('.servico__alternar')];
+  if (botoes.length === 0) return;
+  const celular = window.matchMedia('(max-width: 899px)');
+
+  const definir = (botao, aberto) => {
+    const detalhes = document.getElementById(botao.getAttribute('aria-controls'));
+    if (!detalhes) return;
+    botao.setAttribute('aria-expanded', String(aberto));
+    detalhes.classList.toggle('is-recolhido', !aberto);
+    detalhes.inert = !aberto;
+  };
+
+  const aplicar = () => {
+    botoes.forEach((botao) => {
+      botao.hidden = !celular.matches;
+      definir(botao, !celular.matches);
+    });
+  };
+
+  botoes.forEach((botao) => {
+    botao.addEventListener('click', () => definir(botao, botao.getAttribute('aria-expanded') !== 'true'));
+  });
+
+  // chegou por um link com #area: essa área já abre
+  const alvo = window.location.hash ? document.getElementById(decodeURIComponent(window.location.hash.slice(1))) : null;
+  celular.addEventListener('change', aplicar);
+  aplicar();
+  if (alvo && celular.matches) {
+    const botao = alvo.querySelector('.servico__alternar');
+    if (botao) definir(botao, true);
+  }
+});
+
 // --------------------------------------------- carrossel da galeria (home)
 
 // vale para todo carrossel com data-galeria seguido da sua barra de progresso
