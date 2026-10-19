@@ -1,0 +1,30 @@
+<%# Moldura de celular em volta de um print do app. Recebe tela (um item de
+    aplicativo.telas) e, opcionalmente, paralaxe (fator do site.js). A hora,
+    a ilha e os icones sao desenhados aqui por cima da faixa que o print ja
+    traz no topo, na cor do cabecalho do app. %>
+<div class="celular"<% if (typeof paralaxe !== 'undefined' && paralaxe) { %> data-paralaxe="<%= paralaxe %>"<% } %>>
+  <div class="celular__tela">
+    <img src="/img/app/<%= tela.arquivo %>" width="780" height="1782" loading="lazy" decoding="async" alt="<%= tela.alt %>">
+    <div class="celular__status celular__status--<%= tela.barra %>" aria-hidden="true">
+      <span class="celular__hora">9:41</span>
+      <span class="celular__ilha"></span>
+      <svg class="celular__icones" viewBox="0 0 68 12">
+        <g fill="currentColor">
+          <rect x="0" y="8" width="3" height="4" rx="0.7"/>
+          <rect x="4.6" y="5.8" width="3" height="6.2" rx="0.7"/>
+          <rect x="9.2" y="3.4" width="3" height="8.6" rx="0.7"/>
+          <rect x="13.8" y="1" width="3" height="11" rx="0.7"/>
+          <circle cx="31" cy="10.2" r="1.5"/>
+        </g>
+        <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <path d="M27.8 7.3a4.6 4.6 0 0 1 6.4 0"/>
+          <path d="M25.3 4.7a8.2 8.2 0 0 1 11.4 0"/>
+          <path d="M22.8 2.1a11.8 11.8 0 0 1 16.4 0"/>
+        </g>
+        <rect x="44" y="1.2" width="20" height="9.6" rx="2.8" fill="none" stroke="currentColor" stroke-opacity="0.45"/>
+        <rect x="45.7" y="2.9" width="14.5" height="6.2" rx="1.6" fill="currentColor"/>
+        <rect x="65" y="4.4" width="1.6" height="3.2" rx="0.8" fill="currentColor" fill-opacity="0.45"/>
+      </svg>
+    </div>
+  </div>
+</div>

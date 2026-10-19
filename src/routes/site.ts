@@ -12,7 +12,8 @@ export async function rotasSite(app: FastifyInstance) {
       home: conteudo.home,
       indicadores: conteudo.indicadores,
       clientes: conteudo.clientes,
-      notaClientes: conteudo.notaClientes
+      notaClientes: conteudo.notaClientes,
+      telasApp: conteudo.aplicativo.telas
     })
   );
 

@@ -73,10 +73,11 @@
       </ul>
       <a class="botao botao--verde" href="/aplicativo" data-revelar>Descubra as funcionalidades</a>
     </div>
-    <figure class="destaque-app__figura">
-      <img src="/img/app-telas.webp" width="747" height="504" loading="lazy" decoding="async" data-paralaxe="0.08"
-           alt="Três telas do aplicativo Afirma E-vias: a fila de envios pendentes já sincronizados, o controle de ensaios de ligante e granulometria e o formulário de atividade preenchido em campo.">
-    </figure>
+    <div class="vitrine" data-revelar="zoom">
+      <% telasApp.filter(function (tela) { return tela.vitrine; }).sort(function (a, b) { return a.vitrine - b.vitrine; }).forEach(function (tela, i) { %>
+        <%- include('../partials/celular', { tela: tela, paralaxe: [0.04, 0.09, 0.12][i] }) %>
+      <% }); %>
+    </div>
   </div>
 </section>
 

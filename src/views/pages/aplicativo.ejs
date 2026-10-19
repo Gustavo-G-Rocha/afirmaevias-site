@@ -35,12 +35,31 @@
       <h2 class="titulo-secao titulo-secao--claro" data-revelar>O ensaio sai do papel <em>ainda no campo</em>.</h2>
       <p class="texto-claro" data-revelar>O técnico lança a leitura no celular, com ou sem sinal. Quando a conexão volta, o envio pendente sobe sozinho e o dado já chega ao controle com data, hora e responsável.</p>
     </div>
-    <figure class="figura destaque-app__figura">
-      <img src="/img/app-telas.webp" data-paralaxe="0.08" width="747" height="504" loading="lazy" decoding="async"
-           alt="Duas telas do aplicativo Afirma E-vias: a fila de envios pendentes com os itens já sincronizados e o formulário de extração de ligante granulometria preenchido em campo.">
-      <figcaption>Fila de sincronização e lançamento de ensaio no aplicativo próprio.</figcaption>
-    </figure>
+    <div class="vitrine" data-revelar="zoom">
+      <% aplicativo.telas.filter(function (tela) { return tela.vitrine; }).sort(function (a, b) { return a.vitrine - b.vitrine; }).forEach(function (tela, i) { %>
+        <%- include('../partials/celular', { tela: tela, paralaxe: [0.04, 0.09, 0.12][i] }) %>
+      <% }); %>
+    </div>
   </div>
+</section>
+
+<section class="secao secao--branca">
+  <div class="conteiner">
+    <div class="cabeca-secao">
+      <p class="sobrancelha" data-revelar>Telas do aplicativo</p>
+      <h2 class="titulo-secao" data-revelar>Do laboratório ao <em>canteiro de obra</em>.</h2>
+    </div>
+  </div>
+  <%# carrossel de arrastar no celular, grade no desktop; usa a mesma barra de progresso da galeria da home %>
+  <ul class="telas-app" role="list" data-galeria>
+    <% aplicativo.telas.forEach(function (tela) { %>
+      <li class="telas-app__item" data-revelar>
+        <%- include('../partials/celular', { tela: tela }) %>
+        <p class="telas-app__legenda"><span class="telas-app__app"><%= tela.app %></span><%= tela.titulo %></p>
+      </li>
+    <% }); %>
+  </ul>
+  <div class="galeria__progresso" aria-hidden="true"><span></span></div>
 </section>
 
 <section class="secao secao--clara">

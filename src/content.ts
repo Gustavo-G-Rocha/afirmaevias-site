@@ -319,7 +319,71 @@ export const aplicativo = {
     }
   ],
   fecho:
-    'Com o app você tem controle total da obra, acessando informações essenciais de qualquer lugar.'
+    'Com o app você tem controle total da obra, acessando informações essenciais de qualquer lugar.',
+  // Telas mostradas na moldura de celular (home e página do app). Os prints
+  // são feitos com dados de demonstração: o site é público e não pode exibir
+  // dado pessoal nem de cliente. Cada arquivo tem 780x1782 px, com uma faixa
+  // de 94 px no topo na cor do cabeçalho do app, onde a moldura desenha a
+  // barra de status. "barra" diz se essa faixa é clara ou escura, para a hora
+  // e os ícones saírem em contraste. As três com "vitrine" aparecem juntas na
+  // home e no topo da página do app; a galeria da página mostra todas.
+  telas: [
+    {
+      arquivo: 'laboratorio-inicio.webp',
+      app: 'Laboratório',
+      titulo: 'Tela inicial',
+      alt: 'Tela inicial do aplicativo Afirma E-vias Laboratório: saudação ao usuário, indicadores de clientes, ensaios do catálogo, fichas de amostra e amostras recebidas na semana.',
+      barra: 'escura',
+      vitrine: 1
+    },
+    {
+      arquivo: 'laboratorio-ensaios-realizados.webp',
+      app: 'Laboratório',
+      titulo: 'Ensaios realizados',
+      alt: 'Lista de ensaios do laboratório no aplicativo, com número de protocolo, nome do ensaio, responsável, data e situação, e filtros por status.',
+      barra: 'escura'
+    },
+    {
+      arquivo: 'laboratorio-granulometria.webp',
+      app: 'Laboratório',
+      titulo: 'Ensaio de granulometria',
+      alt: 'Ensaio de granulometria preenchido no aplicativo: peneiras com a porcentagem passante calculada automaticamente para as duas determinações.',
+      barra: 'escura',
+      vitrine: 3
+    },
+    {
+      arquivo: 'controle-inicio.webp',
+      app: 'Controle de obra',
+      titulo: 'Tela inicial',
+      alt: 'Tela inicial do aplicativo Afirma E-vias Controle: faixa de boas-vindas com foto da equipe em campo e filtros por regional, obra, status, tipo de registro e período.',
+      barra: 'escura'
+    },
+    {
+      arquivo: 'controle-ensaios-realizados.webp',
+      app: 'Controle de obra',
+      titulo: 'Ensaios realizados',
+      alt: 'Lista de ensaios realizados na obra: busca, filtros de período e registros com tipo, situação de aprovação, data e obra.',
+      barra: 'escura',
+      vitrine: 2
+    },
+    {
+      arquivo: 'controle-checklist-concretagem.webp',
+      app: 'Controle de obra',
+      titulo: 'Checklist de concretagem',
+      alt: 'Relatório de checklist de concretagem no aplicativo: dados da obra, condições climáticas, observações e ensaio de slump da carga de concreto, com resultado conforme.',
+      barra: 'clara'
+    }
+  ] as TelaApp[]
+};
+
+type TelaApp = {
+  arquivo: string;
+  app: string;
+  titulo: string;
+  alt: string;
+  barra: 'clara' | 'escura';
+  /** posição na vitrine de três celulares: 1 fica na frente, 2 à esquerda, 3 à direita */
+  vitrine?: 1 | 2 | 3;
 };
 
 export const acreditacao = {
