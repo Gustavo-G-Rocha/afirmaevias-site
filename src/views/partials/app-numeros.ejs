@@ -1,0 +1,12 @@
+<%# Numeros do app. Arredondados para baixo do que o Controle informou em
+    19/10/2026 (17.864 registros e cerca de 212 mil fotos), para continuarem
+    verdadeiros quando crescerem. "Registros tecnicos", nao "ensaios": 62%
+    sao diarios de obra. %>
+<ul class="app-numeros" role="list">
+  <% aplicativo.numeros.forEach(function (n) { %>
+    <li class="app-numeros__item" data-revelar>
+      <span class="app-numeros__valor">+<span class="sr"><%= n.valor %></span><span aria-hidden="true" data-contar="<%= n.valor.replace(/\./g, '') %>"><%= n.valor %></span></span>
+      <span class="app-numeros__rotulo"><%= n.rotulo %></span>
+    </li>
+  <% }); %>
+</ul>

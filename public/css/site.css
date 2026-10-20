@@ -999,6 +999,16 @@ p, li { text-wrap: pretty; }
 .lista-marcada--clara li::before { background: var(--verde-claro); }
 .lista-marcada--clara li { color: var(--claro-70); }
 
+/* ---------------------------------------------------------- números do app */
+
+.app-numeros { list-style: none; margin: 1.5rem 0; padding: 0; display: flex; gap: 2rem; }
+.app-numeros__item { display: grid; gap: 0.2rem; padding-left: 1rem; border-left: 3px solid var(--verde-claro); }
+.app-numeros__valor {
+  font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem); font-weight: 500; line-height: 1;
+  letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--off-white);
+}
+.app-numeros__rotulo { font-size: 0.82rem; line-height: 1.4; color: var(--claro-70); max-width: 16ch; }
+
 /* ------------------------------------------------------------ pílulas */
 
 /* Lista curta de áreas em pílulas lado a lado: ocupa duas linhas em vez de

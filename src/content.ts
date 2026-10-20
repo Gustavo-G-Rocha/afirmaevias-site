@@ -330,6 +330,13 @@ export const aplicativo = {
   ],
   fecho:
     'Com o app você tem controle total da obra, acessando informações essenciais de qualquer lugar.',
+  // Confirmados pelo Gustavo em 20/10/2026, a partir do relatorio do Controle
+  // de 19/10 (17.864 registros, cerca de 212 mil fotos). Arredondados para
+  // baixo. Atualize aqui quando quiser renovar.
+  numeros: [
+    { valor: '17.000', rotulo: 'registros técnicos no aplicativo' },
+    { valor: '200.000', rotulo: 'fotos registradas em campo' }
+  ],
   // Telas mostradas na moldura de celular (home e página do app). Os prints
   // são feitos com dados de demonstração: o site é público e não pode exibir
   // dado pessoal nem de cliente. Cada arquivo tem 640x1462 px, com uma faixa
