@@ -16,7 +16,8 @@
       <p class="sobrancelha" data-revelar>O que ele faz</p>
       <h2 class="titulo-secao" data-revelar>Quatro coisas que mudam na sua operação</h2>
     </div>
-    <div class="grade-recursos">
+    <%# no celular os quatro recursos viram carrossel de arrastar %>
+    <div class="grade-recursos" data-galeria>
       <% aplicativo.recursos.forEach(function (recurso, i) { %>
         <article class="recurso" data-revelar>
           <span class="recurso__numero" aria-hidden="true"><%= String(i + 1).padStart(2, '0') %></span>
@@ -25,6 +26,7 @@
         </article>
       <% }); %>
     </div>
+    <div class="galeria__progresso" aria-hidden="true"><span></span></div>
   </div>
 </section>
 
