@@ -548,8 +548,8 @@ export const vagas = {
 
 // -------------------------------------------------------------------- LGPD
 export const privacidade = {
-  atualizadoEm: '25 de agosto de 2026',
-  versao: '1.0',
+  atualizadoEm: '20 de outubro de 2026',
+  versao: '1.1',
   secoes: [
     {
       titulo: 'Quem somos e a quem esta política se aplica',
@@ -596,13 +596,13 @@ export const privacidade = {
         'Atender requisições de titulares e comprovar conformidade — cumprimento de obrigação legal (art. 7º, II).',
         'Apurar relatos de integridade — legítimo interesse na manutenção do programa de compliance (art. 7º, IX).',
         'Manter o site seguro e funcional e prevenir fraudes — legítimo interesse (art. 7º, IX).',
-        'Cookies analíticos e de marketing — consentimento (art. 7º, I), revogável a qualquer momento.'
+        'Cookies analíticos e de marketing — hoje não usamos. Se passarmos a usar, pediremos antes o seu consentimento (art. 7º, I), revogável a qualquer momento.'
       ]
     },
     {
       titulo: 'Com quem compartilhamos',
       paragrafos: [
-        'Não vendemos dados pessoais. Compartilhamos apenas o necessário com: provedores de infraestrutura e hospedagem que operam sob contrato de tratamento; a empresa independente que opera nosso canal de denúncias; e autoridades públicas, quando houver requisição legal.',
+        'Não vendemos dados pessoais. Compartilhamos apenas o necessário com: provedores de infraestrutura e hospedagem que operam sob contrato de tratamento (hoje, a Railway, que hospeda o site e o banco de dados, e a Resend, que entrega os avisos por e-mail à nossa equipe — esses avisos informam que chegou uma mensagem, mas não trazem o conteúdo dela); a empresa independente que opera nosso canal de denúncias; e autoridades públicas, quando houver requisição legal.',
         'Nossos servidores de aplicação e banco de dados podem estar localizados fora do Brasil. Nessas hipóteses, a transferência internacional observa o art. 33 da LGPD e é acompanhada de cláusulas contratuais de proteção.'
       ]
     },
@@ -613,7 +613,8 @@ export const privacidade = {
         'Currículos: 12 meses, salvo se você pedir a exclusão antes.',
         'Requisições de titular e registros de consentimento: 5 anos, para prova de conformidade.',
         'Relatos de integridade: pelo prazo da apuração e mais 5 anos.',
-        'Logs de acesso: 6 meses, conforme o Marco Civil da Internet.'
+        'Logs de acesso: 6 meses, conforme o Marco Civil da Internet.',
+        'Trilha de auditoria do painel administrativo (acessos e ações da nossa equipe): 12 meses.'
       ]
     },
     {
@@ -645,6 +646,11 @@ export const privacidade = {
   ]
 };
 
+// O site hoje só usa o essencial: sessão do painel, preferência de tema e a
+// memória desta escolha. Não há analytics, pixel nem publicidade, então não se
+// oferece "Analíticos" nem "Marketing" - o banner prometia o que não existia.
+// Se uma ferramenta de medição for escolhida, a categoria volta aqui junto com
+// o código que só carrega depois do consentimento, e a política é atualizada.
 export const cookies = {
   categorias: [
     {
@@ -653,20 +659,6 @@ export const cookies = {
       texto:
         'Mantêm o site funcionando: sessão, segurança do formulário e memória da sua escolha de cookies. Não podem ser desligados.',
       obrigatorio: true
-    },
-    {
-      chave: 'analiticos',
-      titulo: 'Analíticos',
-      texto:
-        'Medem páginas visitadas e origem do acesso para entendermos o que é útil. Dados agregados, sem identificar você.',
-      obrigatorio: false
-    },
-    {
-      chave: 'marketing',
-      titulo: 'Marketing',
-      texto:
-        'Permitem medir campanhas e mostrar conteúdo da Afirma E-vias em outras plataformas.',
-      obrigatorio: false
     }
   ]
 };

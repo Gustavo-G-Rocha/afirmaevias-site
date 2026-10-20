@@ -38,7 +38,7 @@ export const config = {
     senha: process.env.ADMIN_PASSWORD ?? '',
     nome: process.env.ADMIN_NOME ?? 'Administrador'
   },
-  versaoPolitica: '2026-08-25',
+  versaoPolitica: '2026-10-20',
   uploadMaximoBytes: 5 * 1024 * 1024
 };
 

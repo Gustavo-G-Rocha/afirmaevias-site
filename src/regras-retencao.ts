@@ -38,6 +38,13 @@ export const REGRAS: Regra[] = [
     sql: `DELETE FROM tentativas_login WHERE criado_em < now() - interval '24 hours'`
   },
   {
+    // trilha de auditoria do /admin: guarda e-mail e IP de quem agiu no painel.
+    // 12 meses cobre a apuracao de qualquer incidente recente; antes a tabela
+    // crescia sem limite. Prazo proposto, a confirmar com o dono.
+    rotulo: 'trilha de auditoria do painel com mais de 12 meses',
+    sql: `DELETE FROM auditoria WHERE criado_em < now() - interval '12 months'`
+  },
+  {
     rotulo: 'consentimentos de cookies com mais de 5 anos',
     sql: `DELETE FROM consentimentos_cookies WHERE criado_em < now() - interval '5 years'`
   }

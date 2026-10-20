@@ -64,7 +64,9 @@
   let player = null;
 
   window.onYouTubeIframeAPIReady = function () {
+    // host nocookie: o player nao grava cookie de rastreamento do Google
     player = new YT.Player('som', {
+      host: 'https://www.youtube-nocookie.com',
       videoId: ID,
       playerVars: { autoplay: 1, controls: 0, playsinline: 1, rel: 0, loop: 1, playlist: ID },
       events: {

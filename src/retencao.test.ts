@@ -8,6 +8,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { REGRAS } from './regras-retencao.js';
+import { privacidade, cookies } from './content.js';
 
 test('há regras cadastradas', () => {
   assert.ok(REGRAS.length > 0, 'nenhuma regra de retenção');
@@ -58,7 +59,8 @@ test('os prazos declarados continuam sendo os da política', () => {
     contatos: '24 months',
     solicitacoes_lgpd: '5 years',
     consentimentos_cookies: '5 years',
-    tentativas_login: '24 hours'
+    tentativas_login: '24 hours',
+    auditoria: '12 months'
   };
 
   for (const [tabela, prazo] of Object.entries(esperado)) {
@@ -78,4 +80,20 @@ test('IP e user-agent são anonimizados aos 6 meses, não apagados', () => {
     assert.match(regra.sql, /user_agent\s*=\s*NULL/i, `deixou o user-agent: ${regra.rotulo}`);
     assert.match(regra.sql, /interval\s*'6 months'/i, `prazo diferente de 6 meses: ${regra.rotulo}`);
   }
+});
+
+// A trilha de auditoria do painel e apagada aos 12 meses: a política precisa
+// dizer isso, senão o site faz uma coisa e promete outra.
+test('a política declara a trilha de auditoria e os prazos que a rotina aplica', () => {
+  const texto = JSON.stringify(privacidade);
+  assert.match(texto, /Trilha de auditoria do painel administrativo[^"]*12 meses/);
+  assert.match(texto, /Currículos: 12 meses/);
+  assert.match(texto, /Contatos comerciais: 24 meses/);
+});
+
+// O banner só pode oferecer categoria que o site realmente usa. Sem analytics
+// nem pixel (o teste de terceiros cobra isso), só o essencial existe.
+test('o banner de cookies só oferece categorias obrigatórias', () => {
+  const opcionais = cookies.categorias.filter((c) => !c.obrigatorio);
+  assert.deepEqual(opcionais, [], 'categoria opcional sem ferramenta que a use');
 });

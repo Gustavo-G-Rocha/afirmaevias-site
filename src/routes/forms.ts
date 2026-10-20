@@ -67,15 +67,11 @@ export async function rotasFormularios(app: FastifyInstance) {
 
     void avisarEquipe({
       tipo: 'contato',
-      assunto: `Novo contato: ${valores.assunto || 'sem assunto'}`,
-      linhas: [
-        ['Nome', `${valores.nome} ${valores.sobrenome ?? ''}`.trim()],
-        ['E-mail', valores.email],
-        ['Telefone', valores.telefone ?? ''],
-        ['Empresa', valores.empresa ?? ''],
-        ['Assunto', valores.assunto ?? ''],
-        ['Mensagem', valores.mensagem ?? '']
-      ],
+      // Minimização (LGPD, art. 6º III): o e-mail avisa e manda abrir o
+      // painel. Antes levava nome, e-mail, telefone e mensagem inteira para a
+      // caixa compartilhada e para a Resend, sem prazo de descarte.
+      assunto: 'Novo contato recebido pelo site',
+      linhas: [['Conteúdo', 'Não enviado por e-mail. Leia no painel, com acesso controlado.']],
       caminhoAdmin: '/admin/dados/contatos'
     });
 
@@ -178,14 +174,10 @@ export async function rotasFormularios(app: FastifyInstance) {
 
     void avisarEquipe({
       tipo: 'candidatura',
-      assunto: `Novo currículo: ${nomeCompleto}`,
+      assunto: 'Novo currículo recebido pelo site',
       linhas: [
-        ['Nome', nomeCompleto],
-        ['E-mail', valores.email],
-        ['Telefone', valores.telefone ?? ''],
         ['Área', valores.area || 'não informada'],
-        ['Arquivo', arquivoNome],
-        ['Recado', valores.mensagem ?? '']
+        ['Conteúdo', 'Não enviado por e-mail. Leia no painel, com acesso controlado.']
       ],
       caminhoAdmin: '/admin/dados/candidaturas'
     });
@@ -307,9 +299,7 @@ export async function rotasFormularios(app: FastifyInstance) {
       linhas: [
         ['Protocolo', protocolo],
         ['Pedido', valores.tipo],
-        ['Titular', valores.nome],
-        ['E-mail', valores.email],
-        ['Detalhes', valores.detalhes ?? '']
+        ['Conteúdo', 'Não enviado por e-mail. Leia no painel, com acesso controlado.']
       ],
       caminhoAdmin: '/admin/dados/lgpd'
     });
