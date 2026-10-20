@@ -332,8 +332,8 @@ export const aplicativo = {
     'Com o app você tem controle total da obra, acessando informações essenciais de qualquer lugar.',
   // Telas mostradas na moldura de celular (home e página do app). Os prints
   // são feitos com dados de demonstração: o site é público e não pode exibir
-  // dado pessoal nem de cliente. Cada arquivo tem 780x1782 px, com uma faixa
-  // de 94 px no topo na cor do cabeçalho do app, onde a moldura desenha a
+  // dado pessoal nem de cliente. Cada arquivo tem 640x1462 px, com uma faixa
+  // de 77 px no topo na cor do cabeçalho do app, onde a moldura desenha a
   // barra de status. "barra" diz se essa faixa é clara ou escura, para a hora
   // e os ícones saírem em contraste. As que têm "vitrine" entram no disco de
   // celulares da home e do topo da página do app, na ordem do número (a 1

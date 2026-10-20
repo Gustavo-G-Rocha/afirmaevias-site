@@ -1052,11 +1052,11 @@ p, li { text-wrap: pretty; }
 .celular__tela img {
   display: block;
   width: 100%; height: auto;
-  aspect-ratio: 780 / 1782;
+  aspect-ratio: 640 / 1462;
   object-fit: cover;
   object-position: top;
 }
-/* barra de status: ocupa os 94 px de faixa do print (94/1782 da altura) */
+/* barra de status: ocupa a faixa do print: 77 de 1462 px de altura, 5,28% */
 .celular__status {
   position: absolute; inset: 0 0 auto;
   height: 5.28%;
