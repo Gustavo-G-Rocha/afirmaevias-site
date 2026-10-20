@@ -45,6 +45,12 @@ export const sistemasInternos = [
   { nome: 'Registro de ponto', url: 'https://aevias-ponto.up.railway.app/login' }
 ];
 
+// Politicas de privacidade publicadas pelos proprios apps. O site so linka:
+// o texto muda pela versao de cada app e nao deve ser copiado para ca.
+export const privacidadeApps = [
+  { nome: 'Privacidade do aplicativo de ponto', url: 'https://aevias-ponto.up.railway.app/privacidade' }
+];
+
 export const navegacao = [
   { rotulo: 'A empresa', href: '/afirma-evias' },
   { rotulo: 'Serviços', href: '/servicos' },
