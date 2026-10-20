@@ -55,7 +55,7 @@
 
         <label class="campo">
           <span class="campo__rotulo">Nome completo</span>
-          <input type="text" name="nome" autocomplete="given-name" required maxlength="160" value="<%= valores.nome || '' %>">
+          <input type="text" name="nome" autocomplete="name" required maxlength="160" value="<%= valores.nome || '' %>">
         </label>
 
         <div class="campo-duplo">
@@ -65,7 +65,7 @@
           </label>
           <label class="campo">
             <span class="campo__rotulo">CPF (opcional)</span>
-            <input type="text" name="documento" maxlength="40" value="<%= valores.documento || '' %>">
+            <input type="text" name="documento" maxlength="40" inputmode="numeric" autocomplete="off" value="<%= valores.documento || '' %>">
             <span class="campo__ajuda">Ajuda a localizar seus registros mais rápido.</span>
           </label>
         </div>

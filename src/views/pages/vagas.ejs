@@ -14,8 +14,8 @@
     <div>
       <p class="sobrancelha" data-revelar>Áreas</p>
       <h2 class="titulo-secao" data-revelar>Onde a gente costuma abrir vaga</h2>
-      <ul class="lista-marcada">
-        <% vagas.areas.forEach(function (area) { %><li data-revelar="esquerda"><%= area %></li><% }); %>
+      <ul class="lista-chips" role="list">
+        <% vagas.areas.forEach(function (area) { %><li data-revelar><%= area %></li><% }); %>
       </ul>
       <p class="texto-apoio" data-revelar>Não achou a sua área? Manda mesmo assim. Guardamos currículos por 12 meses e você pode pedir a exclusão quando quiser pelo <a href="/portal-do-titular">Portal do titular</a>.</p>
     </div>

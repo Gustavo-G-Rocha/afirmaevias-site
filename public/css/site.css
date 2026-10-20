@@ -998,6 +998,21 @@ p, li { text-wrap: pretty; }
 .lista-marcada--clara li::before { background: var(--verde-claro); }
 .lista-marcada--clara li { color: var(--claro-70); }
 
+/* ------------------------------------------------------------ pílulas */
+
+/* Lista curta de áreas em pílulas lado a lado: ocupa duas linhas em vez de
+   cinco e deixa o formulário de currículo mais perto do topo no celular. */
+.lista-chips { list-style: none; margin: 1.25rem 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lista-chips li {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem; line-height: 1.3;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-botao);
+}
+
 /* ------------------------------------------------------- destaque do app */
 
 .destaque-app { overflow: hidden; }
