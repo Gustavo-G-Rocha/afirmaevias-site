@@ -2339,8 +2339,8 @@ body.cabecalho-escondido .indice { top: 0; }
 .rodape__grade {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 2.25rem;
-  padding-block: 3.5rem 2rem;
+  gap: 1.75rem;
+  padding-block: 2.5rem 1.25rem;
 }
 .rodape__marca img { width: 140px; }
 .rodape__lema { font-size: 1.05rem; line-height: 1.4; color: var(--off-white); margin: 1.25rem 0 0; }
@@ -2360,6 +2360,35 @@ body.cabecalho-escondido .indice { top: 0; }
 }
 .rodape__lista a:hover { color: var(--off-white); background-size: 100% 1px; }
 .rodape__lista .icone { color: var(--verde-claro); }
+/* Celular: os quatro canais viram pílulas lado a lado em vez de quatro
+   linhas, e o bloco de contato some onde os mesmos três canais acabaram de
+   aparecer como atalhos. Ele volta a partir do tablet, onde o rodapé tem
+   colunas. */
+.rodape__lista--chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.rodape__lista--chips li { margin: 0; }
+.rodape__lista--chips a {
+  padding: 0.5rem 0.95rem;
+  background: var(--claro-08);
+  border: 1px solid var(--claro-18);
+  border-radius: var(--raio-botao);
+  font-size: 0.85rem;
+  background-image: none;
+}
+.rodape__lista--chips a:hover { background: var(--claro-18); }
+/* só nas páginas que já mostram os atalhos de contato logo acima: nas
+   demais (vagas, termos, privacidade...) o rodapé é o único lugar com o
+   telefone e o e-mail */
+main:has(.chamada__contatos) + .rodape .rodape__bloco--contato { display: none; }
+@media (min-width: 600px) {
+  main:has(.chamada__contatos) + .rodape .rodape__bloco--contato { display: block; }
+  .rodape__lista--chips { display: block; }
+  .rodape__lista--chips li { margin-bottom: 0.5rem; }
+  .rodape__lista--chips a {
+    padding: 0.3rem 0; background: none; border: 0; border-radius: 0; font-size: inherit;
+    background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  }
+  .rodape__lista--chips a:hover { background-color: transparent; background-size: 100% 1px; }
+}
 .rodape__lista--escura { color: var(--texto-suave); margin-block: 1rem; }
 .rodape__lista--escura .icone { color: var(--acento); }
 .rodape__lista--escura a:hover { color: var(--texto); }
