@@ -78,7 +78,8 @@
   --texto-forte: var(--azul-80);
   /* texto corrido sobre claro: azul a 72% fica em ~6:1, folgado acima do AA */
   --texto-suave: rgba(0, 35, 59, 0.72);
-  --texto-fraco: var(--azul-60);
+  /* 0,68 em vez de 0,6: a 0,6 a nota das marcas ficava em 4,15:1 */
+  --texto-fraco: rgba(0, 35, 59, 0.68);
   --borda: var(--azul-12);
   --borda-forte: var(--azul-30);
   --acento: var(--verde);
@@ -1949,7 +1950,9 @@ body.cabecalho-escondido .indice { top: 0; }
   text-transform: uppercase; color: var(--acento);
   padding: 0.3rem 0.8rem;
   border-radius: var(--raio-botao);
-  background: var(--verde-claro-30);
+  /* fundo mais fraco que --verde-claro-30: no tema escuro o texto verde-claro
+     sobre 30% ficava em 4,21:1, abaixo do minimo */
+  background: rgba(191, 207, 153, 0.18);
   margin: 0 0 1rem;
 }
 .aviso__subtitulo { font-weight: 500; margin-bottom: 0.25rem; }
@@ -2423,8 +2426,8 @@ main:has(.chamada__contatos) + .rodape .rodape__bloco--contato { display: none; 
 .rodape__legal a, .rodape__link-botao { display: inline-block; padding-block: 0.35rem; text-decoration: none; font-size: 0.82rem; }
 .rodape__legal a:hover, .rodape__link-botao:hover { color: var(--verde-claro); }
 /* link discreto para os sistemas internos: é para quem já trabalha aqui */
-.rodape__equipe { margin: 0; font-size: 0.78rem; color: var(--claro-45); }
-.rodape__equipe a { color: var(--claro-70); text-underline-offset: 3px; }
+.rodape__equipe { margin: 0; font-size: 0.78rem; color: var(--claro-70); }
+.rodape__equipe a { color: var(--off-white); text-underline-offset: 3px; }
 .rodape__equipe a:hover { color: var(--verde-claro); }
 
 @media (min-width: 600px) {
