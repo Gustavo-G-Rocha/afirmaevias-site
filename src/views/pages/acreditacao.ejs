@@ -80,7 +80,9 @@
       <p class="sobrancelha" data-revelar>Valores</p>
       <h2 class="titulo-secao" data-revelar>O que guia cada decisão</h2>
     </div>
-    <div class="grade-valores">
+    <%# no celular os sete valores viram carrossel de arrastar, com a mesma
+        barra de progresso das outras galerias %>
+    <div class="grade-valores" data-galeria>
       <% acreditacao.valores.forEach(function (valor) { %>
         <article class="valor" data-revelar>
           <h3 class="valor__titulo"><%= valor.titulo %></h3>
@@ -88,6 +90,7 @@
         </article>
       <% }); %>
     </div>
+    <div class="galeria__progresso" aria-hidden="true"><span></span></div>
   </div>
 </section>
 

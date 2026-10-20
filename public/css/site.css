@@ -1496,6 +1496,11 @@ p, li { text-wrap: pretty; }
 }
 
 .figura { margin: 0; }
+/* no celular a foto ganha um recorte mais baixo: em largura total e na
+   proporção original cada uma ocupava quase uma tela inteira */
+@media (max-width: 899px) {
+  .grade-figura .figura img { aspect-ratio: 16 / 10; object-fit: cover; }
+}
 .figura img {
   width: 100%; height: auto;
   border-radius: var(--raio-grande);
@@ -1799,7 +1804,8 @@ body.cabecalho-escondido .indice { top: 0; }
 /* selo circular com um anel tracejado que gira devagar */
 .selo {
   position: relative;
-  width: min(78%, 300px);
+  /* menor no celular: o selo sozinho ocupava meia tela antes do texto */
+  width: min(54%, 190px);
   aspect-ratio: 1;
   margin: 1rem auto;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -1849,8 +1855,33 @@ body.cabecalho-escondido .indice { top: 0; }
   opacity: 0.18;
 }
 
-.grade-valores { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
-@media (min-width: 600px) { .grade-valores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; } }
+/* Celular: sete cartões empilhados davam quase três telas. Viram carrossel
+   de arrastar com a borda do próximo à mostra. */
+.grade-valores {
+  display: flex;
+  gap: 1rem;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0.5rem var(--gutter) 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.grade-valores::-webkit-scrollbar { display: none; }
+.grade-valores > .valor { flex: 0 0 74%; scroll-snap-align: start; }
+.grade-valores + .galeria__progresso { width: 100%; margin: 0; }
+@media (min-width: 600px) {
+  .grade-valores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .grade-valores + .galeria__progresso { display: none; }
+}
 @media (min-width: 1100px) { .grade-valores { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .valor { padding: 1.4rem 1.4rem 1.5rem; }
 .valor__titulo { font-weight: 600; font-size: 1rem; margin: 0 0 0.4rem; }
