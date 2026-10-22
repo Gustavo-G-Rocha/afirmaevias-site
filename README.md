@@ -3,9 +3,20 @@
 Site institucional refeito do zero. Node 22 + Fastify 5 + TypeScript + EJS + PostgreSQL.
 Sem WordPress, sem build de frontend, sem CMS: o conteúdo mora em `src/content.ts`.
 
+## Documentação do sistema
+
+A [documentação de arquitetura](docs/arquitetura/README.md) descreve o sistema,
+as rotas, os dados, o acesso ao painel, a operação e os testes, com referências
+ao código. Foi organizada a partir dos documentos do repositório `aevias_controle`
+e conferida com a implementação deste site em 21/10/2026.
+
+O [mapa de terceiros e sistemas relacionados](docs/arquitetura/05-terceiros-e-sistemas-relacionados.md)
+detalha Railway, Resend, Cloudflare, GitHub, YouTube, canal externo de denúncias,
+redes sociais e a relação do site com Ponto, Controle, Laboratório e `aevias-auth`.
+
 ## Telas
 
-**Públicas (11)**
+**Institucionais públicas (12)**
 
 | Rota | Tela |
 |---|---|
@@ -20,10 +31,12 @@ Sem WordPress, sem build de frontend, sem CMS: o conteúdo mora em `src/content.
 | `/politica-de-privacidade` | **novo** — política LGPD completa |
 | `/termos-de-uso` | **novo** |
 | `/portal-do-titular` | **novo** — requisições do art. 18 da LGPD com protocolo |
+| `/acessibilidade` | Declaração de acessibilidade |
 
-Mais `/protocolo/:codigo` (consulta pública), `/robots.txt`, `/sitemap.xml`, `/health`, 404 e página de erro.
+Mais `/protocolo/:codigo` (consulta pública), `/robots.txt`, `/sitemap.xml`, `/health`,
+a página extra `/bruno_magalhaes` (não indexável, com YouTube), 404 e página de erro.
 
-**Painel (8)**
+**Painel**
 
 `/admin/login`, `/admin` (visão geral), `/admin/dados/contatos`, `/admin/dados/candidaturas`,
 `/admin/dados/relatos`, `/admin/dados/lgpd`, `/admin/dados/consentimentos`, cada uma com tela de
@@ -35,12 +48,15 @@ não precisa escrever rota nem view.
 
 ## Rodar local
 
-```bash
-cp .env.example .env      # preencha DATABASE_URL, SESSION_SECRET, ADMIN_*
-npm install
-npm run migrate:dev
-npm run dev               # http://localhost:3000
+```powershell
+Copy-Item .env.example .env  # preencha DATABASE_URL, SESSION_SECRET, ADMIN_*
+npm ci
+node --env-file=.env --import tsx src/migrate.ts
+node --env-file=.env --import tsx --watch src/server.ts  # http://localhost:3000
 ```
+
+Os scripts `npm run dev` e `npm run migrate:dev` pressupõem variáveis já
+carregadas no processo. Veja [operação e ambiente](docs/arquitetura/06-operacao-ambiente-e-deploy.md).
 
 ## Deploy no Railway
 
@@ -54,7 +70,8 @@ npm run dev               # http://localhost:3000
 4. O `railway.json` já define `npm run migrate && npm start` como start command e `/health` como healthcheck.
 5. Aponte o domínio no Cloudflare para o serviço (CNAME para o host do Railway).
 
-A migration é idempotente: roda a cada deploy sem quebrar nada.
+A aplicação do schema é idempotente e roda a cada deploy. Alterações de tabelas
+existentes exigem SQL explícito; não há histórico numerado de migrations.
 
 ## O que falta
 
@@ -75,7 +92,8 @@ Configuração de ambiente:
   seguem apenas no `/admin`. Veja "Avisos por e-mail" abaixo.
 - **`SESSION_SECRET`** — sem ela o segredo é sorteado a cada boot e o painel desloga
   a cada redeploy.
-- **Backup do banco.** Não há nada configurado, e o banco guarda currículos, relatos de
+- **Backup do banco.** Não há automação no repositório; confirmar a configuração
+  no provedor e o procedimento de restauração. O banco guarda currículos, relatos de
   integridade e requisições LGPD.
 
 Decisão de arquitetura em aberto:
@@ -97,20 +115,24 @@ ou requisição LGPD. Usa a API HTTP da Resend via `fetch` nativo — sem depend
 | `EMAIL_COMPLIANCE` | Destino dos relatos de integridade | `comercial@` |
 | `EMAIL_ENCARREGADO` | Destino das requisições LGPD | `privacidade@` |
 
-O relato de integridade é o único que **não** vai com conteúdo nem identidade: o e-mail
-informa protocolo, categoria e se é anônimo, e manda ler no painel. Despejar o texto de uma
-denúncia numa caixa compartilhada derrubaria a proteção do canal.
+Os avisos não incluem identidade nem conteúdo dos formulários: orientam a leitura
+no painel. Candidaturas incluem a área; relatos incluem protocolo, categoria e
+indicação de anonimato; pedidos LGPD incluem protocolo e tipo. Não há currículo
+anexo. O [mapa de terceiros](docs/arquitetura/05-terceiros-e-sistemas-relacionados.md)
+detalha os campos e o comportamento em caso de falha, sem fila de reenvio.
 
 Se preferirem SMTP próprio no lugar da Resend, o ponto de troca é a função `avisarEquipe`.
 
 ## Descarte automático
 
-`src/retencao.ts` roda ao subir e a cada 24 h, aplicando os prazos declarados na Política
-de Privacidade: currículos em 12 meses, contatos em 24 meses, requisições e consentimentos
-em 5 anos, e anonimização de IP e user-agent em 6 meses (Marco Civil). Relatos de
-integridade ficam de fora porque o prazo conta do fim da apuração, que é decisão humana.
+`src/retencao.ts` roda ao subir e a cada 24 h: currículos em 12 meses, contatos em
+24 meses, requisições e consentimentos em 5 anos, auditoria em 12 meses, tentativas
+de login em 24 h e remoção de IP e user-agent de contatos/candidaturas em 6 meses.
+Os recortes usam `criado_em`. Relatos de integridade não têm descarte automático.
 
-Os prazos espelham a seção "Por quanto tempo guardamos" de `src/content.ts`. Mudou lá, mude aqui.
+Mudanças de prazo exigem revisar `src/regras-retencao.ts`, a política em
+`src/content.ts` e os testes. O [documento de retenção](docs/arquitetura/03-banco-de-dados-e-retencao.md)
+registra as diferenças entre o marco de contagem publicado e o implementado.
 
 ## Decisões de marca
 
@@ -132,12 +154,12 @@ e ela nunca aparece sobre bege.
 
 ## LGPD — o que já está implementado
 
-- Banner de cookies com aceite granular (necessários / analíticos / marketing) e recusa em um clique.
+- Banner de cookies com a categoria Necessários; não há analytics ou marketing instalados.
 - Cada escolha é gravada em `consentimentos_cookies` com a versão da política e hash do IP — prova de consentimento.
-- Checkbox de aceite obrigatório em todo formulário que coleta dado pessoal.
+- Aceite nos formulários de contato e currículo; confirmação de titularidade no portal; relato com opção anônima.
 - Portal do titular com protocolo, prazo de 15 dias calculado no banco e alerta no painel quando faltam menos de 5 dias.
 - Botão de exclusão definitiva no painel (só perfil admin), registrado na trilha de auditoria.
-- Trilha de auditoria de tudo que a equipe faz no painel.
-- Prazos de retenção declarados na política e coerentes com o schema.
+- Trilha de auditoria para autenticação, alterações, exclusões, downloads, exportações e gestão de contas; leitura simples não gera evento.
+- Rotina de retenção por data, com limites descritos na documentação de banco.
 
 Falta o processo humano: definir quem é o Encarregado e criar o e-mail `privacidade@afirmaevias.com.br`.
