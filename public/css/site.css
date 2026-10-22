@@ -2435,13 +2435,6 @@ main:has(.chamada__contatos) + .rodape .rodape__bloco--contato { display: none; 
 .rodape__legal { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
 .rodape__legal a, .rodape__link-botao { display: inline-block; padding-block: 0.35rem; text-decoration: none; font-size: 0.82rem; }
 .rodape__legal a:hover, .rodape__link-botao:hover { color: var(--verde-claro); }
-/* link discreto para os sistemas internos: é para quem já trabalha aqui */
-/* folga à direita no celular: o botão flutuante do WhatsApp cobria o fim da linha */
-.rodape__equipe { padding-right: 4rem; }
-@media (min-width: 600px) { .rodape__equipe { padding-right: 0; } }
-.rodape__equipe { margin: 0; font-size: 0.78rem; color: var(--claro-70); }
-.rodape__equipe a { color: var(--off-white); text-underline-offset: 3px; }
-.rodape__equipe a:hover { color: var(--verde-claro); }
 
 @media (min-width: 600px) {
   .rodape__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }

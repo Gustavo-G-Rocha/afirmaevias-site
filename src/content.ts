@@ -35,22 +35,6 @@ export const empresa = {
   ]
 };
 
-// Sistemas internos, só para a equipe (as contas são de colaboradores, por
-// convite; não há acesso de cliente). Entra aqui apenas sistema com URL de
-// produção no ar. O site só linka a tela de entrada de cada app: sem
-// parâmetro de retorno nem token na URL, e nunca o domínio do serviço de
-// login ou rotas de API - orientação das sessões do auth e do ponto.
-// Laboratório e Controle entram quando tiverem deploy de produção.
-export const sistemasInternos = [
-  { nome: 'Registro de ponto', url: 'https://aevias-ponto.up.railway.app/login' }
-];
-
-// Politicas de privacidade publicadas pelos proprios apps. O site so linka:
-// o texto muda pela versao de cada app e nao deve ser copiado para ca.
-export const privacidadeApps = [
-  { nome: 'Privacidade do aplicativo de ponto', url: 'https://aevias-ponto.up.railway.app/privacidade' }
-];
-
 export const navegacao = [
   { rotulo: 'A empresa', href: '/afirma-evias' },
   { rotulo: 'Serviços', href: '/servicos' },
